@@ -32,7 +32,7 @@ class FriendScreenView: UIView {
     //MARK: the table view to show the list of friends...
     func setupTableViewFriends(){
         tableViewFriends = UITableView()
-        tableViewFriends.register(FriendTableViewCell.self, forCellReuseIdentifier: "friends")
+        tableViewFriends.register(FriendTableViewCell.self, forCellReuseIdentifier: Configs.tableViewFriendsID)
         tableViewFriends.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(tableViewFriends)
     }

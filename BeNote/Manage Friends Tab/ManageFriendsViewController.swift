@@ -38,7 +38,10 @@ class ManageFriendsViewController: UIViewController {
     
     func getAllFriends() {
         if let currentUserID = Auth.auth().currentUser?.uid {
-            db.collection("users").document(currentUserID).collection("friends").getDocuments { (querySnapshot, error) in
+            db.collection(FirebaseConstants.Users)
+                .document(currentUserID)
+                .collection(FirebaseConstants.Friends)
+                .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     self.showErrorAlert("Error fetching user data: \(error)")
                     return
@@ -74,7 +77,21 @@ class ManageFriendsViewController: UIViewController {
     }
     
     func deleteFriend(id: String) {
-        
+        if let currentUserID = Auth.auth().currentUser?.uid {
+            db.collection(FirebaseConstants.Users)
+                .document(currentUserID)
+                .collection(FirebaseConstants.Friends)
+                .document(id).delete() {
+                    error in
+                        if let error = error {
+                            print("Error removing friend: \(error)")
+                        } else {
+                            print("Friend removed successfully.")
+                            // Step 3: Refresh view
+                            self.getAllFriends()
+                        }
+                    }
+        }
     }
     
     func findUserWithEmail(email: String) {
@@ -82,7 +99,7 @@ class ManageFriendsViewController: UIViewController {
         
         let currentUserID = Auth.auth().currentUser?.uid
         
-        db.collection("users").getDocuments { (querySnapshot, error) in
+        db.collection(FirebaseConstants.Users).getDocuments { (querySnapshot, error) in
             if let error = error {
                 self.showErrorAlert("Error fetching user data")
                 return
@@ -115,10 +132,10 @@ class ManageFriendsViewController: UIViewController {
     
     func addFriendToCurrentUser(friend: User) {
         if let currentUserID = Auth.auth().currentUser?.uid {
-            db.collection("users")
+            db.collection(FirebaseConstants.Users)
                 .document(Auth.auth().currentUser!.uid)
-                .collection("Friends")
-                .document(friend.email).setData([
+                .collection(FirebaseConstants.Friends)
+                .document(friend._id).setData([
                     "name": friend.name,
                     "email": friend.email,
                     "id": friend._id,

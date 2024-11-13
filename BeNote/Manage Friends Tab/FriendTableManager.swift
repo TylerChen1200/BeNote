@@ -13,7 +13,7 @@ extension ManageFriendsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notes", for: indexPath) as! FriendTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewFriendsID, for: indexPath) as! FriendTableViewCell
         cell.labelName.text = friendsArray[indexPath.row].name
         cell.labelEmail.text = friendsArray[indexPath.row].email
         
@@ -25,9 +25,9 @@ extension ManageFriendsViewController: UITableViewDelegate, UITableViewDataSourc
         buttonOptions.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
         
         //MARK: setting up menu for button options click...
-        buttonOptions.menu = UIMenu(title: "Delete?",
+        buttonOptions.menu = UIMenu(title: "Manage Friend?",
                                     children: [
-                                        UIAction(title: "Delete",handler: {(_) in
+                                        UIAction(title: "Remove Friend",handler: {(_) in
                                             self.deleteFriend(id: self.friendsArray[indexPath.row]._id)
                                         })
                                     ])

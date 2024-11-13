@@ -9,4 +9,5 @@ import Foundation
 import Foundation
 class Configs{
     static let notesViewContactsID = "notesViewContactsID"
+    static let tableViewFriendsID = "friendsViewContactsID"
 }

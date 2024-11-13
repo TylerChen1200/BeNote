@@ -80,6 +80,7 @@
 		002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */; };
 		002F99B32CE51D5F00602A86 /* FriendTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B22CE51D5F00602A86 /* FriendTableManager.swift */; };
 		002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B42CE53DFC00602A86 /* ViewController.swift */; };
+		002F99B72CE548EE00602A86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B62CE548EE00602A86 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		002F99B22CE51D5F00602A86 /* FriendTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableManager.swift; sourceTree = "<group>"; };
 		002F99B42CE53DFC00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		002F99B62CE548EE00602A86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 				002F991C2CE4E29700602A86 /* GoogleService-Info.plist */,
 				002F994E2CE4E49500602A86 /* Configs.swift */,
 				002F99B42CE53DFC00602A86 /* ViewController.swift */,
+				002F99B62CE548EE00602A86 /* Constants.swift */,
 			);
 			path = BeNote;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				002F99B72CE548EE00602A86 /* Constants.swift in Sources */,
 				002F990C2CE4E1EA00602A86 /* HomeViewController.swift in Sources */,
 				002F995D2CE4EF0F00602A86 /* RegisterFirebaseManager.swift in Sources */,
 				002F99A82CE5004500602A86 /* AddNoteViewController.swift in Sources */,

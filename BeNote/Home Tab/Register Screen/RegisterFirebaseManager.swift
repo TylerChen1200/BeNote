@@ -71,7 +71,7 @@ extension RegisterViewController{
     
     func addToUserDB(name: String, email: String) {
         let db = Firestore.firestore()
-        db.collection("users").document(Auth.auth().currentUser!.uid).setData([
+        db.collection(FirebaseConstants.Users).document(Auth.auth().currentUser!.uid).setData([
             "name": name,
             "email": email,
             "id": Auth.auth().currentUser!.uid,
@@ -82,7 +82,5 @@ extension RegisterViewController{
                         print("User data saved successfully.")
                     }
                 }
-        db.collection("users").document(Auth.auth().currentUser!.uid).collection("Friends")
-        db.collection("users").document(Auth.auth().currentUser!.uid).collection("Notes")
     }
 }
