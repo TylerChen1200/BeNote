@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-extension ViewController{
+extension HomeViewController{
     func setupRightBarButton(isLoggedin: Bool){
         if isLoggedin{
             //MARK: user is logged in...

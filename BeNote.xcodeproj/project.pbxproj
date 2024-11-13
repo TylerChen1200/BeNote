@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		002F99082CE4E1EA00602A86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99072CE4E1EA00602A86 /* AppDelegate.swift */; };
 		002F990A2CE4E1EA00602A86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99092CE4E1EA00602A86 /* SceneDelegate.swift */; };
-		002F990C2CE4E1EA00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F990B2CE4E1EA00602A86 /* ViewController.swift */; };
+		002F990C2CE4E1EA00602A86 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F990B2CE4E1EA00602A86 /* HomeViewController.swift */; };
 		002F990F2CE4E1EA00602A86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 002F990D2CE4E1EA00602A86 /* Main.storyboard */; };
 		002F99112CE4E1EC00602A86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 002F99102CE4E1EC00602A86 /* Assets.xcassets */; };
 		002F99142CE4E1EC00602A86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 002F99122CE4E1EC00602A86 /* LaunchScreen.storyboard */; };
@@ -76,13 +76,17 @@
 		002F99A82CE5004500602A86 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99A72CE5004500602A86 /* AddNoteViewController.swift */; };
 		002F99AA2CE5005600602A86 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99A92CE5005600602A86 /* User.swift */; };
 		002F99AC2CE50B0200602A86 /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99AB2CE50B0200602A86 /* TabBarManager.swift */; };
+		002F99AF2CE51A9700602A86 /* FriendScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99AE2CE51A9700602A86 /* FriendScreenView.swift */; };
+		002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */; };
+		002F99B32CE51D5F00602A86 /* FriendTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B22CE51D5F00602A86 /* FriendTableManager.swift */; };
+		002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B42CE53DFC00602A86 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		002F99042CE4E1EA00602A86 /* BeNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		002F99072CE4E1EA00602A86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		002F99092CE4E1EA00602A86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		002F990B2CE4E1EA00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		002F990B2CE4E1EA00602A86 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		002F990E2CE4E1EA00602A86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		002F99102CE4E1EC00602A86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		002F99132CE4E1EC00602A86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -105,6 +109,10 @@
 		002F99A72CE5004500602A86 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
 		002F99A92CE5005600602A86 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		002F99AB2CE50B0200602A86 /* TabBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarManager.swift; sourceTree = "<group>"; };
+		002F99AE2CE51A9700602A86 /* FriendScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendScreenView.swift; sourceTree = "<group>"; };
+		002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
+		002F99B22CE51D5F00602A86 /* FriendTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableManager.swift; sourceTree = "<group>"; };
+		002F99B42CE53DFC00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +190,7 @@
 		002F99062CE4E1EA00602A86 /* BeNote */ = {
 			isa = PBXGroup;
 			children = (
+				002F99622CE4F10800602A86 /* Progress Spinner */,
 				002F99502CE4E4D300602A86 /* Data Models */,
 				002F99A42CE4FFFC00602A86 /* Profile Tab */,
 				002F99A32CE4FFF300602A86 /* Add Note Tab */,
@@ -195,6 +204,7 @@
 				002F99152CE4E1EC00602A86 /* Info.plist */,
 				002F991C2CE4E29700602A86 /* GoogleService-Info.plist */,
 				002F994E2CE4E49500602A86 /* Configs.swift */,
+				002F99B42CE53DFC00602A86 /* ViewController.swift */,
 			);
 			path = BeNote;
 			sourceTree = "<group>";
@@ -202,7 +212,7 @@
 		002F991B2CE4E20F00602A86 /* Main Screen */ = {
 			isa = PBXGroup;
 			children = (
-				002F990B2CE4E1EA00602A86 /* ViewController.swift */,
+				002F990B2CE4E1EA00602A86 /* HomeViewController.swift */,
 				002F99492CE4E3E100602A86 /* Views */,
 				002F99532CE4E5E500602A86 /* NotesTableViewManager.swift */,
 				002F99552CE4EB5900602A86 /* RightBarButtonManager.swift */,
@@ -252,7 +262,9 @@
 		002F999F2CE4F9D200602A86 /* Manage Friends Tab */ = {
 			isa = PBXGroup;
 			children = (
+				002F99AD2CE519EB00602A86 /* Views */,
 				002F99A02CE4F9EE00602A86 /* ManageFriendsViewController.swift */,
+				002F99B22CE51D5F00602A86 /* FriendTableManager.swift */,
 			);
 			path = "Manage Friends Tab";
 			sourceTree = "<group>";
@@ -260,7 +272,6 @@
 		002F99A22CE4FFDF00602A86 /* Home Tab */ = {
 			isa = PBXGroup;
 			children = (
-				002F99622CE4F10800602A86 /* Progress Spinner */,
 				002F99572CE4EE2200602A86 /* Register Screen */,
 				002F991B2CE4E20F00602A86 /* Main Screen */,
 			);
@@ -281,6 +292,15 @@
 				002F99A52CE5003600602A86 /* ProfileViewController.swift */,
 			);
 			path = "Profile Tab";
+			sourceTree = "<group>";
+		};
+		002F99AD2CE519EB00602A86 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				002F99AE2CE51A9700602A86 /* FriendScreenView.swift */,
+				002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,20 +425,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				002F990C2CE4E1EA00602A86 /* ViewController.swift in Sources */,
+				002F990C2CE4E1EA00602A86 /* HomeViewController.swift in Sources */,
 				002F995D2CE4EF0F00602A86 /* RegisterFirebaseManager.swift in Sources */,
 				002F99A82CE5004500602A86 /* AddNoteViewController.swift in Sources */,
 				002F995B2CE4EECC00602A86 /* RegisterViewController.swift in Sources */,
 				002F99612CE4F0D600602A86 /* ProgressIndicatorManager.swift in Sources */,
 				002F99082CE4E1EA00602A86 /* AppDelegate.swift in Sources */,
+				002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */,
 				002F996C2CE4F2C700602A86 /* ProgressSpinnerViewController.swift in Sources */,
 				002F99522CE4E4EA00602A86 /* Note.swift in Sources */,
 				002F99A62CE5003600602A86 /* ProfileViewController.swift in Sources */,
 				002F99592CE4EE4900602A86 /* RegisterScreenView.swift in Sources */,
+				002F99AF2CE51A9700602A86 /* FriendScreenView.swift in Sources */,
 				002F99562CE4EB5900602A86 /* RightBarButtonManager.swift in Sources */,
 				002F994D2CE4E45B00602A86 /* NotesTableViewCell.swift in Sources */,
+				002F99B32CE51D5F00602A86 /* FriendTableManager.swift in Sources */,
 				002F996E2CE4F2E000602A86 /* ProgressSpinnerDelegate.swift in Sources */,
 				002F99AC2CE50B0200602A86 /* TabBarManager.swift in Sources */,
+				002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */,
 				002F990A2CE4E1EA00602A86 /* SceneDelegate.swift in Sources */,
 				002F99542CE4E5E600602A86 /* NotesTableViewManager.swift in Sources */,
 				002F99A12CE4F9EE00602A86 /* ManageFriendsViewController.swift in Sources */,

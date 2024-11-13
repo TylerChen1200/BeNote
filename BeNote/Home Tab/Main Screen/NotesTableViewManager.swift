@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource{
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notesList.count
     }

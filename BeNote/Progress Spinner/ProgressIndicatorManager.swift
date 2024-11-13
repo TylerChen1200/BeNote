@@ -21,7 +21,7 @@ extension RegisterViewController:ProgressSpinnerDelegate{
     }
 }
 
-extension ViewController:ProgressSpinnerDelegate{
+extension HomeViewController:ProgressSpinnerDelegate{
     func showActivityIndicator(){
         addChild(childProgressView)
         view.addSubview(childProgressView.view)

@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
 
     let mainScreen = MainScreenView()
     var notesList = [Note]()
@@ -30,7 +30,6 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setTabNames()
         
         //MARK: handling if the Authentication state is changed (sign in, sign out, register)...
         handleAuth = Auth.auth().addStateDidChangeListener{ auth, user in
@@ -42,7 +41,7 @@ class ViewController: UIViewController {
                 self.mainScreen.floatingButtonAddContact.isHidden = true
                 
                 self.setupRightBarButton(isLoggedin: false)
-                self.disableTabs()
+//                self.disableTabs()
                 
                 //MARK: Reset tableView...
                self.notesList.removeAll()
@@ -55,7 +54,7 @@ class ViewController: UIViewController {
                 self.mainScreen.floatingButtonAddContact.isHidden = false
                 
                 self.setupRightBarButton(isLoggedin: true)
-                self.enableTabs()
+//                self.enableTabs()
             }
         }
     }

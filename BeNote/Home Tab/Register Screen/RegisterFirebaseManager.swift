@@ -74,7 +74,7 @@ extension RegisterViewController{
         db.collection("users").document(Auth.auth().currentUser!.uid).setData([
             "name": name,
             "email": email,
-            "friends": [String](),
+            "id": Auth.auth().currentUser!.uid,
                 ]) { error in
                     if let error = error {
                         print("Error saving user data: \(error)")
@@ -82,6 +82,7 @@ extension RegisterViewController{
                         print("User data saved successfully.")
                     }
                 }
+        db.collection("users").document(Auth.auth().currentUser!.uid).collection("Friends")
         db.collection("users").document(Auth.auth().currentUser!.uid).collection("Notes")
     }
 }
