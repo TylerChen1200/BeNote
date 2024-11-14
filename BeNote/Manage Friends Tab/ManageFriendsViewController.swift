@@ -26,6 +26,9 @@ class ManageFriendsViewController: UIViewController {
         
         title = "Friends"
         
+        //MARK: Make the titles look large...
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         //MARK: setting the delegate and data source...
         friendScreen.tableViewFriends.dataSource = self
         friendScreen.tableViewFriends.delegate = self

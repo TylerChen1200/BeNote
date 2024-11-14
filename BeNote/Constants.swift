@@ -10,4 +10,5 @@ import Foundation
 class FirebaseConstants {
     static let Users = "users"
     static let Friends = "friends"
+    static let Notes = "notes"
 }
