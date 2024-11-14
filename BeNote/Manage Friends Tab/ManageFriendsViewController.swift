@@ -101,7 +101,7 @@ class ManageFriendsViewController: UIViewController {
         
         db.collection(FirebaseConstants.Users).getDocuments { (querySnapshot, error) in
             if let error = error {
-                self.showErrorAlert("Error fetching user data")
+                self.showErrorAlert("Error fetching user data. Try again")
                 return
             }
             
@@ -133,7 +133,7 @@ class ManageFriendsViewController: UIViewController {
     func addFriendToCurrentUser(friend: User) {
         if let currentUserID = Auth.auth().currentUser?.uid {
             db.collection(FirebaseConstants.Users)
-                .document(Auth.auth().currentUser!.uid)
+                .document(currentUserID)
                 .collection(FirebaseConstants.Friends)
                 .document(friend._id).setData([
                     "name": friend.name,

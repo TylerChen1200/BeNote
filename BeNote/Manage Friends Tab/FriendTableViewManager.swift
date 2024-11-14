@@ -28,12 +28,24 @@ extension ManageFriendsViewController: UITableViewDelegate, UITableViewDataSourc
         buttonOptions.menu = UIMenu(title: "Manage Friend?",
                                     children: [
                                         UIAction(title: "Remove Friend",handler: {(_) in
-                                            self.deleteFriend(id: self.friendsArray[indexPath.row]._id)
+                                            self.confirmDelete(id: self.friendsArray[indexPath.row]._id)
                                         })
                                     ])
         //MARK: setting the button as an accessory of the cell...
         cell.accessoryView = buttonOptions
         
         return cell
+    }
+    
+    func confirmDelete(id: String) {
+        let deleteAlert = UIAlertController(title: "Removing friend", message: "Are you sure want to remove this friend?",
+            preferredStyle: .alert)
+        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(_) in
+                self.deleteFriend(id: id)
+            })
+        )
+        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(deleteAlert, animated: true)
     }
 }

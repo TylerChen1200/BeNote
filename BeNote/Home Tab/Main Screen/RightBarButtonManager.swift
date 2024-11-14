@@ -105,7 +105,7 @@ extension HomeViewController{
     
     @objc func onLogOutBarButtonTapped(){
         let logoutAlert = UIAlertController(title: "Logging out!", message: "Are you sure want to log out?",
-            preferredStyle: .actionSheet)
+            preferredStyle: .alert)
         logoutAlert.addAction(UIAlertAction(title: "Yes, log out!", style: .default, handler: {(_) in
                 do{
                     try Auth.auth().signOut()

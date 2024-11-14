@@ -78,7 +78,7 @@
 		002F99AC2CE50B0200602A86 /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99AB2CE50B0200602A86 /* TabBarManager.swift */; };
 		002F99AF2CE51A9700602A86 /* FriendScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99AE2CE51A9700602A86 /* FriendScreenView.swift */; };
 		002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */; };
-		002F99B32CE51D5F00602A86 /* FriendTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B22CE51D5F00602A86 /* FriendTableManager.swift */; };
+		002F99B32CE51D5F00602A86 /* FriendTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B22CE51D5F00602A86 /* FriendTableViewManager.swift */; };
 		002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B42CE53DFC00602A86 /* ViewController.swift */; };
 		002F99B72CE548EE00602A86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B62CE548EE00602A86 /* Constants.swift */; };
 /* End PBXBuildFile section */
@@ -112,7 +112,7 @@
 		002F99AB2CE50B0200602A86 /* TabBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarManager.swift; sourceTree = "<group>"; };
 		002F99AE2CE51A9700602A86 /* FriendScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendScreenView.swift; sourceTree = "<group>"; };
 		002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
-		002F99B22CE51D5F00602A86 /* FriendTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableManager.swift; sourceTree = "<group>"; };
+		002F99B22CE51D5F00602A86 /* FriendTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewManager.swift; sourceTree = "<group>"; };
 		002F99B42CE53DFC00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		002F99B62CE548EE00602A86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -267,7 +267,7 @@
 			children = (
 				002F99AD2CE519EB00602A86 /* Views */,
 				002F99A02CE4F9EE00602A86 /* ManageFriendsViewController.swift */,
-				002F99B22CE51D5F00602A86 /* FriendTableManager.swift */,
+				002F99B22CE51D5F00602A86 /* FriendTableViewManager.swift */,
 			);
 			path = "Manage Friends Tab";
 			sourceTree = "<group>";
@@ -443,7 +443,7 @@
 				002F99AF2CE51A9700602A86 /* FriendScreenView.swift in Sources */,
 				002F99562CE4EB5900602A86 /* RightBarButtonManager.swift in Sources */,
 				002F994D2CE4E45B00602A86 /* NotesTableViewCell.swift in Sources */,
-				002F99B32CE51D5F00602A86 /* FriendTableManager.swift in Sources */,
+				002F99B32CE51D5F00602A86 /* FriendTableViewManager.swift in Sources */,
 				002F996E2CE4F2E000602A86 /* ProgressSpinnerDelegate.swift in Sources */,
 				002F99AC2CE50B0200602A86 /* TabBarManager.swift in Sources */,
 				002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */,

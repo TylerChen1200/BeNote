@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension ViewController {
+extension HomeViewController {
     
     func disableTabs() {
         tabBarController?.tabBar.items?[1].isEnabled = false

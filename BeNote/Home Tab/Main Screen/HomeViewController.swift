@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
                 self.mainScreen.floatingButtonAddContact.isHidden = true
                 
                 self.setupRightBarButton(isLoggedin: false)
-//                self.disableTabs()
+                self.disableTabs()
                 
                 //MARK: Reset tableView...
                self.notesList.removeAll()
@@ -54,7 +54,7 @@ class HomeViewController: UIViewController {
                 self.mainScreen.floatingButtonAddContact.isHidden = false
                 
                 self.setupRightBarButton(isLoggedin: true)
-//                self.enableTabs()
+                self.enableTabs()
             }
         }
     }
