@@ -82,6 +82,7 @@
 		002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B42CE53DFC00602A86 /* ViewController.swift */; };
 		002F99B72CE548EE00602A86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B62CE548EE00602A86 /* Constants.swift */; };
 		002F99B92CE5ABD400602A86 /* ProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */; };
+		00C7E1692CEE38BA00A44A83 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C7E1682CEE38BA00A44A83 /* ProfileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,6 +118,7 @@
 		002F99B42CE53DFC00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		002F99B62CE548EE00602A86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenView.swift; sourceTree = "<group>"; };
+		00C7E1682CEE38BA00A44A83 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +298,7 @@
 			children = (
 				002F99A52CE5003600602A86 /* ProfileViewController.swift */,
 				002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */,
+				00C7E1682CEE38BA00A44A83 /* ProfileTableViewCell.swift */,
 			);
 			path = "Profile Tab";
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				002F99B72CE548EE00602A86 /* Constants.swift in Sources */,
 				002F990C2CE4E1EA00602A86 /* HomeViewController.swift in Sources */,
 				002F995D2CE4EF0F00602A86 /* RegisterFirebaseManager.swift in Sources */,
+				00C7E1692CEE38BA00A44A83 /* ProfileTableViewCell.swift in Sources */,
 				002F99A82CE5004500602A86 /* AddNoteViewController.swift in Sources */,
 				002F99B92CE5ABD400602A86 /* ProfileScreenView.swift in Sources */,
 				002F995B2CE4EECC00602A86 /* RegisterViewController.swift in Sources */,
