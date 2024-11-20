@@ -10,6 +10,8 @@ import FirebaseAuth
 import FirebaseCore
 
 extension AddNoteViewController {
+    // handles sending the written note to Firestore
+    // save it both in the notes folder and the user folder to easily populate home and history screens
     func sendNoteToFirebase() {
         self.showActivityIndicator()
          
@@ -39,7 +41,7 @@ extension AddNoteViewController {
                 .document(self.today)
                 .setData([
                     "prompt": freeWrite ? "Freewrite" : self.addNoteScreen.labelPrompt.text as Any,
-                    "creatorEmail": Auth.auth().currentUser?.email as Any,
+                    "creatorDisplayName": Auth.auth().currentUser?.email as Any,
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
                     "timestampCreated": Timestamp(date: Date()),
                         ]) { error in

@@ -9,6 +9,11 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+// Entrance for the add note tab
+// allows the user to
+// 1. view their note of the day
+// 2. edit their note (coming soon)
+// 3. add a new note if one doesn't already (mandatory - screen will show automatically)
 class ViewNoteViewController: UIViewController {
     
     let viewNoteScreen = ViewNoteScreenView()
@@ -16,7 +21,10 @@ class ViewNoteViewController: UIViewController {
     var latestNote: Note? = nil
     let childProgressView = ProgressSpinnerViewController()
     var prompt: String = FirebaseConstants.DefaultPrompt
+    let today: String = todaysDate()
 
+    // every time the view is to show, check if there is a note
+    // if not, show the AddNoteViewController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -33,16 +41,19 @@ class ViewNoteViewController: UIViewController {
         title = "Todays Note"
     }
     
+    // Highlights labels based on whether the note was done with the daily prompt or freewrite
     func updateLabelsWithNote() {
         if let uwNote = self.latestNote {
             viewNoteScreen.labelPromptReply.text = uwNote.creatorReply
             viewNoteScreen.labelPrompt.text = uwNote.prompt
             
             if (uwNote.prompt == FirebaseConstants.Freewrite) {
+                // Prompt was freewrite - highlight those elements
                 viewNoteScreen.labelPrompt.isHidden = true
                 viewNoteScreen.switchFreeWrite.isOn = true
                 viewNoteScreen.labelFreeWrite.textColor = .black
             } else {
+                // Prompt was daily prompt
                 viewNoteScreen.labelPrompt.isHidden = false
                 viewNoteScreen.switchFreeWrite.isOn = false
                 viewNoteScreen.labelFreeWrite.textColor = .lightGray

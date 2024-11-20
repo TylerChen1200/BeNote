@@ -8,6 +8,8 @@
 import UIKit
 import FirebaseFirestore
 
+// Controller to handle adding and editing a new note for the user
+// A new note will be added once each day, resetting at UTC 0 midnight
 class AddNoteViewController: UIViewController, UITextViewDelegate {
 
     let addNoteScreen = AddNoteScreenView()
@@ -40,6 +42,7 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
         navigationItem.setHidesBackButton(true, animated: true)
     }
     
+    // handles the UISwitch element being flipped
     @objc func onSwitchFlipped(_ sender: UISwitch) {
         // 1. bold the Freewrite label
         // 2. Change the controller variable to know what to send to firebase
@@ -57,7 +60,8 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
             self.freeWrite = false
         }
     }
-        
+    
+    // Handles the submit navbar button being tapped
     @objc func onSubmitButtonTapped() {
         if let uwNoteText = addNoteScreen.textFieldPrompt.text {
             if (uwNoteText.isEmpty) {

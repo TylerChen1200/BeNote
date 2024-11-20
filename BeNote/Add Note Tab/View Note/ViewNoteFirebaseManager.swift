@@ -10,9 +10,15 @@ import FirebaseAuth
 import FirebaseCore
 
 extension ViewNoteViewController {
+    
+    // Loads the most recent note from Firebase
+    // If there is no note from the current day
+    // 1. get the daily prompt
+    // 2. Push the addNoteViewController to the navigation controller
     func loadLatestNote() {
         self.showActivityIndicator()
         if let currentUserID = Auth.auth().currentUser?.uid {
+            // access the user's notes
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Notes)
@@ -46,7 +52,7 @@ extension ViewNoteViewController {
                         self.hideActivityIndicator()
                         
                         if (self.latestNote == nil) {
-                            // no latest note so display the edit view
+                            // no latest note so display the add/edit view
                             self.loadTodaysPrompt()
                         } else {
                             // update the current views labels with the note info
@@ -57,10 +63,12 @@ extension ViewNoteViewController {
         }
     }
     
+    // load the prompt from the day and pass it to the AddNoteViewController
     func loadTodaysPrompt() {
+        // Access the notes from the current day to check for a daily prompt
         db.collection(FirebaseConstants.Notes)
             .document(FirebaseConstants.Notes)
-            .collection(todaysDate())
+            .collection(self.today)
             .getDocuments { (querySnapshot, error) in
                 let currPrompt = querySnapshot?.documents
                     .first { $0.documentID == FirebaseConstants.DailyPrompt }
@@ -74,12 +82,15 @@ extension ViewNoteViewController {
                     addNoteViewController.addNoteScreen.labelPrompt.text = self.prompt
                     self.navigationController?.pushViewController(addNoteViewController, animated: false)
                 } else {
+                    // If there is no existing prompt, generate one
                     self.generateNewPrompt()
                 }
             }
     }
     
+    // Generate a random prompt for all BeNote users to reply to for the day
     func generateNewPrompt() {
+        // Access the notes documents to get the list of prompts
         db.collection(FirebaseConstants.Notes).getDocuments { (querySnapshot, error) in
             if let _ = error {
                 self.showErrorAlert("Error fetching user data. Try again")
@@ -91,14 +102,16 @@ extension ViewNoteViewController {
                 .first { $0.documentID == FirebaseConstants.Prompts }
             
             if let uwPromptData = promptData {
+                // get all the prompts and randomly select one
                 let data = uwPromptData.data()
                 let allPrompts = Prompts(prompts: data[FirebaseConstants.Prompts] as? [String] ?? [String]())
                 let randomIndex = Int.random(in: 0..<allPrompts.prompts.count)
                 self.prompt = allPrompts.prompts[randomIndex]
                 
+                // add that prompt to the notes collection, under the current day
                 self.db.collection(FirebaseConstants.Notes)
                     .document(FirebaseConstants.Notes)
-                    .collection(todaysDate())
+                    .collection(self.today)
                     .document(FirebaseConstants.DailyPrompt)
                     .setData([
                         FirebaseConstants.DailyPrompt: self.prompt
@@ -110,6 +123,7 @@ extension ViewNoteViewController {
                         }
                     }
                 
+                // push the AddNoteViewController with the updated prompt
                 let addNoteViewController = AddNoteViewController()
                 addNoteViewController.addNoteScreen.labelPrompt.text = self.prompt
                 self.navigationController?.pushViewController(addNoteViewController, animated: false)
