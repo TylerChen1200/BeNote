@@ -28,36 +28,34 @@ extension ViewNoteViewController {
                         return
                     }
                     
-                    DispatchQueue.main.async {
-                        // get the last note in the list of notes
-                        if let uwLastNote = querySnapshot?.documents.last {
-                            let data = uwLastNote.data()
-                            print(data)
-                            // first confirm that a date can be extracted from the note
-                            if let timestamp = data["timestampCreated"] as? Timestamp {
-                                // if the note was posted today, set the variable for the controller
-                                let uwDate = timestamp.dateValue()
-                                if (Calendar.current.isDateInToday(uwDate)) {
-                                    self.latestNote = Note(prompt: data["prompt"] as? String ?? "No Prompt",
-                                                           creatorDisplayName: data["creatorEmail"] as? String ?? "No Email",
-                                                           creatorReply: data["creatorReply"] as? String ?? "",
-                                                           timestampCreated: uwDate
-                                    )
-                                }
-                            } else {
-                                print(data)
-                                self.showErrorAlert("Error fetching latest note")
+                    // get the last note in the list of notes
+                    if let uwLastNote = querySnapshot?.documents.last {
+                        let data = uwLastNote.data()
+                        print(data)
+                        // first confirm that a date can be extracted from the note
+                        if let timestamp = data["timestampCreated"] as? Timestamp {
+                            // if the note Dwas posted today, set the variable for the controller
+                            let uwDate = timestamp.dateValue()
+                            if (Calendar.current.isDateInToday(uwDate)) {
+                                self.latestNote = Note(prompt: data["prompt"] as? String ?? "No Prompt",
+                                                       creatorDisplayName: data["creatorEmail"] as? String ?? "No Email",
+                                                       creatorReply: data["creatorReply"] as? String ?? "",
+                                                       timestampCreated: uwDate
+                                )
                             }
-                        }
-                        self.hideActivityIndicator()
-                        
-                        if (self.latestNote == nil) {
-                            // no latest note so display the add/edit view
-                            self.loadTodaysPrompt()
                         } else {
-                            // update the current views labels with the note info
-                            self.updateLabelsWithNote()
+                            print(data)
+                            self.showErrorAlert("Error fetching latest note")
                         }
+                    }
+                    self.hideActivityIndicator()
+                    
+                    if (self.latestNote == nil) {
+                        // no latest note so display the add/edit view
+                        self.loadTodaysPrompt()
+                    } else {
+                        // update the current views labels with the note info
+                        self.updateLabelsWithNote()
                     }
                 }
         }
@@ -78,9 +76,7 @@ extension ViewNoteViewController {
                     // load the existing prompt
                     let data = uwCurrPrompt.data()
                     self.prompt = data[FirebaseConstants.DailyPrompt] as! String
-                    let addNoteViewController = AddNoteViewController()
-                    addNoteViewController.addNoteScreen.labelPrompt.text = self.prompt
-                    self.navigationController?.pushViewController(addNoteViewController, animated: false)
+                    self.pushAddNoteScreen()
                 } else {
                     // If there is no existing prompt, generate one
                     self.generateNewPrompt()
@@ -124,10 +120,14 @@ extension ViewNoteViewController {
                     }
                 
                 // push the AddNoteViewController with the updated prompt
-                let addNoteViewController = AddNoteViewController()
-                addNoteViewController.addNoteScreen.labelPrompt.text = self.prompt
-                self.navigationController?.pushViewController(addNoteViewController, animated: false)
+                self.pushAddNoteScreen()
             }
         }
+    }
+    
+    func pushAddNoteScreen() {
+        let addNoteViewController = AddNoteViewController()
+        addNoteViewController.addNoteScreen.labelPrompt.text = self.prompt
+        self.navigationController?.pushViewController(addNoteViewController, animated: false)
     }
 }

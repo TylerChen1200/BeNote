@@ -51,9 +51,7 @@ extension AddNoteViewController {
                                 print("Note saved successfully.")
                             }
                         }
-        }
-        
-        DispatchQueue.main.async {
+            // go back to viewNote screen
             self.navigationController?.popViewController(animated: true)
             self.hideActivityIndicator()
         }
