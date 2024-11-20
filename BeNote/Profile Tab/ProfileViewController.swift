@@ -52,7 +52,7 @@ class ProfileViewController: UIViewController {
                         return
                     }
                     
-                    var numberOfNotes = querySnapshot?.documents.count ?? 0
+                    let numberOfNotes = querySnapshot?.documents.count ?? 0
                     
                     DispatchQueue.main.async {
                         self.profileScreen.labelNotesWritten.text = "\(numberOfNotes) notes written"

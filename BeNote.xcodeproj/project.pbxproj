@@ -82,6 +82,13 @@
 		002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B42CE53DFC00602A86 /* ViewController.swift */; };
 		002F99B72CE548EE00602A86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B62CE548EE00602A86 /* Constants.swift */; };
 		002F99B92CE5ABD400602A86 /* ProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */; };
+		008C6BA92CEA6B930064863D /* AddNoteScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BA82CEA6B930064863D /* AddNoteScreenView.swift */; };
+		008C6BB02CED0A550064863D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BAF2CED0A550064863D /* Date.swift */; };
+		008C6BB22CED0FBC0064863D /* ViewNoteScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BB12CED0FBC0064863D /* ViewNoteScreenView.swift */; };
+		008C6BB42CED0FCA0064863D /* ViewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BB32CED0FCA0064863D /* ViewNoteViewController.swift */; };
+		008C6BB82CED19FB0064863D /* AddNoteFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BB72CED19FB0064863D /* AddNoteFirebaseManager.swift */; };
+		008C6BBA2CED560D0064863D /* ViewNoteFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BB92CED560D0064863D /* ViewNoteFirebaseManager.swift */; };
+		008C6BBC2CED5A2A0064863D /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C6BBB2CED5A2A0064863D /* Prompts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,6 +124,13 @@
 		002F99B42CE53DFC00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		002F99B62CE548EE00602A86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenView.swift; sourceTree = "<group>"; };
+		008C6BA82CEA6B930064863D /* AddNoteScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteScreenView.swift; sourceTree = "<group>"; };
+		008C6BAF2CED0A550064863D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		008C6BB12CED0FBC0064863D /* ViewNoteScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteScreenView.swift; sourceTree = "<group>"; };
+		008C6BB32CED0FCA0064863D /* ViewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteViewController.swift; sourceTree = "<group>"; };
+		008C6BB72CED19FB0064863D /* AddNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteFirebaseManager.swift; sourceTree = "<group>"; };
+		008C6BB92CED560D0064863D /* ViewNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteFirebaseManager.swift; sourceTree = "<group>"; };
+		008C6BBB2CED5A2A0064863D /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,7 +208,7 @@
 		002F99062CE4E1EA00602A86 /* BeNote */ = {
 			isa = PBXGroup;
 			children = (
-				002F99622CE4F10800602A86 /* Progress Spinner */,
+				008C6BAE2CED0A290064863D /* Utils and Constants */,
 				002F99502CE4E4D300602A86 /* Data Models */,
 				002F99A42CE4FFFC00602A86 /* Profile Tab */,
 				002F99A32CE4FFF300602A86 /* Add Note Tab */,
@@ -207,9 +221,7 @@
 				002F99122CE4E1EC00602A86 /* LaunchScreen.storyboard */,
 				002F99152CE4E1EC00602A86 /* Info.plist */,
 				002F991C2CE4E29700602A86 /* GoogleService-Info.plist */,
-				002F994E2CE4E49500602A86 /* Configs.swift */,
 				002F99B42CE53DFC00602A86 /* ViewController.swift */,
-				002F99B62CE548EE00602A86 /* Constants.swift */,
 			);
 			path = BeNote;
 			sourceTree = "<group>";
@@ -240,6 +252,7 @@
 			children = (
 				002F99512CE4E4EA00602A86 /* Note.swift */,
 				002F99A92CE5005600602A86 /* User.swift */,
+				008C6BBB2CED5A2A0064863D /* Prompts.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -286,7 +299,8 @@
 		002F99A32CE4FFF300602A86 /* Add Note Tab */ = {
 			isa = PBXGroup;
 			children = (
-				002F99A72CE5004500602A86 /* AddNoteViewController.swift */,
+				008C6BB62CED0FE10064863D /* View Note */,
+				008C6BB52CED0FCE0064863D /* Add or Edit Note */,
 			);
 			path = "Add Note Tab";
 			sourceTree = "<group>";
@@ -307,6 +321,37 @@
 				002F99B02CE51B2300602A86 /* FriendTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		008C6BAE2CED0A290064863D /* Utils and Constants */ = {
+			isa = PBXGroup;
+			children = (
+				002F99622CE4F10800602A86 /* Progress Spinner */,
+				002F994E2CE4E49500602A86 /* Configs.swift */,
+				002F99B62CE548EE00602A86 /* Constants.swift */,
+				008C6BAF2CED0A550064863D /* Date.swift */,
+			);
+			path = "Utils and Constants";
+			sourceTree = "<group>";
+		};
+		008C6BB52CED0FCE0064863D /* Add or Edit Note */ = {
+			isa = PBXGroup;
+			children = (
+				002F99A72CE5004500602A86 /* AddNoteViewController.swift */,
+				008C6BA82CEA6B930064863D /* AddNoteScreenView.swift */,
+				008C6BB72CED19FB0064863D /* AddNoteFirebaseManager.swift */,
+			);
+			path = "Add or Edit Note";
+			sourceTree = "<group>";
+		};
+		008C6BB62CED0FE10064863D /* View Note */ = {
+			isa = PBXGroup;
+			children = (
+				008C6BB12CED0FBC0064863D /* ViewNoteScreenView.swift */,
+				008C6BB32CED0FCA0064863D /* ViewNoteViewController.swift */,
+				008C6BB92CED560D0064863D /* ViewNoteFirebaseManager.swift */,
+			);
+			path = "View Note";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,10 +481,14 @@
 				002F995D2CE4EF0F00602A86 /* RegisterFirebaseManager.swift in Sources */,
 				002F99A82CE5004500602A86 /* AddNoteViewController.swift in Sources */,
 				002F99B92CE5ABD400602A86 /* ProfileScreenView.swift in Sources */,
+				008C6BBA2CED560D0064863D /* ViewNoteFirebaseManager.swift in Sources */,
+				008C6BB02CED0A550064863D /* Date.swift in Sources */,
 				002F995B2CE4EECC00602A86 /* RegisterViewController.swift in Sources */,
+				008C6BA92CEA6B930064863D /* AddNoteScreenView.swift in Sources */,
 				002F99612CE4F0D600602A86 /* ProgressIndicatorManager.swift in Sources */,
 				002F99082CE4E1EA00602A86 /* AppDelegate.swift in Sources */,
 				002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */,
+				008C6BB22CED0FBC0064863D /* ViewNoteScreenView.swift in Sources */,
 				002F996C2CE4F2C700602A86 /* ProgressSpinnerViewController.swift in Sources */,
 				002F99522CE4E4EA00602A86 /* Note.swift in Sources */,
 				002F99A62CE5003600602A86 /* ProfileViewController.swift in Sources */,
@@ -452,7 +501,10 @@
 				002F99AC2CE50B0200602A86 /* TabBarManager.swift in Sources */,
 				002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */,
 				002F990A2CE4E1EA00602A86 /* SceneDelegate.swift in Sources */,
+				008C6BB82CED19FB0064863D /* AddNoteFirebaseManager.swift in Sources */,
 				002F99542CE4E5E600602A86 /* NotesTableViewManager.swift in Sources */,
+				008C6BB42CED0FCA0064863D /* ViewNoteViewController.swift in Sources */,
+				008C6BBC2CED5A2A0064863D /* Prompts.swift in Sources */,
 				002F99A12CE4F9EE00602A86 /* ManageFriendsViewController.swift in Sources */,
 				002F994B2CE4E3F000602A86 /* MainScreenView.swift in Sources */,
 				002F994F2CE4E49500602A86 /* Configs.swift in Sources */,
