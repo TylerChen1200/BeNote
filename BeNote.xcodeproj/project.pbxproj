@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -119,6 +119,10 @@
 		FD50AE2D2CEFDD1B00F0F137 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FD07AA682CF0317700C6DF88 /* Login */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Login; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		002F99012CE4E1EA00602A86 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -194,6 +198,7 @@
 		002F99062CE4E1EA00602A86 /* BeNote */ = {
 			isa = PBXGroup;
 			children = (
+				FD07AA682CF0317700C6DF88 /* Login */,
 				002F99622CE4F10800602A86 /* Progress Spinner */,
 				002F99502CE4E4D300602A86 /* Data Models */,
 				002F99A42CE4FFFC00602A86 /* Profile Tab */,
@@ -324,6 +329,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				FD07AA682CF0317700C6DF88 /* Login */,
+			);
 			name = BeNote;
 			packageProductDependencies = (
 				002F991F2CE4E35C00602A86 /* FirebaseAnalytics */,
@@ -388,6 +396,7 @@
 				TargetAttributes = {
 					002F99032CE4E1EA00602A86 = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -606,6 +615,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -624,6 +634,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuios.BeNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -634,6 +645,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

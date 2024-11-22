@@ -53,9 +53,13 @@ class RegisterScreenView: UIView {
     }
     
     func setupbuttonRegister(){
+        
         buttonRegister = UIButton(type: .system)
         buttonRegister.setTitle("Register", for: .normal)
+        buttonRegister.setTitleColor(.white, for: .normal)
+        buttonRegister.backgroundColor = .tintColor
         buttonRegister.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        buttonRegister.layer.cornerRadius = 10
         buttonRegister.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonRegister)
     }
@@ -65,17 +69,25 @@ class RegisterScreenView: UIView {
             textFieldName.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
             textFieldName.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             textFieldName.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9),
+            textFieldName.heightAnchor.constraint(equalToConstant: 44),
             
             textFieldEmail.topAnchor.constraint(equalTo: textFieldName.bottomAnchor, constant: 16),
             textFieldEmail.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             textFieldEmail.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9),
+            textFieldEmail.heightAnchor.constraint(equalToConstant: 44),
             
             textFieldPassword.topAnchor.constraint(equalTo: textFieldEmail.bottomAnchor, constant: 16),
             textFieldPassword.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             textFieldPassword.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9),
+            textFieldPassword.heightAnchor.constraint(equalToConstant: 44),
+
             
             buttonRegister.topAnchor.constraint(equalTo: textFieldPassword.bottomAnchor, constant: 32),
             buttonRegister.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            buttonRegister.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            buttonRegister.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            buttonRegister.heightAnchor.constraint(equalToConstant: 44),
+
         ])
     }
     
