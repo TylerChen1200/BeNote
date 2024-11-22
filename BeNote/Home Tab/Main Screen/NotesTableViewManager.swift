@@ -15,7 +15,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.notesViewContactsID, for: indexPath) as! NotesTableViewCell
         cell.labelPrompt.text = notesList[indexPath.row].prompt
-        cell.labelCreatorEmail.text = notesList[indexPath.row].creatorDisplayName
+        cell.labelCreatorDisplayName.text = notesList[indexPath.row].creatorDisplayName
         cell.labelTimestampCreated.text = "\(notesList[indexPath.row].timestampCreated)"
         return cell
     }
