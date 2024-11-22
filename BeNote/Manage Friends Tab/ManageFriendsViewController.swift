@@ -103,7 +103,7 @@ class ManageFriendsViewController: UIViewController {
         let currentUserID = Auth.auth().currentUser?.uid
         
         db.collection(FirebaseConstants.Users).getDocuments { (querySnapshot, error) in
-            if let error = error {
+            if let _ = error {
                 self.showErrorAlert("Error fetching user data. Try again")
                 return
             }

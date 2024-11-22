@@ -9,7 +9,7 @@ import Foundation
 
 struct Note: Codable {
     var prompt: String
-    var creatorEmail: String
+    var creatorDisplayName: String
     var creatorReply: String
     var timestampCreated: Date
 }
