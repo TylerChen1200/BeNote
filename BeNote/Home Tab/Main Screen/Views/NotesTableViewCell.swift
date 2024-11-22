@@ -11,7 +11,7 @@ class NotesTableViewCell: UITableViewCell {
     
     var wrapperCellView: UIView!
     var labelPrompt: UILabel!
-    var labelCreatorEmail: UILabel!
+    var labelCreatorDisplayName: UILabel!
     var labelTimestampCreated: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
@@ -19,7 +19,7 @@ class NotesTableViewCell: UITableViewCell {
         
         setupWrapperCellView()
         setupLabelPrompt()
-        setupLabelCreatorEmail()
+        setupLabelCreatorDisplayName()
         setupLabelTimestampCreated()
         
         initConstraints()
@@ -50,11 +50,11 @@ class NotesTableViewCell: UITableViewCell {
         wrapperCellView.addSubview(labelPrompt)
     }
     
-    func setupLabelCreatorEmail(){
-        labelCreatorEmail = UILabel()
-        labelCreatorEmail.font = UIFont.boldSystemFont(ofSize: 14)
-        labelCreatorEmail.translatesAutoresizingMaskIntoConstraints = false
-        wrapperCellView.addSubview(labelCreatorEmail)
+    func setupLabelCreatorDisplayName(){
+        labelCreatorDisplayName = UILabel()
+        labelCreatorDisplayName.font = UIFont.boldSystemFont(ofSize: 14)
+        labelCreatorDisplayName.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelCreatorDisplayName)
     }
     
     func setupLabelTimestampCreated(){
@@ -76,13 +76,13 @@ class NotesTableViewCell: UITableViewCell {
             labelPrompt.heightAnchor.constraint(equalToConstant: 20),
             labelPrompt.widthAnchor.constraint(lessThanOrEqualTo: wrapperCellView.widthAnchor),
             
-            labelCreatorEmail.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 2),
-            labelCreatorEmail.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelCreatorEmail.heightAnchor.constraint(equalToConstant: 16),
-            labelCreatorEmail.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
+            labelCreatorDisplayName.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 2),
+            labelCreatorDisplayName.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelCreatorDisplayName.heightAnchor.constraint(equalToConstant: 16),
+            labelCreatorDisplayName.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
-            labelTimestampCreated.topAnchor.constraint(equalTo: labelCreatorEmail.bottomAnchor, constant: 2),
-            labelTimestampCreated.leadingAnchor.constraint(equalTo: labelCreatorEmail.leadingAnchor),
+            labelTimestampCreated.topAnchor.constraint(equalTo: labelCreatorDisplayName.bottomAnchor, constant: 2),
+            labelTimestampCreated.leadingAnchor.constraint(equalTo: labelCreatorDisplayName.leadingAnchor),
             labelTimestampCreated.heightAnchor.constraint(equalToConstant: 16),
             labelTimestampCreated.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
