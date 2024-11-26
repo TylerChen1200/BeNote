@@ -11,6 +11,7 @@ class NotesTableViewCell: UITableViewCell {
     
     var wrapperCellView: UIView!
     var labelPrompt: UILabel!
+    var labelReply: UILabel!
     var labelCreatorDisplayName: UILabel!
     var labelTimestampCreated: UILabel!
     
@@ -19,6 +20,7 @@ class NotesTableViewCell: UITableViewCell {
         
         setupWrapperCellView()
         setupLabelPrompt()
+        setupLabelReply()
         setupLabelCreatorDisplayName()
         setupLabelTimestampCreated()
         
@@ -48,6 +50,13 @@ class NotesTableViewCell: UITableViewCell {
         labelPrompt.font = UIFont.boldSystemFont(ofSize: 20)
         labelPrompt.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelPrompt)
+    }
+    
+    func setupLabelReply() {
+        labelReply = UILabel()
+        labelReply.font = UIFont.systemFont(ofSize: 16)
+        labelReply.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelReply)
     }
     
     func setupLabelCreatorDisplayName(){
@@ -81,7 +90,12 @@ class NotesTableViewCell: UITableViewCell {
             labelCreatorDisplayName.heightAnchor.constraint(equalToConstant: 16),
             labelCreatorDisplayName.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
-            labelTimestampCreated.topAnchor.constraint(equalTo: labelCreatorDisplayName.bottomAnchor, constant: 2),
+            labelReply.topAnchor.constraint(equalTo: labelCreatorDisplayName.bottomAnchor, constant: 8),
+            labelReply.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelReply.heightAnchor.constraint(equalToConstant: 16),
+            labelReply.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
+            
+            labelTimestampCreated.topAnchor.constraint(equalTo: labelReply.bottomAnchor, constant: 2),
             labelTimestampCreated.leadingAnchor.constraint(equalTo: labelCreatorDisplayName.leadingAnchor),
             labelTimestampCreated.heightAnchor.constraint(equalToConstant: 16),
             labelTimestampCreated.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
