@@ -10,4 +10,5 @@ import Foundation
 class Configs{
     static let notesViewContactsID = "notesViewContactsID"
     static let tableViewFriendsID = "friendsViewContactsID"
+    static let tableViewProfileID = "tableViewProfileID"
 }
