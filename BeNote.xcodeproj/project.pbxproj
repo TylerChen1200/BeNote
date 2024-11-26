@@ -89,6 +89,7 @@
 		004FE5402CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE53F2CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift */; };
 		004FE5422CF136CF006C0EC8 /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5412CF136CF006C0EC8 /* Prompts.swift */; };
 		004FE5442CF1371F006C0EC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5432CF1371F006C0EC8 /* Date.swift */; };
+		00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +132,7 @@
 		004FE53F2CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteFirebaseManager.swift; sourceTree = "<group>"; };
 		004FE5412CF136CF006C0EC8 /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
 		004FE5432CF1371F006C0EC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 			children = (
 				002F99A52CE5003600602A86 /* ProfileViewController.swift */,
 				002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */,
+				00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */,
 			);
 			path = "Profile Tab";
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				002F99082CE4E1EA00602A86 /* AppDelegate.swift in Sources */,
 				002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */,
 				002F996C2CE4F2C700602A86 /* ProgressSpinnerViewController.swift in Sources */,
+				00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */,
 				002F99522CE4E4EA00602A86 /* Note.swift in Sources */,
 				004FE53C2CF13633006C0EC8 /* ViewNoteScreenView.swift in Sources */,
 				004FE5402CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift in Sources */,
