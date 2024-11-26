@@ -23,7 +23,7 @@ class ViewController: UITabBarController, UITabBarControllerDelegate {
         tabHome.title = "BeNote"
         
         //MARK: setting up add note tab bar...
-        let tabAddNote = UINavigationController(rootViewController: AddNoteViewController())
+        let tabAddNote = UINavigationController(rootViewController: ViewNoteViewController())
         let tabAddNoteBarItem = UITabBarItem(
             title: "Add Note",
             image: UIImage(systemName: "plus.app")?.withRenderingMode(.alwaysOriginal),
