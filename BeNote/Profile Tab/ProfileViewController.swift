@@ -13,6 +13,7 @@ class ProfileViewController: UIViewController {
     
     let profileScreen = ProfileScreenView()
     let db = Firestore.firestore()
+    var notesHistory = [Note]()
     
     override func loadView() {
         view = profileScreen
@@ -25,7 +26,10 @@ class ProfileViewController: UIViewController {
         
         //MARK: Make the titles look large...
         navigationController?.navigationBar.prefersLargeTitles = true
-
+        
+        //MARK: patching table view delegate and data source...
+        profileScreen.tableViewNotesHistory.delegate = self
+        profileScreen.tableViewNotesHistory.dataSource = self
 
         self.fetchProfileData()
         self.fetchNotesData()
@@ -52,11 +56,27 @@ class ProfileViewController: UIViewController {
                         return
                     }
                     
-                    var numberOfNotes = querySnapshot?.documents.count ?? 0
+                    // get number of notes written
+                    let numberOfNotes = querySnapshot?.documents.count ?? 0
+                    self.profileScreen.labelNotesWritten.text = "\(numberOfNotes) notes written"
                     
-                    DispatchQueue.main.async {
-                        self.profileScreen.labelNotesWritten.text = "\(numberOfNotes) notes written"
-                    }
+                    // get the history of the notes
+                    self.notesHistory = querySnapshot?.documents
+                        .map {document in
+                            let data = document.data()
+                            let timestamp = data["timestampCreated"] as? Timestamp
+                            let uwDate = timestamp?.dateValue() ?? Date()
+                            
+                            return Note(prompt: data["prompt"] as? String ?? "",
+                                        creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Email",
+                                        creatorReply: data["creatorReply"] as? String ?? "",
+                                        timestampCreated: uwDate)
+                        }
+                        .reversed()
+                    ?? [Note]()
+                    
+                    print(self.notesHistory)
+                    self.profileScreen.tableViewNotesHistory.reloadData()
                 }
         }
     }
@@ -69,4 +89,18 @@ class ProfileViewController: UIViewController {
         self.present(errorAlert, animated: true)
     }
 
+}
+
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.notesHistory.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewProfileID, for: indexPath) as! ProfileTableViewCell
+        cell.labelPrompt.text = notesHistory[indexPath.row].prompt
+        cell.labelReply.text = notesHistory[indexPath.row].creatorReply
+        cell.labelTimestampCreated.text = "\(notesHistory[indexPath.row].timestampCreated)"
+        return cell
+    }
 }

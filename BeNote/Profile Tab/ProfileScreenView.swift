@@ -12,6 +12,7 @@ class ProfileScreenView: UIView {
     var labelName:UILabel!
     var labelEmail:UILabel!
     var labelNotesWritten:UILabel!
+    var tableViewNotesHistory: UITableView!
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -20,6 +21,7 @@ class ProfileScreenView: UIView {
         setupLabelName()
         setupLabelEmail()
         setupLabelNotesWritten()
+        setupTableViewNotesHistory()
         
         initConstraints()
     }
@@ -45,6 +47,13 @@ class ProfileScreenView: UIView {
         self.addSubview(labelNotesWritten)
     }
     
+    func setupTableViewNotesHistory() {
+         tableViewNotesHistory = UITableView()
+         tableViewNotesHistory.register(ProfileTableViewCell.self, forCellReuseIdentifier: Configs.tableViewProfileID)
+         tableViewNotesHistory.translatesAutoresizingMaskIntoConstraints = false
+         self.addSubview(tableViewNotesHistory)
+     }
+    
     func initConstraints() {
         NSLayoutConstraint.activate([
             labelName.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
@@ -55,6 +64,11 @@ class ProfileScreenView: UIView {
             
             labelNotesWritten.topAnchor.constraint(equalTo: labelEmail.bottomAnchor, constant: 32),
             labelNotesWritten.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            
+            tableViewNotesHistory.topAnchor.constraint(equalTo: labelNotesWritten.bottomAnchor, constant: 8),
+            tableViewNotesHistory.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            tableViewNotesHistory.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            tableViewNotesHistory.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
     }
     
