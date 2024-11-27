@@ -61,8 +61,13 @@ extension RegisterViewController{
                 //MARK: the profile update is successful...
                 self.hideActivityIndicator()
                 
+                // Pop the current view controller
                 self.navigationController?.popViewController(animated: true)
-            }else{
+                    
+                // Dismiss the root view controller (if this VC was presented modally)
+                self.navigationController?.dismiss(animated: true)
+                    
+            } else {
                 //MARK: there was an error updating the profile...
                 print("Error occured: \(String(describing: error))")
             }
