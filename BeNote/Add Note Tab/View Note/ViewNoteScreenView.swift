@@ -15,7 +15,7 @@ class ViewNoteScreenView: UIView {
     var labelPrompt: UILabel!
     var labelFreeWrite: UILabel!
     var switchFreeWrite: UISwitch!
-    var labelPromptReply: UILabel!
+    var labelPromptReply: UITextView!
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -84,15 +84,15 @@ class ViewNoteScreenView: UIView {
     }
     
     func setupTextFieldPrompt() {
-        labelPromptReply = UILabel()
+        labelPromptReply = UITextView()
         labelPromptReply.text = "I think..."
         labelPromptReply.font = UIFont.systemFont(ofSize: 20)
         labelPromptReply.layer.cornerRadius = 6
-        labelPromptReply.layer.borderWidth = 1.0;
+        labelPromptReply.layer.borderWidth = 1.0
         labelPromptReply.translatesAutoresizingMaskIntoConstraints = false
         labelPromptReply.backgroundColor = .secondarySystemBackground
-        labelPromptReply.lineBreakMode = .byWordWrapping
-        labelPromptReply.numberOfLines = 0
+        labelPromptReply.isEditable = false
+        labelPromptReply.isScrollEnabled = false 
         contentWrapper.addSubview(labelPromptReply)
     }
     
@@ -123,14 +123,27 @@ class ViewNoteScreenView: UIView {
             switchFreeWrite.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             switchFreeWrite.leadingAnchor.constraint(equalTo: labelFreeWrite.trailingAnchor, constant: 16),
             
+//            labelPromptReply.topAnchor.constraint(equalTo: switchFreeWrite.bottomAnchor, constant: 16),
+//            labelPromptReply.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
+//            labelPromptReply.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
+//            labelPromptReply.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
             labelPromptReply.topAnchor.constraint(equalTo: switchFreeWrite.bottomAnchor, constant: 16),
-            labelPromptReply.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
             labelPromptReply.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
             labelPromptReply.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
+            labelPromptReply.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ViewNoteScreenView: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let contentHeight = textView.contentSize.height
+        // Adjust the height based on the content size
+        labelPromptReply.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
+        layoutIfNeeded()
     }
 }
