@@ -35,12 +35,19 @@ class HomeViewController: UIViewController {
         handleAuth = Auth.auth().addStateDidChangeListener{ auth, user in
             if user == nil{
                 //MARK: not signed in...
+                
+                let loginVC = LoginViewController(homeViewController: self)
+                loginVC.delegate = self
+                let navigationController = UINavigationController(rootViewController: loginVC)
+                navigationController.modalPresentationStyle = .fullScreen
+                navigationController.isModalInPresentation = true
+                self.present(navigationController, animated: false)
+
                 self.currentUser = nil
                 self.mainScreen.labelText.text = "Please sign in to send your note of the day!"
                 self.mainScreen.floatingButtonAddContact.isEnabled = false
                 self.mainScreen.floatingButtonAddContact.isHidden = true
                 
-                self.setupRightBarButton(isLoggedin: false)
                 self.disableTabs()
                 
                 //MARK: Reset tableView...
@@ -48,12 +55,12 @@ class HomeViewController: UIViewController {
                self.mainScreen.tableViewNotes.reloadData()
             } else {
                 //MARK: the user is signed in...
+                self.setupRightBarButton(isLoggedin: true)
                 self.currentUser = user
                 self.mainScreen.labelText.text = "Welcome \(user?.displayName ?? "Anonymous")!"
                 self.mainScreen.floatingButtonAddContact.isEnabled = true
                 self.mainScreen.floatingButtonAddContact.isHidden = false
                 
-                self.setupRightBarButton(isLoggedin: true)
                 self.enableTabs()
             }
         }

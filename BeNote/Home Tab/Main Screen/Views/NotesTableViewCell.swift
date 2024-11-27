@@ -102,4 +102,3 @@ class NotesTableViewCell: UITableViewCell {
     }
 
 }
-
