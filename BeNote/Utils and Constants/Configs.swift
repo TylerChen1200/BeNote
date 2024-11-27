@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import Foundation
+import UIKit
+
 class Configs{
     static let notesViewContactsID = "notesViewContactsID"
     static let tableViewFriendsID = "friendsViewContactsID"

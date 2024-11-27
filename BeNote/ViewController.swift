@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UITabBarController, UITabBarControllerDelegate {
+    // Singleton instance to manage global app state
+    static let shared = ViewController()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -58,6 +60,16 @@ class ViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    // Method to refresh all view controllers in the tab bar
+    func refreshAllTabs() {
+        // Iterate through all view controllers
+        viewControllers?.forEach { viewController in
+            // Check if the view controller conforms to a custom refresh protocol
+            if let refreshableVC = viewController as? RefreshableViewController {
+                refreshableVC.refreshContent()
+            }
+        }
     }
 }

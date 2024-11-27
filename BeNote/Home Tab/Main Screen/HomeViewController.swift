@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, RefreshableViewController {
 
     let mainScreen = MainScreenView()
     var notesList = [Note]()
@@ -61,7 +61,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "BeNote"
         
         //MARK: Make the titles look large...
@@ -74,6 +73,11 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handleAuth!)
+    }
+    
+    // refreshes the content of this screen
+    func refreshContent() {
+        //TODO: Refresh getting the list for the home screen
     }
 }
 

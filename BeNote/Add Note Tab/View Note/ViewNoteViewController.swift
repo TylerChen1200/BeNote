@@ -14,7 +14,7 @@ import FirebaseFirestore
 // 1. view their note of the day
 // 2. edit their note (coming soon)
 // 3. add a new note if one doesn't already (mandatory - screen will show automatically)
-class ViewNoteViewController: UIViewController {
+class ViewNoteViewController: UIViewController, RefreshableViewController {
     
     let viewNoteScreen = ViewNoteScreenView()
     let db = Firestore.firestore()
@@ -37,7 +37,6 @@ class ViewNoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         title = "Todays Note"
     }
     
@@ -59,6 +58,12 @@ class ViewNoteViewController: UIViewController {
                 viewNoteScreen.labelFreeWrite.textColor = .lightGray
             }
         }
+    }
+    
+    // refreshes the content of this screen
+    func refreshContent() {
+        // Recalls this function to reload the screen since it'll show the right screen
+        loadLatestNote()
     }
     
     func showErrorAlert(_ message: String) {

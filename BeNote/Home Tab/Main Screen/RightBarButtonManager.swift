@@ -125,6 +125,8 @@ extension HomeViewController{
         Auth.auth().signIn(withEmail: email, password: password, completion: {(result, error) in
             if error == nil{
                 //MARK: user authenticated...
+                // Refresh the tab bar
+                ViewController.shared.refreshAllTabs()
             }else{
                 //MARK: alert that no user found or password wrong...
                 var message: String = "Error occurred while signing in. Please try again."

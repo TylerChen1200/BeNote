@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 
-class ManageFriendsViewController: UIViewController {
+class ManageFriendsViewController: UIViewController, RefreshableViewController {
     
     let friendScreen = FriendScreenView()
     let db = Firestore.firestore()
@@ -107,7 +107,6 @@ class ManageFriendsViewController: UIViewController {
                 self.showErrorAlert("Error fetching user data. Try again")
                 return
             }
-            
             // find user with the given email
             newFriend = querySnapshot?.documents
                 .filter { $0.documentID != currentUserID }
@@ -166,6 +165,12 @@ class ManageFriendsViewController: UIViewController {
     
     func clearAddViewFields(){
         friendScreen.textFieldAddFriend.text = ""
+    }
+    
+    // refreshes the content of this screen
+    func refreshContent() {
+        // Regets all the friends in the list
+        self.getAllFriends()
     }
     
     func showErrorAlert(_ message: String) {

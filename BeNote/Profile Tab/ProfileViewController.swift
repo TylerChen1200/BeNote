@@ -81,6 +81,12 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    // refreshes the profile content of this screen
+    func refreshContent() {
+        self.fetchProfileData()
+        self.fetchNotesData()
+    }
+    
     func showErrorAlert(_ message: String) {
         let errorAlert = UIAlertController(title: "Error!",
                                            message: message,

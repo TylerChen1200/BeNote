@@ -81,7 +81,6 @@
 		002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B42CE53DFC00602A86 /* ViewController.swift */; };
 		002F99B72CE548EE00602A86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B62CE548EE00602A86 /* Constants.swift */; };
 		002F99B92CE5ABD400602A86 /* ProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */; };
-		004FE5332CF0F96B006C0EC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 004FE5322CF0F96B006C0EC8 /* GoogleService-Info.plist */; };
 		004FE5382CF1361F006C0EC8 /* AddNoteFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5372CF1361F006C0EC8 /* AddNoteFirebaseManager.swift */; };
 		004FE53A2CF1362A006C0EC8 /* AddNoteScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5392CF1362A006C0EC8 /* AddNoteScreenView.swift */; };
 		004FE53C2CF13633006C0EC8 /* ViewNoteScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE53B2CF13633006C0EC8 /* ViewNoteScreenView.swift */; };
@@ -90,6 +89,8 @@
 		004FE5422CF136CF006C0EC8 /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5412CF136CF006C0EC8 /* Prompts.swift */; };
 		004FE5442CF1371F006C0EC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5432CF1371F006C0EC8 /* Date.swift */; };
 		00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */; };
+		957A58EB2CF6C46A005849FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 957A58EA2CF6C46A005849FC /* GoogleService-Info.plist */; };
+		95A3181F2CF6D3A1006046C8 /* RefreshableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A3181E2CF6D3A1006046C8 /* RefreshableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,7 +125,6 @@
 		002F99B42CE53DFC00602A86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		002F99B62CE548EE00602A86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		002F99B82CE5ABD400602A86 /* ProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenView.swift; sourceTree = "<group>"; };
-		004FE5322CF0F96B006C0EC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		004FE5372CF1361F006C0EC8 /* AddNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteFirebaseManager.swift; sourceTree = "<group>"; };
 		004FE5392CF1362A006C0EC8 /* AddNoteScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteScreenView.swift; sourceTree = "<group>"; };
 		004FE53B2CF13633006C0EC8 /* ViewNoteScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteScreenView.swift; sourceTree = "<group>"; };
@@ -133,6 +133,8 @@
 		004FE5412CF136CF006C0EC8 /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
 		004FE5432CF1371F006C0EC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		957A58EA2CF6C46A005849FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		95A3181E2CF6D3A1006046C8 /* RefreshableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,9 +223,10 @@
 				002F990D2CE4E1EA00602A86 /* Main.storyboard */,
 				002F99102CE4E1EC00602A86 /* Assets.xcassets */,
 				002F99122CE4E1EC00602A86 /* LaunchScreen.storyboard */,
+				957A58EA2CF6C46A005849FC /* GoogleService-Info.plist */,
 				002F99152CE4E1EC00602A86 /* Info.plist */,
-				004FE5322CF0F96B006C0EC8 /* GoogleService-Info.plist */,
 				002F99B42CE53DFC00602A86 /* ViewController.swift */,
+				95A3181E2CF6D3A1006046C8 /* RefreshableViewController.swift */,
 			);
 			path = BeNote;
 			sourceTree = "<group>";
@@ -466,8 +469,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				002F99142CE4E1EC00602A86 /* LaunchScreen.storyboard in Resources */,
+				957A58EB2CF6C46A005849FC /* GoogleService-Info.plist in Resources */,
 				002F99112CE4E1EC00602A86 /* Assets.xcassets in Resources */,
-				004FE5332CF0F96B006C0EC8 /* GoogleService-Info.plist in Resources */,
 				002F990F2CE4E1EA00602A86 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,6 +494,7 @@
 				002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */,
 				002F996C2CE4F2C700602A86 /* ProgressSpinnerViewController.swift in Sources */,
 				00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */,
+				95A3181F2CF6D3A1006046C8 /* RefreshableViewController.swift in Sources */,
 				002F99522CE4E4EA00602A86 /* Note.swift in Sources */,
 				004FE53C2CF13633006C0EC8 /* ViewNoteScreenView.swift in Sources */,
 				004FE5402CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift in Sources */,
