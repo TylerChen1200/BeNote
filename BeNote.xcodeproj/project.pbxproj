@@ -91,6 +91,7 @@
 		FDBDBC162CF6A28D00CC64FD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC0D2CF6A28D00CC64FD /* LoginView.swift */; };
 		FDBDBC172CF6A28D00CC64FD /* ProgressSpinnerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC112CF6A28D00CC64FD /* ProgressSpinnerDelegate.swift */; };
 		FDBDBC182CF6A28D00CC64FD /* ProgressSpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC122CF6A28D00CC64FD /* ProgressSpinnerViewController.swift */; };
+		FDBDBC1E2CF6D4DB00CC64FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDBDBC1D2CF6D4DB00CC64FD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,6 +136,7 @@
 		FDBDBC102CF6A28D00CC64FD /* ProgressIndicatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorManager.swift; sourceTree = "<group>"; };
 		FDBDBC112CF6A28D00CC64FD /* ProgressSpinnerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSpinnerDelegate.swift; sourceTree = "<group>"; };
 		FDBDBC122CF6A28D00CC64FD /* ProgressSpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSpinnerViewController.swift; sourceTree = "<group>"; };
+		FDBDBC1D2CF6D4DB00CC64FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 				002F99102CE4E1EC00602A86 /* Assets.xcassets */,
 				002F99122CE4E1EC00602A86 /* LaunchScreen.storyboard */,
 				002F99152CE4E1EC00602A86 /* Info.plist */,
+				FDBDBC1D2CF6D4DB00CC64FD /* GoogleService-Info.plist */,
 				002F99B42CE53DFC00602A86 /* ViewController.swift */,
 			);
 			path = BeNote;
@@ -479,6 +482,7 @@
 				002F99142CE4E1EC00602A86 /* LaunchScreen.storyboard in Resources */,
 				002F99112CE4E1EC00602A86 /* Assets.xcassets in Resources */,
 				002F990F2CE4E1EA00602A86 /* Main.storyboard in Resources */,
+				FDBDBC1E2CF6D4DB00CC64FD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
