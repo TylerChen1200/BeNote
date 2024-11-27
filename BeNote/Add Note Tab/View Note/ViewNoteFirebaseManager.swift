@@ -57,6 +57,8 @@ extension ViewNoteViewController {
                         // update the current views labels with the note info
                         self.updateLabelsWithNote()
                     }
+                    // Refresh the tab bar
+                    ViewController.shared.refreshAllTabs()
                 }
         }
     }

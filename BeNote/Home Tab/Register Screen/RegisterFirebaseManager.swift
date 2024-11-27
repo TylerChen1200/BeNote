@@ -26,6 +26,7 @@ extension RegisterViewController{
                     //MARK: the user creation is successful...
                     self.setNameOfTheUserInFirebaseAuth(name: name)
                     self.addToUserDB(name: name, email: email)
+                    ViewController.shared.refreshAllTabs()
                 }else{
                     //MARK: there is a error creating the user...
                     var message: String = "Error occurred while signing in. Please try again."

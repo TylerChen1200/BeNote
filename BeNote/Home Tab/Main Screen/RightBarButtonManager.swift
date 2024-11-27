@@ -126,6 +126,7 @@ extension HomeViewController{
             if error == nil{
                 //MARK: user authenticated...
                 // Refresh the tab bar
+                self.currentUser = result?.user
                 ViewController.shared.refreshAllTabs()
             }else{
                 //MARK: alert that no user found or password wrong...
