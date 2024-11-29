@@ -25,7 +25,6 @@ extension HomeViewController{
                 action: #selector(onLogOutBarButtonTapped)
             )
             
-
             self.navigationItem.rightBarButtonItems = [barIcon, barText]
         }
     }

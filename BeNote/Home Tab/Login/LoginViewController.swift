@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     let loginView = LoginView()
     var delegate: HomeViewController?
     let childProgressView = ProgressSpinnerViewController()
+    let notificationCenter = NotificationCenter.default
     
     init(homeViewController: HomeViewController) {
         self.delegate = homeViewController
@@ -68,6 +69,13 @@ class LoginViewController: UIViewController {
                 //MARK: user authenticated...
                 self.delegate?.setupRightBarButton(isLoggedin: true)
                 self.dismiss(animated: true)
+                // TODO: set the current user object to UserStandard
+//                self.currentUser = result?.user
+                // Refresh the tab views
+                self.notificationCenter.post(
+                    name: Configs.notificationRefresh,
+                    object: nil
+                )
             }else{
                 //MARK: alert that no user found or password wrong...
                 var message: String = "Error occurred while signing in. Please try again."
