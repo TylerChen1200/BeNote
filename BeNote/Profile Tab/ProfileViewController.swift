@@ -69,7 +69,7 @@ class ProfileViewController: UIViewController {
                             
                             return Note(prompt: data["prompt"] as? String ?? "",
                                         creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Email",
-                                        creatorReply: data["creatorReply"] as? String ?? "",
+                                        creatorReply: data["creatorReply"] as? String ?? "", location: data["location"] as? String ?? "",
                                         timestampCreated: uwDate)
                         }
                         .reversed()
@@ -101,6 +101,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         cell.labelPrompt.text = notesHistory[indexPath.row].prompt
         cell.labelReply.text = notesHistory[indexPath.row].creatorReply
         cell.labelTimestampCreated.text = "\(notesHistory[indexPath.row].timestampCreated)"
+        cell.labelLocation.text = notesHistory[indexPath.row].location
         return cell
     }
 }

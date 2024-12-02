@@ -17,6 +17,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         cell.labelPrompt.text = notesList[indexPath.row].prompt
         cell.labelCreatorDisplayName.text = notesList[indexPath.row].creatorDisplayName
         cell.labelTimestampCreated.text = "\(notesList[indexPath.row].timestampCreated)"
+        cell.labelLocation.text = notesList[indexPath.row].location
         return cell
     }
 }

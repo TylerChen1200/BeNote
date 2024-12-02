@@ -46,6 +46,7 @@ class ViewNoteViewController: UIViewController {
         if let uwNote = self.latestNote {
             viewNoteScreen.labelPromptReply.text = uwNote.creatorReply
             viewNoteScreen.labelPrompt.text = uwNote.prompt
+            viewNoteScreen.labelLocation.text = uwNote.location
             let contentHeight = viewNoteScreen.labelPromptReply.sizeThatFits(CGSize(width: viewNoteScreen.labelPromptReply.frame.width, height: .infinity)).height
             viewNoteScreen.labelPromptReply.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
             

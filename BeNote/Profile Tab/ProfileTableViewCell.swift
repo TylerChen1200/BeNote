@@ -13,6 +13,8 @@ class ProfileTableViewCell: UITableViewCell {
     var labelPrompt: UILabel!
     var labelReply: UILabel!
     var labelTimestampCreated: UILabel!
+    var labelLocation: UILabel!
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,6 +23,7 @@ class ProfileTableViewCell: UITableViewCell {
         setupLabelPrompt()
         setupLabelReply()
         setupLabelTimestampCreated()
+        setupLabelLocation()
         
         initConstraints()
     }
@@ -64,9 +67,16 @@ class ProfileTableViewCell: UITableViewCell {
         wrapperCellView.addSubview(labelTimestampCreated)
     }
     
-    func initConstraints(){
+    func setupLabelLocation() {
+        labelLocation = UILabel()
+        labelLocation.font = UIFont.systemFont(ofSize: 14) // Adjust font size
+        labelLocation.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelLocation)
+    }
+    
+    func initConstraints() {
         NSLayoutConstraint.activate([
-            wrapperCellView.topAnchor.constraint(equalTo: self.topAnchor,constant: 10),
+            wrapperCellView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             wrapperCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             wrapperCellView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             wrapperCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
@@ -77,7 +87,12 @@ class ProfileTableViewCell: UITableViewCell {
             labelPrompt.heightAnchor.constraint(equalToConstant: 20),
             labelPrompt.widthAnchor.constraint(lessThanOrEqualTo: wrapperCellView.widthAnchor),
             
-            labelReply.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 2),
+            labelLocation.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 4),
+            labelLocation.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelLocation.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            labelLocation.heightAnchor.constraint(equalToConstant: 16),
+            
+            labelReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 2), 
             labelReply.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
             labelReply.heightAnchor.constraint(equalToConstant: 16),
             labelReply.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
@@ -86,9 +101,10 @@ class ProfileTableViewCell: UITableViewCell {
             labelTimestampCreated.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
             labelTimestampCreated.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
-            wrapperCellView.heightAnchor.constraint(equalToConstant: 72)
+            wrapperCellView.heightAnchor.constraint(equalToConstant: 96)
         ])
     }
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

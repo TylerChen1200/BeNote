@@ -16,6 +16,7 @@ class ViewNoteScreenView: UIView {
     var labelFreeWrite: UILabel!
     var switchFreeWrite: UISwitch!
     var labelPromptReply: UITextView!
+    var labelLocation: UILabel!
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -28,6 +29,7 @@ class ViewNoteScreenView: UIView {
         setupLabelFreeWrite()
         setupSwitchFreeWrite()
         setupTextFieldPrompt()
+        setupLabelLocation()
         
         initConstraints()
     }
@@ -96,11 +98,20 @@ class ViewNoteScreenView: UIView {
         contentWrapper.addSubview(labelPromptReply)
     }
     
+    func setupLabelLocation() {
+        labelLocation = UILabel()
+        labelLocation.text = "Location: Not set"
+        labelLocation.font = UIFont.systemFont(ofSize: 14)
+        labelLocation.textColor = .gray
+        labelLocation.translatesAutoresizingMaskIntoConstraints = false
+        contentWrapper.addSubview(labelLocation)
+    }
+    
     func initConstraints() {
         NSLayoutConstraint.activate([
             contentWrapper.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             contentWrapper.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            contentWrapper.widthAnchor.constraint(equalTo:self.safeAreaLayoutGuide.widthAnchor),
+            contentWrapper.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor),
             contentWrapper.heightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.heightAnchor),
             contentWrapper.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             
@@ -123,11 +134,11 @@ class ViewNoteScreenView: UIView {
             switchFreeWrite.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             switchFreeWrite.leadingAnchor.constraint(equalTo: labelFreeWrite.trailingAnchor, constant: 16),
             
-//            labelPromptReply.topAnchor.constraint(equalTo: switchFreeWrite.bottomAnchor, constant: 16),
-//            labelPromptReply.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
-//            labelPromptReply.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
-//            labelPromptReply.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
-            labelPromptReply.topAnchor.constraint(equalTo: switchFreeWrite.bottomAnchor, constant: 16),
+            labelLocation.topAnchor.constraint(equalTo: switchFreeWrite.bottomAnchor, constant: 16),
+            labelLocation.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
+            labelLocation.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
+            
+            labelPromptReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 8),
             labelPromptReply.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
             labelPromptReply.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
             labelPromptReply.heightAnchor.constraint(equalToConstant: 100)

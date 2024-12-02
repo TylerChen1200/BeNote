@@ -25,6 +25,7 @@ extension AddNoteViewController {
                     "prompt": freeWrite ? "Freewrite" : self.addNoteScreen.labelPrompt.text as Any,
                     "creatorDisplayName": Auth.auth().currentUser?.displayName as Any,
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
+                    "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),
                         ]) { error in
                             if let error = error {
@@ -43,6 +44,7 @@ extension AddNoteViewController {
                     "prompt": freeWrite ? "Freewrite" : self.addNoteScreen.labelPrompt.text as Any,
                     "creatorDisplayName": Auth.auth().currentUser?.email as Any,
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
+                    "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),
                         ]) { error in
                             if let error = error {
