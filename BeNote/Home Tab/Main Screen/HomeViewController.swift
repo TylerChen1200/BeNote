@@ -112,6 +112,7 @@ class HomeViewController: UIViewController {
     //MARK: handling notifications...
     @objc func notificationReceived(notification: Notification){
         // FIGURE OUT REFRESH
+    }
 
     func logo() {
         let logoImage = UIImage(named: "logo.png")?.withRenderingMode(.alwaysOriginal)
