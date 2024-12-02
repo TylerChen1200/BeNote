@@ -11,12 +11,14 @@ import FirebaseFirestore
 // Controller to handle adding and editing a new note for the user
 // A new note will be added once each day, resetting at UTC 0 midnight
 class AddNoteViewController: UIViewController, UITextViewDelegate {
-
+    
     let addNoteScreen = AddNoteScreenView()
     let db = Firestore.firestore()
     var freeWrite = false
     let childProgressView = ProgressSpinnerViewController()
     let today = todaysDate()
+    let locationManager = LocationManager()
+    var location: String?
     let notificationCenter = NotificationCenter.default
     
     override func loadView() {
@@ -68,7 +70,7 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
             if (uwNoteText.isEmpty) {
                 self.showErrorAlert("Fields cannot be empty")
             } else {
-                self.sendNoteToFirebase()
+                getCurrentLocationAndSubmit(uwNoteText)
             }
         }
     }
@@ -91,5 +93,23 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
                                            preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Okay", style: .cancel))
         self.present(errorAlert, animated: true)
+    }
+    
+    func getCurrentLocationAndSubmit(_ noteText: String) {
+        locationManager.locationCompletion = { [weak self] city, state in
+            guard let self = self else { return }
+            
+            if let city = city, let state = state {
+                self.location = "\(city), \(state)"
+                print("Location retrieved: \(self.location!)")
+            } else {
+                self.location = "Location unavailable"
+                print("Could not retrieve location")
+            }
+            
+            self.sendNoteToFirebase()
+        }
+        
+        locationManager.requestLocation()
     }
 }

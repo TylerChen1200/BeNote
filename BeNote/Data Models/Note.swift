@@ -11,5 +11,6 @@ struct Note: Codable {
     var prompt: String
     var creatorDisplayName: String
     var creatorReply: String
+    var location: String
     var timestampCreated: Date
 }

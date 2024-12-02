@@ -13,6 +13,7 @@ class NotesTableViewCell: UITableViewCell {
     var labelPrompt: UILabel!
     var labelCreatorDisplayName: UILabel!
     var labelTimestampCreated: UILabel!
+    var labelLocation: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,6 +22,7 @@ class NotesTableViewCell: UITableViewCell {
         setupLabelPrompt()
         setupLabelCreatorDisplayName()
         setupLabelTimestampCreated()
+        setupLabelLocation()
         
         initConstraints()
     }
@@ -64,9 +66,18 @@ class NotesTableViewCell: UITableViewCell {
         wrapperCellView.addSubview(labelTimestampCreated)
     }
     
-    func initConstraints(){
+    func setupLabelLocation() {
+        labelLocation = UILabel()
+        labelLocation.font = UIFont.systemFont(ofSize: 14)
+        labelLocation.textColor = .darkGray
+        labelLocation.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelLocation)
+    }
+    
+    
+    func initConstraints() {
         NSLayoutConstraint.activate([
-            wrapperCellView.topAnchor.constraint(equalTo: self.topAnchor,constant: 10),
+            wrapperCellView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             wrapperCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             wrapperCellView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             wrapperCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
@@ -86,7 +97,12 @@ class NotesTableViewCell: UITableViewCell {
             labelTimestampCreated.heightAnchor.constraint(equalToConstant: 16),
             labelTimestampCreated.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
-            wrapperCellView.heightAnchor.constraint(equalToConstant: 72)
+            labelLocation.topAnchor.constraint(equalTo: labelTimestampCreated.bottomAnchor, constant: 2),
+            labelLocation.leadingAnchor.constraint(equalTo: labelTimestampCreated.leadingAnchor),
+            labelLocation.heightAnchor.constraint(equalToConstant: 16),
+            labelLocation.widthAnchor.constraint(lessThanOrEqualTo: wrapperCellView.widthAnchor, constant: -16),
+            
+            wrapperCellView.heightAnchor.constraint(greaterThanOrEqualToConstant: 96)
         ])
     }
 
