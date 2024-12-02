@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
     
     var handleAuth: AuthStateDidChangeListenerHandle?
     var currentUser:FirebaseAuth.User?
+    let notificationCenter = NotificationCenter.default
     let today: String = todaysDate()
     
     override func loadView() {
@@ -82,6 +83,8 @@ class HomeViewController: UIViewController {
         //MARK: Put the floating button above all the views...
         view.bringSubviewToFront(mainScreen.floatingButtonAddContact)
         
+        // Settings observers
+        observeRefresh()
         logo()
 
         mainScreen.addNoteButton.addTarget(self, action: #selector(addNote), for: .touchUpInside)
@@ -95,6 +98,20 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handleAuth!)
+    }
+    
+    // Observing refresh
+    func observeRefresh(){
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationReceived(notification:)),
+            name: Configs.notificationRefresh, object: nil
+        )
+    }
+    
+    //MARK: handling notifications...
+    @objc func notificationReceived(notification: Notification){
+        // FIGURE OUT REFRESH
     }
 
     func logo() {

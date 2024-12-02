@@ -17,6 +17,7 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
     var freeWrite = false
     let childProgressView = ProgressSpinnerViewController()
     let today = todaysDate()
+    let notificationCenter = NotificationCenter.default
     
     override func loadView() {
         view = addNoteScreen
