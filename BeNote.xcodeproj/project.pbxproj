@@ -95,7 +95,7 @@
 		FDBDBC342CFD5FBA00CC64FD /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC332CFD5FBA00CC64FD /* LocationManager.swift */; };
 		FDBDBC6D2CFD703700CC64FD /* NoteFullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */; };
 		FDBDBC6F2CFD707A00CC64FD /* NoteFullViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */; };
-		FDBDBC752CFD782500CC64FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDBDBC732CFD76EC00CC64FD /* GoogleService-Info.plist */; };
+		FDBDBC802CFD7E3000CC64FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDBDBC7F2CFD7E3000CC64FD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,7 +145,7 @@
 		FDBDBC332CFD5FBA00CC64FD /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFullView.swift; sourceTree = "<group>"; };
 		FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFullViewController.swift; sourceTree = "<group>"; };
-		FDBDBC732CFD76EC00CC64FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FDBDBC7F2CFD7E3000CC64FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,7 +238,7 @@
 				002F99102CE4E1EC00602A86 /* Assets.xcassets */,
 				002F99122CE4E1EC00602A86 /* LaunchScreen.storyboard */,
 				002F99152CE4E1EC00602A86 /* Info.plist */,
-				FDBDBC732CFD76EC00CC64FD /* GoogleService-Info.plist */,
+				FDBDBC7F2CFD7E3000CC64FD /* GoogleService-Info.plist */,
 				002F99B42CE53DFC00602A86 /* ViewController.swift */,
 			);
 			path = BeNote;
@@ -501,8 +501,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDBDBC752CFD782500CC64FD /* GoogleService-Info.plist in Resources */,
 				002F99142CE4E1EC00602A86 /* LaunchScreen.storyboard in Resources */,
+				FDBDBC802CFD7E3000CC64FD /* GoogleService-Info.plist in Resources */,
 				002F99112CE4E1EC00602A86 /* Assets.xcassets in Resources */,
 				002F990F2CE4E1EA00602A86 /* Main.storyboard in Resources */,
 			);

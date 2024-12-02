@@ -20,4 +20,33 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         cell.labelLocation.text = notesList[indexPath.row].location
         return cell
     }
+    
+    // Observing refresh
+    func observeRefresh(){
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationReceived(notification:)),
+            name: Configs.notificationRefresh, object: nil
+        )
+    }
+    
+    //MARK: handling notifications...
+    @objc func notificationReceived(notification: Notification){
+        // FIGURE OUT REFRESH
+    }
+    
+    func logo() {
+        let logoImage = UIImage(named: "logo.png")?.withRenderingMode(.alwaysOriginal)
+        let leftButton = UIBarButtonItem(image: logoImage, style: .plain, target: nil, action: nil)
+        
+        // Create a custom view to add padding to the left button
+        let leftButtonCustomView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let leftImageView = UIImageView(image: logoImage)
+        leftImageView.frame = CGRect(x: 10, y: 0, width: 30, height: 30)
+        
+        leftButtonCustomView.addSubview(leftImageView)
+        
+        leftButton.customView = leftButtonCustomView
+        self.navigationItem.leftBarButtonItem = leftButton
+    }
 }
