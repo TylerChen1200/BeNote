@@ -12,6 +12,9 @@ class MainScreenView: UIView {
     var labelText: UILabel!
     var floatingButtonAddContact: UIButton!
     var tableViewNotes: UITableView!
+    var modalOverlay: UIView!
+    var modalView: UIView!
+    var addNoteButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +24,7 @@ class MainScreenView: UIView {
         setupLabelText()
         setupFloatingButtonAddContact()
         setupTableViewNotes()
+        setupModal()
         initConstraints()
     }
     
@@ -65,6 +69,50 @@ class MainScreenView: UIView {
         self.addSubview(floatingButtonAddContact)
     }
     
+    func setupModal() {
+            // Overlay
+        modalOverlay = UIView()
+        modalOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        modalOverlay.isHidden = true // Initially hidden
+        modalOverlay.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(modalOverlay)
+        
+        // Modal View
+        modalView = UIView()
+        modalView.backgroundColor = .white
+        modalView.layer.cornerRadius = 12
+        modalView.layer.masksToBounds = true
+        modalView.translatesAutoresizingMaskIntoConstraints = false
+        modalOverlay.addSubview(modalView)
+        
+        // Add a label to the modal
+        let modalLabel = UILabel()
+        modalLabel.text = "Create your Note of the Day!"
+        modalLabel.textAlignment = .center
+        modalLabel.font = .boldSystemFont(ofSize: 16)
+        modalLabel.numberOfLines = 0
+        modalLabel.translatesAutoresizingMaskIntoConstraints = false
+        modalView.addSubview(modalLabel)
+            
+        // Add a button to dismiss the modal
+        addNoteButton = UIButton(type: .system)
+        addNoteButton.setTitle("Create Note", for: .normal)
+        addNoteButton.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        addNoteButton.translatesAutoresizingMaskIntoConstraints = false
+        modalView.addSubview(addNoteButton)
+            
+        // Constraints for modalLabel and dismissButton
+        NSLayoutConstraint.activate([
+            modalLabel.topAnchor.constraint(equalTo: modalView.topAnchor, constant: 16),
+            modalLabel.leadingAnchor.constraint(equalTo: modalView.leadingAnchor, constant: 16),
+            modalLabel.trailingAnchor.constraint(equalTo: modalView.trailingAnchor, constant: -16),
+            
+            addNoteButton.topAnchor.constraint(equalTo: modalLabel.bottomAnchor, constant: 16),
+            addNoteButton.centerXAnchor.constraint(equalTo: modalView.centerXAnchor),
+            addNoteButton.bottomAnchor.constraint(equalTo: modalView.bottomAnchor, constant: -16)
+        ])
+    }
+    
     
     //MARK: setting up constraints...
     func initConstraints(){
@@ -87,6 +135,17 @@ class MainScreenView: UIView {
             floatingButtonAddContact.heightAnchor.constraint(equalToConstant: 48),
             floatingButtonAddContact.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -12),
             floatingButtonAddContact.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            
+            modalOverlay.topAnchor.constraint(equalTo: self.topAnchor),
+            modalOverlay.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            modalOverlay.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            modalOverlay.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            
+            modalView.centerXAnchor.constraint(equalTo: modalOverlay.centerXAnchor),
+            modalView.centerYAnchor.constraint(equalTo: modalOverlay.centerYAnchor),
+            modalView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            modalView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            modalView.heightAnchor.constraint(equalToConstant: 600)
             
         ])
     }

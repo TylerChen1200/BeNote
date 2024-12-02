@@ -49,6 +49,8 @@ class ViewNoteViewController: UIViewController {
         if let uwNote = self.latestNote {
             viewNoteScreen.labelPromptReply.text = uwNote.creatorReply
             viewNoteScreen.labelPrompt.text = uwNote.prompt
+            let contentHeight = viewNoteScreen.labelPromptReply.sizeThatFits(CGSize(width: viewNoteScreen.labelPromptReply.frame.width, height: .infinity)).height
+            viewNoteScreen.labelPromptReply.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
             
             if (uwNote.prompt == FirebaseConstants.Freewrite) {
                 // Prompt was freewrite - highlight those elements

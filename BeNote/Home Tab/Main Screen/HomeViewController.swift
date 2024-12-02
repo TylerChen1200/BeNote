@@ -7,16 +7,20 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class HomeViewController: UIViewController {
 
     let mainScreen = MainScreenView()
     var notesList = [Note]()
+    let db = Firestore.firestore()
+    var latestNote: Note? = nil
     let childProgressView = ProgressSpinnerViewController()
     
     var handleAuth: AuthStateDidChangeListenerHandle?
     var currentUser:FirebaseAuth.User?
     let notificationCenter = NotificationCenter.default
+    let today: String = todaysDate()
     
     override func loadView() {
         view = mainScreen
@@ -65,6 +69,7 @@ class HomeViewController: UIViewController {
                 self.enableTabs()
             }
         }
+        hasNoteToday()
     }
     
     override func viewDidLoad() {
@@ -80,6 +85,14 @@ class HomeViewController: UIViewController {
         
         // Settings observers
         observeRefresh()
+        logo()
+
+        mainScreen.addNoteButton.addTarget(self, action: #selector(addNote), for: .touchUpInside)
+    }
+    
+    @objc func addNote() {
+        // Navigate to the second tab
+        tabBarController?.selectedIndex = 1
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -99,6 +112,20 @@ class HomeViewController: UIViewController {
     //MARK: handling notifications...
     @objc func notificationReceived(notification: Notification){
         // FIGURE OUT REFRESH
+
+    func logo() {
+        let logoImage = UIImage(named: "logo.png")?.withRenderingMode(.alwaysOriginal)
+        let leftButton = UIBarButtonItem(image: logoImage, style: .plain, target: nil, action: nil)
+        
+        // Create a custom view to add padding to the left button
+        let leftButtonCustomView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let leftImageView = UIImageView(image: logoImage)
+        leftImageView.frame = CGRect(x: 10, y: 0, width: 30, height: 30)
+        
+        leftButtonCustomView.addSubview(leftImageView)
+        
+        leftButton.customView = leftButtonCustomView
+        self.navigationItem.leftBarButtonItem = leftButton
     }
 }
 

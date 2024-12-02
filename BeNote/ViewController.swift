@@ -16,8 +16,8 @@ class ViewController: UITabBarController, UITabBarControllerDelegate {
         let tabHome = UINavigationController(rootViewController: HomeViewController())
         let tabHomeBarItem = UITabBarItem(
             title: "BeNote",
-            image: UIImage(systemName: "house")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(systemName: "house.fill")
+            image: UIImage(systemName: "house")?.withRenderingMode(.automatic),
+            selectedImage: UIImage(systemName: "house.fill")?.withRenderingMode(.automatic)
         )
         tabHome.tabBarItem = tabHomeBarItem
         tabHome.title = "BeNote"
