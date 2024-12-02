@@ -100,8 +100,21 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewProfileID, for: indexPath) as! ProfileTableViewCell
         cell.labelPrompt.text = notesHistory[indexPath.row].prompt
         cell.labelReply.text = notesHistory[indexPath.row].creatorReply
-        cell.labelTimestampCreated.text = "\(notesHistory[indexPath.row].timestampCreated)"
+        cell.labelTimestampCreated.text = formatTimestamp(notesHistory[indexPath.row].timestampCreated)
         cell.labelLocation.text = notesHistory[indexPath.row].location
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let noteFullVC = NoteFullViewController()
+        noteFullVC.note = self.notesHistory[indexPath.row]
+        self.navigationController?.pushViewController(noteFullVC, animated: true)
+    }
+    
+    func formatTimestamp(_ timestamp: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy h:mm a" // Month day year, and time without leading zeros (12-hour format)
+        return formatter.string(from: timestamp)
+    }
+    
 }

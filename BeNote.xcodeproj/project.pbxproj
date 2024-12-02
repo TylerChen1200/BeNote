@@ -94,6 +94,8 @@
 		FDBDBC282CF6E52100CC64FD /* NoNoteFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC272CF6E51A00CC64FD /* NoNoteFirebaseManager.swift */; };
 		FDBDBC322CFD5E4600CC64FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDBDBC312CFD5E4600CC64FD /* GoogleService-Info.plist */; };
 		FDBDBC342CFD5FBA00CC64FD /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC332CFD5FBA00CC64FD /* LocationManager.swift */; };
+		FDBDBC6D2CFD703700CC64FD /* NoteFullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */; };
+		FDBDBC6F2CFD707A00CC64FD /* NoteFullViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +143,8 @@
 		FDBDBC272CF6E51A00CC64FD /* NoNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNoteFirebaseManager.swift; sourceTree = "<group>"; };
 		FDBDBC312CFD5E4600CC64FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FDBDBC332CFD5FBA00CC64FD /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFullView.swift; sourceTree = "<group>"; };
+		FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFullViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,8 @@
 		002F99062CE4E1EA00602A86 /* BeNote */ = {
 			isa = PBXGroup;
 			children = (
+				FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */,
+				FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */,
 				004FE5342CF0F998006C0EC8 /* Utils and Constants */,
 				002F99502CE4E4D300602A86 /* Data Models */,
 				002F99A42CE4FFFC00602A86 /* Profile Tab */,
@@ -507,6 +513,7 @@
 				002F99B52CE53DFC00602A86 /* ViewController.swift in Sources */,
 				00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */,
 				002F99522CE4E4EA00602A86 /* Note.swift in Sources */,
+				FDBDBC6F2CFD707A00CC64FD /* NoteFullViewController.swift in Sources */,
 				004FE53C2CF13633006C0EC8 /* ViewNoteScreenView.swift in Sources */,
 				004FE5402CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift in Sources */,
 				002F99A62CE5003600602A86 /* ProfileViewController.swift in Sources */,
@@ -522,6 +529,7 @@
 				FDBDBC162CF6A28D00CC64FD /* LoginView.swift in Sources */,
 				FDBDBC172CF6A28D00CC64FD /* ProgressSpinnerDelegate.swift in Sources */,
 				FDBDBC182CF6A28D00CC64FD /* ProgressSpinnerViewController.swift in Sources */,
+				FDBDBC6D2CFD703700CC64FD /* NoteFullView.swift in Sources */,
 				FDBDBC282CF6E52100CC64FD /* NoNoteFirebaseManager.swift in Sources */,
 				FDBDBC0A2CF6A23C00CC64FD /* RegisterScreenView.swift in Sources */,
 				FDBDBC0B2CF6A23C00CC64FD /* RightBarButtonManager.swift in Sources */,
