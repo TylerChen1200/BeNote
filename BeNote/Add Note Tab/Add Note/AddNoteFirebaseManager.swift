@@ -53,6 +53,12 @@ extension AddNoteViewController {
                                 print("Note saved successfully.")
                             }
                         }
+            
+            // Refresh the tab views
+            self.notificationCenter.post(
+                name: Configs.notificationRefresh,
+                object: nil
+            )
             // go back to viewNote screen
             self.navigationController?.popViewController(animated: true)
             self.hideActivityIndicator()

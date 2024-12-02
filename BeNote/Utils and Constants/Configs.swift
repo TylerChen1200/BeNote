@@ -6,9 +6,12 @@
 //
 
 import Foundation
-import Foundation
+import UIKit
+
 class Configs{
     static let notesViewContactsID = "notesViewContactsID"
     static let tableViewFriendsID = "friendsViewContactsID"
     static let tableViewProfileID = "tableViewProfileID"
+    
+    static let notificationRefresh = Notification.Name("refreshTab")
 }
