@@ -35,6 +35,22 @@ extension HomeViewController:ProgressSpinnerDelegate{
     }
 }
 
+extension LoginViewController: ProgressSpinnerDelegate{
+    func showActivityIndicator(){
+        addChild(childProgressView)
+        view.addSubview(childProgressView.view)
+        childProgressView.didMove(toParent: self)
+        view.bringSubviewToFront(childProgressView.view)
+
+    }
+    
+    func hideActivityIndicator(){
+        childProgressView.willMove(toParent: nil)
+        childProgressView.view.removeFromSuperview()
+        childProgressView.removeFromParent()
+    }
+}
+
 extension ViewNoteViewController:ProgressSpinnerDelegate{
     func showActivityIndicator(){
         addChild(childProgressView)

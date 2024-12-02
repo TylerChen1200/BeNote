@@ -13,12 +13,14 @@ class HomeViewController: UIViewController {
 
     let mainScreen = MainScreenView()
     var notesList = [Note]()
+    let db = Firestore.firestore()
+    var latestNote: Note? = nil
     let childProgressView = ProgressSpinnerViewController()
     
     var handleAuth: AuthStateDidChangeListenerHandle?
     var currentUser:FirebaseAuth.User?
-    let db = Firestore.firestore()
-    let today = todaysDate()
+    let notificationCenter = NotificationCenter.default
+    let today: String = todaysDate()
     
     override func loadView() {
         view = mainScreen
@@ -40,12 +42,19 @@ class HomeViewController: UIViewController {
         handleAuth = Auth.auth().addStateDidChangeListener{ auth, user in
             if user == nil{
                 //MARK: not signed in...
+                
+                let loginVC = LoginViewController(homeViewController: self)
+                loginVC.delegate = self
+                let navigationController = UINavigationController(rootViewController: loginVC)
+                navigationController.modalPresentationStyle = .fullScreen
+                navigationController.isModalInPresentation = true
+                self.present(navigationController, animated: false)
+
                 self.currentUser = nil
                 self.mainScreen.labelText.text = "Please sign in to send your note of the day!"
                 self.mainScreen.floatingButtonAddContact.isEnabled = false
                 self.mainScreen.floatingButtonAddContact.isHidden = true
                 
-                self.setupRightBarButton(isLoggedin: false)
                 self.disableTabs()
                 
                 //MARK: Reset tableView...
@@ -53,15 +62,16 @@ class HomeViewController: UIViewController {
                self.mainScreen.tableViewNotes.reloadData()
             } else {
                 //MARK: the user is signed in...
+                self.setupRightBarButton(isLoggedin: true)
                 self.currentUser = user
                 self.mainScreen.labelText.text = "Welcome \(user?.displayName ?? "Anonymous")!"
                 self.mainScreen.floatingButtonAddContact.isEnabled = true
                 self.mainScreen.floatingButtonAddContact.isHidden = false
                 
-                self.setupRightBarButton(isLoggedin: true)
                 self.enableTabs()
             }
         }
+        hasNoteToday()
     }
     
     override func viewDidLoad() {
@@ -78,6 +88,17 @@ class HomeViewController: UIViewController {
         
         //MARK: Put the floating button above all the views...
         view.bringSubviewToFront(mainScreen.floatingButtonAddContact)
+        
+        // Settings observers
+        observeRefresh()
+        logo()
+
+        mainScreen.addNoteButton.addTarget(self, action: #selector(addNote), for: .touchUpInside)
+    }
+    
+    @objc func addNote() {
+        // Navigate to the second tab
+        tabBarController?.selectedIndex = 1
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -154,6 +175,33 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         cell.labelCreatorDisplayName.text = notesList[indexPath.row].creatorDisplayName
         cell.labelTimestampCreated.text = "\(notesList[indexPath.row].timestampCreated)"
         return cell
+    // Observing refresh
+    func observeRefresh(){
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationReceived(notification:)),
+            name: Configs.notificationRefresh, object: nil
+        )
+    }
+    
+    //MARK: handling notifications...
+    @objc func notificationReceived(notification: Notification){
+        // FIGURE OUT REFRESH
+    }
+
+    func logo() {
+        let logoImage = UIImage(named: "logo.png")?.withRenderingMode(.alwaysOriginal)
+        let leftButton = UIBarButtonItem(image: logoImage, style: .plain, target: nil, action: nil)
+        
+        // Create a custom view to add padding to the left button
+        let leftButtonCustomView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let leftImageView = UIImageView(image: logoImage)
+        leftImageView.frame = CGRect(x: 10, y: 0, width: 30, height: 30)
+        
+        leftButtonCustomView.addSubview(leftImageView)
+        
+        leftButton.customView = leftButtonCustomView
+        self.navigationItem.leftBarButtonItem = leftButton
     }
 }
 

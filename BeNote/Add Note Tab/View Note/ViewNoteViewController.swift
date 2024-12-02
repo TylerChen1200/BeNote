@@ -22,6 +22,7 @@ class ViewNoteViewController: UIViewController {
     let childProgressView = ProgressSpinnerViewController()
     var prompt: String = FirebaseConstants.DefaultPrompt
     let today: String = todaysDate()
+    let notificationCenter = NotificationCenter.default
 
     // every time the view is to show, check if there is a note
     // if not, show the AddNoteViewController
@@ -37,8 +38,10 @@ class ViewNoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         title = "Todays Note"
+        
+        // Settings observers
+        observeRefresh()
     }
     
     // Highlights labels based on whether the note was done with the daily prompt or freewrite
@@ -46,6 +49,9 @@ class ViewNoteViewController: UIViewController {
         if let uwNote = self.latestNote {
             viewNoteScreen.labelPromptReply.text = uwNote.creatorReply
             viewNoteScreen.labelPrompt.text = uwNote.prompt
+            viewNoteScreen.labelLocation.text = uwNote.location
+            let contentHeight = viewNoteScreen.labelPromptReply.sizeThatFits(CGSize(width: viewNoteScreen.labelPromptReply.frame.width, height: .infinity)).height
+            viewNoteScreen.labelPromptReply.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
             
             if (uwNote.prompt == FirebaseConstants.Freewrite) {
                 // Prompt was freewrite - highlight those elements
@@ -59,6 +65,21 @@ class ViewNoteViewController: UIViewController {
                 viewNoteScreen.labelFreeWrite.textColor = .lightGray
             }
         }
+    }
+    
+    // Observing refresh
+    func observeRefresh(){
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationReceived(notification:)),
+            name: Configs.notificationRefresh, object: nil
+        )
+    }
+    
+    //MARK: handling notifications...
+    @objc func notificationReceived(notification: Notification){        
+        // Recalls this function to reload the screen since it'll show the right screen
+        loadLatestNote()
     }
     
     func showErrorAlert(_ message: String) {

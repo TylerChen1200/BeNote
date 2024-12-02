@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController {
     let profileScreen = ProfileScreenView()
     let db = Firestore.firestore()
     var notesHistory = [Note]()
+    let notificationCenter = NotificationCenter.default
     
     override func loadView() {
         view = profileScreen
@@ -21,7 +22,6 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "Profile"
         
         //MARK: Make the titles look large...
@@ -30,12 +30,14 @@ class ProfileViewController: UIViewController {
         //MARK: patching table view delegate and data source...
         profileScreen.tableViewNotesHistory.delegate = self
         profileScreen.tableViewNotesHistory.dataSource = self
-
         self.fetchProfileData()
         self.fetchNotesData()
+        
+        // Setting observers
+        observeRefresh()
     }
     
-
+    
     func fetchProfileData() {
         if let currentUserEmail = Auth.auth().currentUser?.email,
            let currentUserName = Auth.auth().currentUser?.displayName {
@@ -55,7 +57,6 @@ class ProfileViewController: UIViewController {
                         self.showErrorAlert("Error fetching user data: \(error)")
                         return
                     }
-                    
                     // get number of notes written
                     let numberOfNotes = querySnapshot?.documents.count ?? 0
                     self.profileScreen.labelNotesWritten.text = "\(numberOfNotes) notes written"
@@ -69,7 +70,7 @@ class ProfileViewController: UIViewController {
                             
                             return Note(prompt: data["prompt"] as? String ?? "",
                                         creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Email",
-                                        creatorReply: data["creatorReply"] as? String ?? "",
+                                        creatorReply: data["creatorReply"] as? String ?? "", location: data["location"] as? String ?? "",
                                         timestampCreated: uwDate)
                         }
                         .reversed()
@@ -81,6 +82,21 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    // Observing refresh
+    func observeRefresh(){
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationReceived(notification:)),
+            name: Configs.notificationRefresh, object: nil
+        )
+    }
+    
+    // Refreshes the profile content of this screen
+    @objc func notificationReceived(notification: Notification){
+        self.fetchProfileData()
+        self.fetchNotesData()
+    }
+    
     func showErrorAlert(_ message: String) {
         let errorAlert = UIAlertController(title: "Error!",
                                            message: message,
@@ -88,7 +104,7 @@ class ProfileViewController: UIViewController {
         errorAlert.addAction(UIAlertAction(title: "Okay", style: .cancel))
         self.present(errorAlert, animated: true)
     }
-
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -100,7 +116,21 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewProfileID, for: indexPath) as! ProfileTableViewCell
         cell.labelPrompt.text = notesHistory[indexPath.row].prompt
         cell.labelReply.text = notesHistory[indexPath.row].creatorReply
-        cell.labelTimestampCreated.text = "\(notesHistory[indexPath.row].timestampCreated)"
+        cell.labelTimestampCreated.text = formatTimestamp(notesHistory[indexPath.row].timestampCreated)
+        cell.labelLocation.text = notesHistory[indexPath.row].location
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let noteFullVC = NoteFullViewController()
+        noteFullVC.note = self.notesHistory[indexPath.row]
+        self.navigationController?.pushViewController(noteFullVC, animated: true)
+    }
+    
+    func formatTimestamp(_ timestamp: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy h:mm a" // Month day year, and time without leading zeros (12-hour format)
+        return formatter.string(from: timestamp)
+    }
+    
 }
