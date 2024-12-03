@@ -151,7 +151,7 @@ class HomeViewController: UIViewController {
                                     return Note(prompt: data["prompt"] as? String ?? "No Prompt",
                                                 creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Display Name",
                                                 creatorReply: data["creatorReply"] as? String ?? "No Reply",
-                                                location: data["creatorReply"] as? String ?? "No Location",
+                                                location: data["location"] as? String ?? "No Location",
                                                 timestampCreated: uwDate)
                                 }
                             ?? [Note]()
