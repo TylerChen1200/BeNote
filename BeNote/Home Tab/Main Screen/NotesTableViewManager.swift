@@ -16,9 +16,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.notesViewContactsID, for: indexPath) as! NotesTableViewCell
         cell.labelPrompt.text = notesList[indexPath.row].prompt
         cell.labelCreatorDisplayName.text = notesList[indexPath.row].creatorDisplayName
-        cell.labelTimestampCreated.text = "\(notesList[indexPath.row].timestampCreated)"
+        cell.labelTimestampCreated.text = formatTimestamp(notesList[indexPath.row].timestampCreated)
+        cell.labelReply.text = notesList[indexPath.row].creatorReply
         cell.labelLocation.text = notesList[indexPath.row].location
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let noteFullVC = NoteFullViewController()
+        noteFullVC.note = self.notesList[indexPath.row]
+        self.navigationController?.pushViewController(noteFullVC, animated: true)
     }
     
     // Observing refresh
@@ -48,5 +55,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         
         leftButton.customView = leftButtonCustomView
         self.navigationItem.leftBarButtonItem = leftButton
+    }
+    
+    func formatTimestamp(_ timestamp: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy h:mm a"
+        return formatter.string(from: timestamp)
     }
 }

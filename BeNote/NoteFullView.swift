@@ -21,22 +21,22 @@ class NoteFullView: UIView {
         initConstraints()
     }
     
-    private func setupScrollView() {
+    func setupScrollView() {
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(scrollView)
     }
     
-    private func setupContentView() {
+    func setupContentView() {
         contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
     }
 
-    private func setupLabels() {
+    func setupLabels() {
         // Setup for the prompt label (larger font)
         labelPrompt = UILabel()
-        labelPrompt.font = UIFont.boldSystemFont(ofSize: 24)  // Larger font for the prompt
+        labelPrompt.font = UIFont.boldSystemFont(ofSize: 24)
         labelPrompt.numberOfLines = 0
         labelPrompt.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(labelPrompt)
@@ -65,11 +65,10 @@ class NoteFullView: UIView {
 
     private func initConstraints() {
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
-            scrollView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             // Content view inside scroll view
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
@@ -94,7 +93,7 @@ class NoteFullView: UIView {
             labelTimestampCreated.trailingAnchor.constraint(equalTo: labelLocation.trailingAnchor),
             
             // Creator's reply label constraints
-            labelCreatorReply.topAnchor.constraint(equalTo: labelTimestampCreated.bottomAnchor, constant: 12),
+            labelCreatorReply.topAnchor.constraint(equalTo: labelTimestampCreated.bottomAnchor, constant: 25),
             labelCreatorReply.leadingAnchor.constraint(equalTo: labelTimestampCreated.leadingAnchor),
             labelCreatorReply.trailingAnchor.constraint(equalTo: labelTimestampCreated.trailingAnchor),
             labelCreatorReply.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
