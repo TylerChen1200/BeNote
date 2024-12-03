@@ -15,6 +15,7 @@ class ProfileViewController: UIViewController {
     let db = Firestore.firestore()
     var notesHistory = [Note]()
     let notificationCenter = NotificationCenter.default
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         view = profileScreen
@@ -39,8 +40,8 @@ class ProfileViewController: UIViewController {
     
     
     func fetchProfileData() {
-        if let currentUserEmail = Auth.auth().currentUser?.email,
-           let currentUserName = Auth.auth().currentUser?.displayName {
+        if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String?,
+           let currentUserName = self.defaults.object(forKey: Configs.defaultName) as! String? {
             self.profileScreen.labelName.text = "Name: \(currentUserName)"
             self.profileScreen.labelEmail.text = "Email: \(currentUserEmail)"
         }
@@ -48,7 +49,7 @@ class ProfileViewController: UIViewController {
     }
     
     func fetchNotesData() {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Notes)

@@ -17,6 +17,7 @@ class ManageFriendsViewController: UIViewController {
     //MARK: list to display the contact names in the TableView...
     var friendsArray = [User]()
     let notificationCenter = NotificationCenter.default
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         view = friendScreen
@@ -44,7 +45,7 @@ class ManageFriendsViewController: UIViewController {
     }
     
     func getAllFriends() {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Friends)
@@ -84,7 +85,7 @@ class ManageFriendsViewController: UIViewController {
     }
     
     func deleteFriend(id: String) {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Friends)
@@ -104,41 +105,41 @@ class ManageFriendsViewController: UIViewController {
     func findUserWithEmail(email: String) {
         var newFriend: User?
         
-        let currentUserID = Auth.auth().currentUser?.uid
-        
-        db.collection(FirebaseConstants.Users).getDocuments { (querySnapshot, error) in
-            if let _ = error {
-                self.showErrorAlert("Error fetching user data. Try again")
-                return
-            }
-            
-            // find user with the given email
-            newFriend = querySnapshot?.documents
-                .filter { $0.documentID != currentUserID }
-                .first { $0.data()["email"] as! String == email }
-                .map { document in
-                    let data = document.data()
-                    return User(name: data["name"] as? String ?? "No Name",
-                                email: data["email"] as? String ?? "No Email",
-                                _id: data["id"] as? String ?? "No ID")
-                } ?? nil
-            
-            DispatchQueue.main.async {
-                if let uwFriend = newFriend {
-                    print("successfully found friend data")
-                    
-                    // Step 2: Add friend info to the current users friends collection
-                    self.addFriendToCurrentUser(friend: uwFriend)
-                } else {
-                    self.showErrorAlert("Cannot find friend with that email")
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
+            db.collection(FirebaseConstants.Users).getDocuments { (querySnapshot, error) in
+                if let _ = error {
+                    self.showErrorAlert("Error fetching user data. Try again")
                     return
+                }
+                
+                // find user with the given email
+                newFriend = querySnapshot?.documents
+                    .filter { $0.documentID != currentUserID }
+                    .first { $0.data()["email"] as! String == email }
+                    .map { document in
+                        let data = document.data()
+                        return User(name: data["name"] as? String ?? "No Name",
+                                    email: data["email"] as? String ?? "No Email",
+                                    _id: data["id"] as? String ?? "No ID")
+                    } ?? nil
+                
+                DispatchQueue.main.async {
+                    if let uwFriend = newFriend {
+                        print("successfully found friend data")
+                        
+                        // Step 2: Add friend info to the current users friends collection
+                        self.addFriendToCurrentUser(friend: uwFriend)
+                    } else {
+                        self.showErrorAlert("Cannot find friend with that email")
+                        return
+                    }
                 }
             }
         }
     }
     
     func addFriendToCurrentUser(friend: User) {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Friends)

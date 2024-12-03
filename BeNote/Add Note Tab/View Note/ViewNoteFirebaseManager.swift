@@ -17,7 +17,7 @@ extension ViewNoteViewController {
     // 2. Push the addNoteViewController to the navigation controller
     func loadLatestNote() {
         self.showActivityIndicator()
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             // access the user's notes
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)

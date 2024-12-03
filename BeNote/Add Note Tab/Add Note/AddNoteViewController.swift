@@ -20,6 +20,7 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
     let locationManager = LocationManager()
     var location: String?
     let notificationCenter = NotificationCenter.default
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         view = addNoteScreen

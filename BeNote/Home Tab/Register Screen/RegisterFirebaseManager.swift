@@ -31,6 +31,10 @@ extension RegisterViewController{
                     //MARK: the user creation is successful...
                     self.setNameOfTheUserInFirebaseAuth(name: name)
                     self.addToUserDB(name: name, email: email)
+                    let currentUser = result?.user
+                    self.defaults.set(currentUser?.uid, forKey: Configs.defaultUID)
+                    self.defaults.set(currentUser?.email, forKey: Configs.defaultEmail)
+                    self.defaults.set(currentUser?.displayName, forKey: Configs.defaultName)
                     // Refresh the tab views
                     self.notificationCenter.post(
                         name: Configs.notificationRefresh,
@@ -43,15 +47,15 @@ extension RegisterViewController{
                        let code = AuthErrorCode(rawValue: nsError.code) {
                         print(nsError.code)
                         switch code {
-                            case AuthErrorCode.invalidEmail:
-                                message = "Invalid email formatting"
-                                break
-                            case AuthErrorCode.weakPassword:
-                                message = "Weak password. Please use a new one"
-                            case AuthErrorCode.emailAlreadyInUse:
-                                message = "Account with email exists. Please sign in."
-                            default:
-                               break
+                        case AuthErrorCode.invalidEmail:
+                            message = "Invalid email formatting"
+                            break
+                        case AuthErrorCode.weakPassword:
+                            message = "Weak password. Please use a new one"
+                        case AuthErrorCode.emailAlreadyInUse:
+                            message = "Account with email exists. Please sign in."
+                        default:
+                            break
                         }
                     }
                     
@@ -73,10 +77,10 @@ extension RegisterViewController{
                 
                 // Pop the current view controller
                 self.navigationController?.popViewController(animated: true)
-                    
+                
                 // Dismiss the root view controller (if this VC was presented modally)
                 self.navigationController?.dismiss(animated: true)
-                    
+                
             } else {
                 //MARK: there was an error updating the profile...
                 print("Error occured: \(String(describing: error))")
@@ -86,16 +90,18 @@ extension RegisterViewController{
     
     func addToUserDB(name: String, email: String) {
         let db = Firestore.firestore()
-        db.collection(FirebaseConstants.Users).document(Auth.auth().currentUser!.uid).setData([
-            "name": name,
-            "email": email,
-            "id": Auth.auth().currentUser!.uid,
-                ]) { error in
-                    if let error = error {
-                        print("Error saving user data: \(error)")
-                    } else {
-                        print("User data saved successfully.")
-                    }
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
+            db.collection(FirebaseConstants.Users).document(currentUserID).setData([
+                "name": name,
+                "email": email,
+                "id": currentUserID,
+            ]) { error in
+                if let error = error {
+                    print("Error saving user data: \(error)")
+                } else {
+                    print("User data saved successfully.")
                 }
+            }
+        }
     }
 }
