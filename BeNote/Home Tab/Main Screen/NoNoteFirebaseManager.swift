@@ -36,6 +36,7 @@ extension HomeViewController {
                                 self.latestNote = Note(prompt: data["prompt"] as? String ?? "No Prompt",
                                                        creatorDisplayName: data["creatorEmail"] as? String ?? "No Email",
                                                        creatorReply: data["creatorReply"] as? String ?? "",
+                                                       location: data["location"] as? String ?? "",
                                                        timestampCreated: uwDate
                                 )
                             }

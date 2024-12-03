@@ -16,6 +16,7 @@ class ManageFriendsViewController: UIViewController {
     
     //MARK: list to display the contact names in the TableView...
     var friendsArray = [User]()
+    let notificationCenter = NotificationCenter.default
     
     override func loadView() {
         view = friendScreen
@@ -35,6 +36,9 @@ class ManageFriendsViewController: UIViewController {
         
         //get all friends names when the screen loads...
         getAllFriends()
+        
+        // Setting observers
+        observeRefresh()
         
         friendScreen.buttonAdd.addTarget(self, action: #selector(onButtonAddTapped), for: .touchUpInside)
     }
@@ -166,6 +170,21 @@ class ManageFriendsViewController: UIViewController {
     
     func clearAddViewFields(){
         friendScreen.textFieldAddFriend.text = ""
+    }
+    
+    // Observing refresh
+    func observeRefresh(){
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationReceived(notification:)),
+            name: Configs.notificationRefresh, object: nil
+        )
+    }
+    
+    //MARK: handling notifications...
+    @objc func notificationReceived(notification: Notification){        
+        // Regets all the friends in the list
+        self.getAllFriends()
     }
     
     func showErrorAlert(_ message: String) {

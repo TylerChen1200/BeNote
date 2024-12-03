@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
     
     var handleAuth: AuthStateDidChangeListenerHandle?
     var currentUser:FirebaseAuth.User?
+    let notificationCenter = NotificationCenter.default
     let today: String = todaysDate()
     
     override func loadView() {
@@ -30,6 +31,8 @@ class HomeViewController: UIViewController {
         
         //MARK: removing the separator line...
         mainScreen.tableViewNotes.separatorStyle = .none
+        
+        self.getFriendsNotes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,9 +82,15 @@ class HomeViewController: UIViewController {
         //MARK: Make the titles look large...
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        //MARK: patching table view delegate and data source...
+        mainScreen.tableViewNotes.delegate = self
+        mainScreen.tableViewNotes.dataSource = self
+        
         //MARK: Put the floating button above all the views...
         view.bringSubviewToFront(mainScreen.floatingButtonAddContact)
         
+        // Settings observers
+        observeRefresh()
         logo()
 
         mainScreen.addNoteButton.addTarget(self, action: #selector(addNote), for: .touchUpInside)
@@ -96,20 +105,61 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handleAuth!)
     }
-
-    func logo() {
-        let logoImage = UIImage(named: "logo.png")?.withRenderingMode(.alwaysOriginal)
-        let leftButton = UIBarButtonItem(image: logoImage, style: .plain, target: nil, action: nil)
-        
-        // Create a custom view to add padding to the left button
-        let leftButtonCustomView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        let leftImageView = UIImageView(image: logoImage)
-        leftImageView.frame = CGRect(x: 10, y: 0, width: 30, height: 30)
-        
-        leftButtonCustomView.addSubview(leftImageView)
-        
-        leftButton.customView = leftButtonCustomView
-        self.navigationItem.leftBarButtonItem = leftButton
+    
+    func getFriendsNotes() {
+        if let currentUserID = Auth.auth().currentUser?.uid {
+            
+            var friendsArray = [String]()
+            
+            // get the users friends
+            db.collection(FirebaseConstants.Users)
+                .document(currentUserID)
+                .collection(FirebaseConstants.Friends)
+                .getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        self.showErrorAlert("Error fetching user data: \(error)")
+                        return
+                    }
+                    
+                    // Filter out the current user and then map the documents to User objects
+                    friendsArray = querySnapshot?.documents
+                        .map { document in
+                            return document.documentID
+                        } ?? []
+                    
+                    // save note to notes collection
+                    self.db.collection(FirebaseConstants.Notes)
+                        .document(FirebaseConstants.Notes)
+                        .collection(self.today)
+                        .getDocuments { (querySnapshot, error) in
+                            if let error = error {
+                                self.showErrorAlert("Error fetching user data: \(error)")
+                                return
+                            }
+                            
+                            // Filter out the current user and then map the documents to User objects
+                            self.notesList = querySnapshot?.documents
+                                .filter { document in
+                                    let title = document.documentID
+                                    return friendsArray.contains(title)
+                                }
+                                .map {document in
+                                    let data = document.data()
+                                    let timestamp = data["timestampCreated"] as? Timestamp
+                                    let uwDate = timestamp?.dateValue() ?? Date()
+                                    
+                                    return Note(prompt: data["prompt"] as? String ?? "No Prompt",
+                                                creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Display Name",
+                                                creatorReply: data["creatorReply"] as? String ?? "No Reply",
+                                                location: data["location"] as? String ?? "No Location",
+                                                timestampCreated: uwDate)
+                                }
+                            ?? [Note]()
+                            print("All Notes: \(self.notesList)")
+                            
+                            self.mainScreen.tableViewNotes.reloadData()
+                        }
+                }
+        }
     }
 }
-

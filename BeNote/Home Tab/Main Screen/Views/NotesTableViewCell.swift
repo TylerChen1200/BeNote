@@ -1,9 +1,9 @@
-//
-//  NotesTableViewCell.swift
-//  BeNote
-//
-//  Created by MAD on 11/13/24.
-//
+////
+////  NotesTableViewCell.swift
+////  BeNote
+////
+////  Created by MAD on 11/13/24.
+////
 
 import UIKit
 
@@ -11,15 +11,19 @@ class NotesTableViewCell: UITableViewCell {
     
     var wrapperCellView: UIView!
     var labelPrompt: UILabel!
+    var labelReply: UILabel!
     var labelCreatorDisplayName: UILabel!
     var labelTimestampCreated: UILabel!
+    var labelLocation: UILabel!
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupWrapperCellView()
         setupLabelPrompt()
         setupLabelCreatorDisplayName()
+        setupLabelLocation()
+        setupLabelReply()
         setupLabelTimestampCreated()
         
         initConstraints()
@@ -29,76 +33,103 @@ class NotesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupWrapperCellView(){
-        wrapperCellView = UITableViewCell()
-        
-        //working with the shadows and colors...
+    func setupWrapperCellView() {
+        wrapperCellView = UIView()
         wrapperCellView.backgroundColor = .white
-        wrapperCellView.layer.cornerRadius = 6.0
-        wrapperCellView.layer.shadowColor = UIColor.gray.cgColor
-        wrapperCellView.layer.shadowOffset = .zero
+        wrapperCellView.layer.cornerRadius = 8.0
+        wrapperCellView.layer.shadowColor = UIColor.black.cgColor
+        wrapperCellView.layer.shadowOffset = CGSize(width: 0, height: 2)
         wrapperCellView.layer.shadowRadius = 4.0
-        wrapperCellView.layer.shadowOpacity = 0.4
+        wrapperCellView.layer.shadowOpacity = 0.2
         wrapperCellView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(wrapperCellView)
+        self.contentView.addSubview(wrapperCellView)
     }
     
-    func setupLabelPrompt(){
+    func setupLabelPrompt() {
         labelPrompt = UILabel()
-        labelPrompt.font = UIFont.boldSystemFont(ofSize: 20)
+        labelPrompt.font = UIFont.boldSystemFont(ofSize: 16) // Adjusted font size
+        labelPrompt.textColor = .black // Set to black
+        labelPrompt.numberOfLines = 1 // Restrict to a single line
+        labelPrompt.lineBreakMode = .byTruncatingTail // Add "..." for overflow
         labelPrompt.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelPrompt)
     }
     
-    func setupLabelCreatorDisplayName(){
+    func setupLabelCreatorDisplayName() {
         labelCreatorDisplayName = UILabel()
-        labelCreatorDisplayName.font = UIFont.boldSystemFont(ofSize: 14)
+        labelCreatorDisplayName.font = UIFont.systemFont(ofSize: 14)
+        labelCreatorDisplayName.textColor = .tintColor
         labelCreatorDisplayName.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelCreatorDisplayName)
     }
     
-    func setupLabelTimestampCreated(){
+    func setupLabelLocation() {
+        labelLocation = UILabel()
+        labelLocation.font = UIFont.systemFont(ofSize: 14)
+        labelLocation.textColor = .black
+        labelLocation.numberOfLines = 0
+        labelLocation.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelLocation)
+    }
+    
+    func setupLabelReply() {
+        labelReply = UILabel()
+        labelReply.font = UIFont.systemFont(ofSize: 16)
+        labelReply.textColor = .darkGray
+        labelReply.numberOfLines = 0
+        labelReply.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelReply)
+    }
+    
+    func setupLabelTimestampCreated() {
         labelTimestampCreated = UILabel()
-        labelTimestampCreated.font = UIFont.boldSystemFont(ofSize: 14)
+        labelTimestampCreated.font = UIFont.systemFont(ofSize: 14)
+        labelTimestampCreated.textColor = .lightGray
         labelTimestampCreated.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelTimestampCreated)
     }
     
-    func initConstraints(){
+    func initConstraints() {
         NSLayoutConstraint.activate([
-            wrapperCellView.topAnchor.constraint(equalTo: self.topAnchor,constant: 10),
-            wrapperCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            wrapperCellView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            wrapperCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            // Wrapper cell view
+            wrapperCellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            wrapperCellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            wrapperCellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            wrapperCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
-            labelPrompt.topAnchor.constraint(equalTo: wrapperCellView.topAnchor, constant: 8),
+            // Prompt label
+            labelPrompt.topAnchor.constraint(equalTo: wrapperCellView.topAnchor, constant: 12),
             labelPrompt.leadingAnchor.constraint(equalTo: wrapperCellView.leadingAnchor, constant: 16),
-            labelPrompt.heightAnchor.constraint(equalToConstant: 20),
-            labelPrompt.widthAnchor.constraint(lessThanOrEqualTo: wrapperCellView.widthAnchor),
+            labelPrompt.trailingAnchor.constraint(equalTo: wrapperCellView.trailingAnchor, constant: -16),
             
-            labelCreatorDisplayName.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 2),
+            // Creator display name
+            labelCreatorDisplayName.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             labelCreatorDisplayName.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelCreatorDisplayName.heightAnchor.constraint(equalToConstant: 16),
-            labelCreatorDisplayName.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
+            labelCreatorDisplayName.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
             
-            labelTimestampCreated.topAnchor.constraint(equalTo: labelCreatorDisplayName.bottomAnchor, constant: 2),
-            labelTimestampCreated.leadingAnchor.constraint(equalTo: labelCreatorDisplayName.leadingAnchor),
-            labelTimestampCreated.heightAnchor.constraint(equalToConstant: 16),
-            labelTimestampCreated.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
+            // Location label
+            labelLocation.topAnchor.constraint(equalTo: labelCreatorDisplayName.bottomAnchor, constant: 8),
+            labelLocation.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelLocation.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
             
-            wrapperCellView.heightAnchor.constraint(equalToConstant: 72)
+            // Reply label
+            labelReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 8),
+            labelReply.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelReply.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            
+            // Timestamp label
+            labelTimestampCreated.topAnchor.constraint(equalTo: labelReply.bottomAnchor, constant: 8),
+            labelTimestampCreated.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelTimestampCreated.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            labelTimestampCreated.bottomAnchor.constraint(lessThanOrEqualTo: wrapperCellView.bottomAnchor, constant: -12),
         ])
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-
 }

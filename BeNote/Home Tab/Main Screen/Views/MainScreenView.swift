@@ -145,7 +145,7 @@ class MainScreenView: UIView {
             modalView.centerYAnchor.constraint(equalTo: modalOverlay.centerYAnchor),
             modalView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             modalView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            modalView.heightAnchor.constraint(equalToConstant: 600)
+            modalView.heightAnchor.constraint(equalToConstant: 550)
             
         ])
     }
