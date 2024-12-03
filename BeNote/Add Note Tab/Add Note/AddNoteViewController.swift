@@ -53,12 +53,12 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
             // code for switch being on
             addNoteScreen.labelFreeWrite.font = UIFont.boldSystemFont(ofSize: 20)
             addNoteScreen.labelFreeWrite.textColor = .black
-            addNoteScreen.labelPrompt.textColor = .lightGray
+            addNoteScreen.labelPrompt.textColor = .gray
             self.freeWrite = true
         } else {
             // code for switch being off
             addNoteScreen.labelFreeWrite.font = UIFont.systemFont(ofSize: 20)
-            addNoteScreen.labelFreeWrite.textColor = .lightGray
+            addNoteScreen.labelFreeWrite.textColor = .gray
             addNoteScreen.labelPrompt.textColor = .black
             self.freeWrite = false
         }

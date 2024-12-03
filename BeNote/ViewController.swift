@@ -59,5 +59,21 @@ class ViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Create the background image view
+        let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add it to the view
+        view.addSubview(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)
+        
+        // Set constraints for full screen
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }

@@ -19,6 +19,8 @@ class ProfileTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.backgroundColor = .clear
+        
         setupWrapperCellView()
         setupLabelPrompt()
         setupLabelReply()
@@ -36,7 +38,9 @@ class ProfileTableViewCell: UITableViewCell {
         wrapperCellView = UITableViewCell()
         
         //working with the shadows and colors...
-        wrapperCellView.backgroundColor = .white
+        wrapperCellView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        wrapperCellView.layer.borderColor = UIColor.tintColor.cgColor
+        wrapperCellView.layer.borderWidth = 2
         wrapperCellView.layer.cornerRadius = 6.0
         wrapperCellView.layer.shadowColor = UIColor.gray.cgColor
         wrapperCellView.layer.shadowOffset = .zero

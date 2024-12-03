@@ -25,8 +25,30 @@ class FriendScreenView: UIView {
         setupBottomAddView()
         setupTextFieldAddFriend()
         setupButtonAdd()
+        setupBackgroundImage()
         
         initConstraints()
+    }
+    
+    func setupBackgroundImage() {
+        // Create an image view with the background image
+        let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+        // Add the background image view to the current view
+        self.addSubview(backgroundImageView)
+            
+        // Send it to the back so it doesn't cover other elements
+        self.sendSubviewToBack(backgroundImageView)
+            
+        // Set up constraints for the background image
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
     }
     
     //MARK: the table view to show the list of friends...
@@ -34,6 +56,8 @@ class FriendScreenView: UIView {
         tableViewFriends = UITableView()
         tableViewFriends.register(FriendTableViewCell.self, forCellReuseIdentifier: Configs.tableViewFriendsID)
         tableViewFriends.translatesAutoresizingMaskIntoConstraints = false
+        tableViewFriends.backgroundColor = UIColor.clear
+        tableViewFriends.separatorStyle = .none
         self.addSubview(tableViewFriends)
     }
     
@@ -42,7 +66,7 @@ class FriendScreenView: UIView {
         bottomAddView = UIView()
         bottomAddView.backgroundColor = .white
         bottomAddView.layer.cornerRadius = 6
-        bottomAddView.layer.shadowColor = UIColor.lightGray.cgColor
+        bottomAddView.layer.shadowColor = UIColor.gray.cgColor
         bottomAddView.layer.shadowOffset = .zero
         bottomAddView.layer.shadowRadius = 4.0
         bottomAddView.layer.shadowOpacity = 0.7

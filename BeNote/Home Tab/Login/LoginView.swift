@@ -22,6 +22,7 @@ class LoginView: UIView {
         super.init(frame: frame)
         
         setupComponents()
+        setupBackgroundImage()
         initConstraints()
     }
     
@@ -46,11 +47,19 @@ class LoginView: UIView {
         emailLabel = createLabel(text: "Email:", fontSize: 16, isBold: true)
         emailTextField = createTextField(placeholder: "Enter your email")
         emailTextField.keyboardType = .emailAddress
+        emailTextField.backgroundColor = .clear
+        emailTextField.layer.borderColor = UIColor.tintColor.cgColor
+        emailTextField.layer.borderWidth = 2
+        emailTextField.layer.cornerRadius = 6
         emailTextField.autocapitalizationType = .none
         
         // Password Label and TextField
         passwordLabel = createLabel(text: "Password:", fontSize: 16, isBold: true)
         passwordTextField = createTextField(placeholder: "Enter your password")
+        passwordTextField.backgroundColor = .clear
+        passwordTextField.layer.borderColor = UIColor.tintColor.cgColor
+        passwordTextField.layer.borderWidth = 2
+        passwordTextField.layer.cornerRadius = 6
         passwordTextField.isSecureTextEntry = true
         
         // Login Button
@@ -84,6 +93,27 @@ class LoginView: UIView {
 
     }
     
+    func setupBackgroundImage() {
+        // Create an image view with the background image
+        let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+        // Add the background image view to the current view
+        self.addSubview(backgroundImageView)
+            
+        // Send it to the back so it doesn't cover other elements
+        self.sendSubviewToBack(backgroundImageView)
+            
+        // Set up constraints for the background image
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+    
     func createLabel(text: String, fontSize: CGFloat, isBold: Bool) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -97,6 +127,7 @@ class LoginView: UIView {
         let textField = UITextField()
         textField.placeholder = placeholder
         textField.borderStyle = .roundedRect
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.gray])
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }

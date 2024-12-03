@@ -19,6 +19,8 @@ class NotesTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.backgroundColor = .clear
+                
         setupWrapperCellView()
         setupLabelPrompt()
         setupLabelCreatorDisplayName()
@@ -35,8 +37,10 @@ class NotesTableViewCell: UITableViewCell {
     
     func setupWrapperCellView() {
         wrapperCellView = UIView()
-        wrapperCellView.backgroundColor = .white
+        wrapperCellView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         wrapperCellView.layer.cornerRadius = 8.0
+        wrapperCellView.layer.borderColor = UIColor.tintColor.cgColor
+        wrapperCellView.layer.borderWidth = 2.0
         wrapperCellView.layer.shadowColor = UIColor.black.cgColor
         wrapperCellView.layer.shadowOffset = CGSize(width: 0, height: 2)
         wrapperCellView.layer.shadowRadius = 4.0
@@ -84,7 +88,7 @@ class NotesTableViewCell: UITableViewCell {
     func setupLabelTimestampCreated() {
         labelTimestampCreated = UILabel()
         labelTimestampCreated.font = UIFont.systemFont(ofSize: 14)
-        labelTimestampCreated.textColor = .lightGray
+        labelTimestampCreated.textColor = .gray
         labelTimestampCreated.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelTimestampCreated)
     }

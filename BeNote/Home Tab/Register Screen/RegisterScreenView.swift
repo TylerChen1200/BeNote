@@ -22,46 +22,84 @@ class RegisterScreenView: UIView {
         setuptextFieldPassword()
         setuptextFieldPasswordVal()
         setupbuttonRegister()
+        setupBackgroundImage()
         
         initConstraints()
     }
     
+    func setupBackgroundImage() {
+        // Create an image view with the background image
+        let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+        // Add the background image view to the current view
+        self.addSubview(backgroundImageView)
+            
+        // Send it to the back so it doesn't cover other elements
+        self.sendSubviewToBack(backgroundImageView)
+            
+        // Set up constraints for the background image
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+    
     func setuptextFieldName(){
         textFieldName = UITextField()
-        textFieldName.placeholder = "Name"
+        textFieldName.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [.foregroundColor: UIColor.gray])
         textFieldName.keyboardType = .default
         textFieldName.borderStyle = .roundedRect
+        textFieldName.backgroundColor = .clear
+        textFieldName.layer.borderColor = UIColor.tintColor.cgColor
+        textFieldName.layer.borderWidth = 2
+        textFieldName.layer.cornerRadius = 6
         textFieldName.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textFieldName)
     }
     
     func setuptextFieldEmail(){
         textFieldEmail = UITextField()
-        textFieldEmail.placeholder = "Email"
+        textFieldEmail.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [.foregroundColor: UIColor.gray])
         textFieldEmail.keyboardType = .emailAddress
         textFieldEmail.borderStyle = .roundedRect
+        textFieldEmail.backgroundColor = .clear
+        textFieldEmail.layer.borderColor = UIColor.tintColor.cgColor
+        textFieldEmail.layer.borderWidth = 2
+        textFieldEmail.layer.cornerRadius = 6
         textFieldEmail.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textFieldEmail)
     }
     
-    func setuptextFieldPasswordVal(){
-        textFieldPasswordVal = UITextField()
-        textFieldPasswordVal.placeholder = "Confirm password"
-        textFieldPasswordVal.textContentType = .password
-        textFieldPasswordVal.isSecureTextEntry = true
-        textFieldPasswordVal.borderStyle = .roundedRect
-        textFieldPasswordVal.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(textFieldPasswordVal)
-    }
-    
     func setuptextFieldPassword(){
         textFieldPassword = UITextField()
-        textFieldPassword.placeholder = "Password"
+        textFieldPassword.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [.foregroundColor: UIColor.gray])
         textFieldPassword.textContentType = .password
         textFieldPassword.isSecureTextEntry = true
         textFieldPassword.borderStyle = .roundedRect
+        textFieldPassword.backgroundColor = .clear
+        textFieldPassword.layer.borderColor = UIColor.tintColor.cgColor
+        textFieldPassword.layer.borderWidth = 2
+        textFieldPassword.layer.cornerRadius = 6
         textFieldPassword.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textFieldPassword)
+    }
+    
+    func setuptextFieldPasswordVal(){
+        textFieldPasswordVal = UITextField()
+        textFieldPasswordVal.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [.foregroundColor: UIColor.gray])
+        textFieldPasswordVal.textContentType = .password
+        textFieldPasswordVal.isSecureTextEntry = true
+        textFieldPasswordVal.borderStyle = .roundedRect
+        textFieldPasswordVal.backgroundColor = .clear
+        textFieldPasswordVal.layer.borderColor = UIColor.tintColor.cgColor
+        textFieldPasswordVal.layer.borderWidth = 2
+        textFieldPasswordVal.layer.cornerRadius = 6
+        textFieldPasswordVal.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(textFieldPasswordVal)
     }
     
     func setupbuttonRegister(){

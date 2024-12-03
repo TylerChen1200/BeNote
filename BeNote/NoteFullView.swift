@@ -1,3 +1,10 @@
+//
+//  NoteFullView.swift
+//  BeNote
+//
+//  Created by Jiana Ang on 12/1/24.
+//
+
 import UIKit
 
 class NoteFullView: UIView {
@@ -18,7 +25,30 @@ class NoteFullView: UIView {
         setupContentView()
         setupLabels()
         
+        setupBackgroundImage()
+        
         initConstraints()
+    }
+    
+    func setupBackgroundImage() {
+        // Create an image view with the background image
+        let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+        // Add the background image view to the current view
+        self.addSubview(backgroundImageView)
+            
+        // Send it to the back so it doesn't cover other elements
+        self.sendSubviewToBack(backgroundImageView)
+            
+        // Set up constraints for the background image
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
     }
     
     func setupScrollView() {
@@ -44,14 +74,14 @@ class NoteFullView: UIView {
         // Setup for the location label
         labelLocation = UILabel()
         labelLocation.font = UIFont.systemFont(ofSize: 14)
-        labelLocation.textColor = .gray
+        labelLocation.textColor = .black
         labelLocation.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(labelLocation)
         
         // Setup for the timestamp label
         labelTimestampCreated = UILabel()
         labelTimestampCreated.font = UIFont.systemFont(ofSize: 12)
-        labelTimestampCreated.textColor = .lightGray
+        labelTimestampCreated.textColor = .gray
         labelTimestampCreated.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(labelTimestampCreated)
         
@@ -65,10 +95,10 @@ class NoteFullView: UIView {
 
     private func initConstraints() {
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             
             // Content view inside scroll view
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
@@ -78,7 +108,7 @@ class NoteFullView: UIView {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             // Prompt label constraints
-            labelPrompt.topAnchor.constraint(equalTo: contentView.topAnchor),
+            labelPrompt.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             labelPrompt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             labelPrompt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             

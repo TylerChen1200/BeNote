@@ -62,7 +62,7 @@ class ViewNoteViewController: UIViewController {
                 // Prompt was daily prompt
                 viewNoteScreen.labelPrompt.isHidden = false
                 viewNoteScreen.switchFreeWrite.isOn = false
-                viewNoteScreen.labelFreeWrite.textColor = .lightGray
+                viewNoteScreen.labelFreeWrite.textColor = .gray
             }
         }
     }
