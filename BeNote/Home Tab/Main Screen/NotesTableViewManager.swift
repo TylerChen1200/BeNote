@@ -39,7 +39,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: handling notifications...
     @objc func notificationReceived(notification: Notification){
-        // FIGURE OUT REFRESH
+        self.getFriendsNotes()
     }
     
     func logo() {
