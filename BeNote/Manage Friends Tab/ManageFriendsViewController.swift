@@ -73,7 +73,7 @@ class ManageFriendsViewController: UIViewController {
     }
     
     @objc func onButtonAddTapped() {
-        if let emailText = friendScreen.textFieldAddFriend.text {
+        if let emailText = friendScreen.textFieldAddFriend.text?.lowercased() {
             // validate email entered
             if (emailText.isEmpty || !validateEmail(emailText)) {
                 showErrorAlert("Please enter a valid email")

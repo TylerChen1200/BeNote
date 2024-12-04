@@ -15,7 +15,7 @@ struct User: Codable {
     
     init(name: String = "Anonymous", email: String, friends: [String] = [String](), _id: String) {
         self.name = name
-        self.email = email
+        self.email = email.lowercased()
         self.friends = friends
         self._id = _id
     }
