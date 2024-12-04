@@ -7,22 +7,24 @@
 
 import UIKit
 
-class ProfileScreenView: UIView {
 
+class ProfileScreenView: UIView {
+    
+    var imageViewProfile: UIImageView!
     var labelName:UILabel!
     var labelEmail:UILabel!
     var labelNotesWritten:UILabel!
     var tableViewNotesHistory: UITableView!
     
-    override init(frame: CGRect){
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
+        setupImageViewProfile() // Add this line
         setupLabelName()
         setupLabelEmail()
         setupLabelNotesWritten()
         setupTableViewNotesHistory()
-        
         setupBackgroundImage()
         
         initConstraints()
@@ -47,6 +49,17 @@ class ProfileScreenView: UIView {
             backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+    }
+    func setupImageViewProfile() {
+        imageViewProfile = UIImageView()
+        imageViewProfile.contentMode = .scaleAspectFill
+        imageViewProfile.clipsToBounds = true
+        imageViewProfile.layer.cornerRadius = 50
+        imageViewProfile.layer.borderWidth = 2
+        imageViewProfile.layer.borderColor = UIColor.tintColor.cgColor
+        imageViewProfile.translatesAutoresizingMaskIntoConstraints = false
+        imageViewProfile.isUserInteractionEnabled = false // Change this to false
+        self.addSubview(imageViewProfile)
     }
         
     
@@ -82,7 +95,12 @@ class ProfileScreenView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            labelName.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
+            imageViewProfile.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
+            imageViewProfile.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            imageViewProfile.widthAnchor.constraint(equalToConstant: 100),
+            imageViewProfile.heightAnchor.constraint(equalToConstant: 100),
+            
+            labelName.topAnchor.constraint(equalTo: imageViewProfile.bottomAnchor, constant: 16),
             labelName.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             
             labelEmail.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 16),
