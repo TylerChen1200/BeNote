@@ -35,6 +35,9 @@ extension HomeViewController{
         logoutAlert.addAction(UIAlertAction(title: "Yes, log out!", style: .default, handler: {(_) in
                 do{
                     try Auth.auth().signOut()
+                    self.defaults.removeObject(forKey: Configs.defaultUID)
+                    self.defaults.removeObject(forKey: Configs.defaultEmail)
+                    self.defaults.removeObject(forKey: Configs.defaultName)
                 }catch{
                     print("Error occured!")
                 }

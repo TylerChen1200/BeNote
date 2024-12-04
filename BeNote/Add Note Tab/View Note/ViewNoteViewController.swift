@@ -23,6 +23,7 @@ class ViewNoteViewController: UIViewController {
     var prompt: String = FirebaseConstants.DefaultPrompt
     let today: String = todaysDate()
     let notificationCenter = NotificationCenter.default
+    let defaults = UserDefaults.standard
 
     // every time the view is to show, check if there is a note
     // if not, show the AddNoteViewController

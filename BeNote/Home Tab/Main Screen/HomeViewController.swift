@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
     var currentUser:FirebaseAuth.User?
     let notificationCenter = NotificationCenter.default
     let today: String = todaysDate()
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         view = mainScreen
@@ -107,7 +108,7 @@ class HomeViewController: UIViewController {
     }
     
     func getFriendsNotes() {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             
             var friendsArray = [String]()
             
