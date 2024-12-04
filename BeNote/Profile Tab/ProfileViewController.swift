@@ -41,7 +41,7 @@ class ProfileViewController: UIViewController {
     func fetchProfileData() {
         if let currentUserEmail = Auth.auth().currentUser?.email,
            let currentUserName = Auth.auth().currentUser?.displayName {
-            self.profileScreen.labelName.text = "Name: \(currentUserName)"
+            self.profileScreen.labelName.text = "\(currentUserName)"
             self.profileScreen.labelEmail.text = "Email: \(currentUserEmail)"
         }
         
@@ -125,6 +125,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let noteFullVC = NoteFullViewController()
         noteFullVC.note = self.notesHistory[indexPath.row]
         self.navigationController?.pushViewController(noteFullVC, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     func formatTimestamp(_ timestamp: Date) -> String {
