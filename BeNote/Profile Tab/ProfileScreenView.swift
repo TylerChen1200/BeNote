@@ -9,22 +9,24 @@
 import UIKit
 
 class ProfileScreenView: UIView {
-    
-    var imageViewProfile: UIImageView!
-    var labelName:UILabel!
-    var labelEmail:UILabel!
-    var labelNotesWritten:UILabel!
+
+    var labelName: UILabel!
+    var labelEmail: UILabel!
+    var labelNotesWritten: UILabel!
     var tableViewNotesHistory: UITableView!
+    
+    var imageViewProfile: UIImageView! // Placeholder profile image
+    var nameContainer: UIStackView! // Stack view to contain name and email
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
-        setupImageViewProfile() 
-        setupLabelName()
-        setupLabelEmail()
+        setupImageViewProfile()
+        setupNameContainer()
         setupLabelNotesWritten()
         setupTableViewNotesHistory()
+        
         setupBackgroundImage()
         
         initConstraints()
@@ -45,7 +47,7 @@ class ProfileScreenView: UIView {
             backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
-
+    
     func setupImageViewProfile() {
         imageViewProfile = UIImageView()
         imageViewProfile.contentMode = .scaleAspectFill
@@ -96,17 +98,14 @@ class ProfileScreenView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-
-            imageViewProfile.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
-            imageViewProfile.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            // Profile image and name container
+            imageViewProfile.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            imageViewProfile.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             imageViewProfile.widthAnchor.constraint(equalToConstant: 100),
             imageViewProfile.heightAnchor.constraint(equalToConstant: 100),
             
-            labelName.topAnchor.constraint(equalTo: imageViewProfile.bottomAnchor, constant: 16),
-            labelName.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            
-            nameContainer.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-            nameContainer.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+            nameContainer.centerYAnchor.constraint(equalTo: imageViewProfile.centerYAnchor),
+            nameContainer.leadingAnchor.constraint(equalTo: imageViewProfile.trailingAnchor, constant: 16),
             nameContainer.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             // Notes written label
