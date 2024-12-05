@@ -69,7 +69,7 @@ class ViewNoteViewController: UIViewController {
     }
     
     func showEditButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Edit",
             style: .plain,
             target: self,
