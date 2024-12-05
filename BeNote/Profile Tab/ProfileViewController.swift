@@ -17,10 +17,27 @@ class ProfileViewController: UIViewController {
     var notesHistory = [Note]()
     let notificationCenter = NotificationCenter.default
     let defaults = UserDefaults.standard
+    var handleAuth: AuthStateDidChangeListenerHandle?
     
     
     override func loadView() {
         view = profileScreen
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //MARK: handling if the Authentication state is changed (sign in, sign out, register)...
+        handleAuth = Auth.auth().addStateDidChangeListener{ auth, user in
+            if user == nil{
+                //MARK: not signed in...
+                HomeViewController().disableTabs()
+            } else {
+                //MARK: the user is signed in...
+                self.setupRightBarButton(isLoggedin: true)
+                HomeViewController().enableTabs()
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -46,6 +63,10 @@ class ProfileViewController: UIViewController {
         observeRefresh()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(handleAuth!)
+    }
     
     
     func fetchProfileData() {
@@ -119,6 +140,49 @@ class ProfileViewController: UIViewController {
         present(navController, animated: true)
     }
     
+    func setupRightBarButton(isLoggedin: Bool){
+        if isLoggedin{
+            //MARK: user is logged in...
+            let barIcon = UIBarButtonItem(
+                image: UIImage(systemName: "rectangle.portrait.and.arrow.forward"),
+                style: .plain,
+                target: self,
+                action: #selector(onLogOutBarButtonTapped)
+            )
+            let barText = UIBarButtonItem(
+                title: "Logout",
+                style: .plain,
+                target: self,
+                action: #selector(onLogOutBarButtonTapped)
+            )
+            
+            self.navigationItem.rightBarButtonItems = [barIcon, barText]
+        }
+    }
+    
+    @objc func onLogOutBarButtonTapped(){
+        let logoutAlert = UIAlertController(title: "Logging out!", message: "Are you sure want to log out?",
+            preferredStyle: .alert)
+        logoutAlert.addAction(UIAlertAction(title: "Yes, log out!", style: .default, handler: {(_) in
+                do{
+                    try Auth.auth().signOut()
+                    self.defaults.removeObject(forKey: Configs.defaultUID)
+                    self.defaults.removeObject(forKey: Configs.defaultEmail)
+                    self.defaults.removeObject(forKey: Configs.defaultName)
+                    // Switch to the home tab
+                    if let tabBarController = self.tabBarController {
+                        tabBarController.selectedIndex = 0
+                    }
+                }catch{
+                    print("Error occured!")
+                }
+            })
+        )
+        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(logoutAlert, animated: true)
+    }
+
     func fetchProfilePicture() {
         guard let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as? String else {
             return
