@@ -44,7 +44,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         title = "Profile"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Edit",
             style: .plain,
             target: self,
