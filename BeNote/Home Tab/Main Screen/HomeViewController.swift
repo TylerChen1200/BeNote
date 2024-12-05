@@ -53,8 +53,6 @@ class HomeViewController: UIViewController {
 
                 self.currentUser = nil
                 self.mainScreen.labelText.text = "Please sign in to send your note of the day!"
-                self.mainScreen.floatingButtonAddContact.isEnabled = false
-                self.mainScreen.floatingButtonAddContact.isHidden = true
                 
                 self.disableTabs()
                 
@@ -66,8 +64,6 @@ class HomeViewController: UIViewController {
                 self.setupRightBarButton(isLoggedin: true)
                 self.currentUser = user
                 self.mainScreen.labelText.text = "Welcome \(user?.displayName ?? "Anonymous")!"
-                self.mainScreen.floatingButtonAddContact.isEnabled = true
-                self.mainScreen.floatingButtonAddContact.isHidden = false
                 
                 self.enableTabs()
             }
@@ -86,9 +82,6 @@ class HomeViewController: UIViewController {
         //MARK: patching table view delegate and data source...
         mainScreen.tableViewNotes.delegate = self
         mainScreen.tableViewNotes.dataSource = self
-        
-        //MARK: Put the floating button above all the views...
-        view.bringSubviewToFront(mainScreen.floatingButtonAddContact)
         
         // Settings observers
         observeRefresh()
