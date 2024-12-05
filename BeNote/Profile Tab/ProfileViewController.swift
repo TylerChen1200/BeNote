@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import PhotosUI
 
 class ProfileViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class ProfileViewController: UIViewController {
     let notificationCenter = NotificationCenter.default
     let defaults = UserDefaults.standard
     var handleAuth: AuthStateDidChangeListenerHandle?
+    
     
     override func loadView() {
         view = profileScreen
@@ -42,16 +44,22 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         title = "Profile"
         
-        //MARK: Make the titles look large...
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Edit",
+            style: .plain,
+            target: self,
+            action: #selector(editProfileTapped)
+        )
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        //MARK: patching table view delegate and data source...
         profileScreen.tableViewNotesHistory.delegate = self
         profileScreen.tableViewNotesHistory.dataSource = self
+        
         self.fetchProfileData()
         self.fetchNotesData()
+        self.fetchProfilePicture()
         
-        // Setting observers
         observeRefresh()
     }
     
@@ -59,6 +67,7 @@ class ProfileViewController: UIViewController {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handleAuth!)
     }
+    
     
     func fetchProfileData() {
         if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String?,
@@ -104,7 +113,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    // Observing refresh
     func observeRefresh(){
         notificationCenter.addObserver(
             self,
@@ -113,10 +121,10 @@ class ProfileViewController: UIViewController {
         )
     }
     
-    // Refreshes the profile content of this screen
-    @objc func notificationReceived(notification: Notification){
+    @objc func notificationReceived(notification: Notification) {
         self.fetchProfileData()
         self.fetchNotesData()
+        self.fetchProfilePicture()  
     }
     
     func showErrorAlert(_ message: String) {
@@ -125,6 +133,11 @@ class ProfileViewController: UIViewController {
                                            preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Okay", style: .cancel))
         self.present(errorAlert, animated: true)
+    }
+    @objc func editProfileTapped() {
+        let editProfileVC = EditProfileViewController()
+        let navController = UINavigationController(rootViewController: editProfileVC)
+        present(navController, animated: true)
     }
     
     func setupRightBarButton(isLoggedin: Bool){
@@ -169,7 +182,46 @@ class ProfileViewController: UIViewController {
         
         self.present(logoutAlert, animated: true)
     }
-    
+
+    func fetchProfilePicture() {
+        guard let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as? String else {
+            return
+        }
+        
+        // Set a default profile image or placeholder
+        self.profileScreen.imageViewProfile.image = UIImage(systemName: "person.circle.fill")
+        
+        db.collection(FirebaseConstants.Users)
+            .document(currentUserID)
+            .getDocument { [weak self] document, error in
+                if let error = error {
+                    self?.showErrorAlert("Error fetching profile picture: \(error.localizedDescription)")
+                    return
+                }
+                
+                // Check for the URL in Firestore
+                if let profilePictureURL = document?.data()?["profilePictureURL"] as? String,
+                   let url = URL(string: profilePictureURL) {
+                    
+                    // Create a URLSession task to download the image
+                    URLSession.shared.dataTask(with: url) { data, response, error in
+                        if let error = error {
+                            DispatchQueue.main.async {
+                                self?.showErrorAlert("Error downloading profile picture: \(error.localizedDescription)")
+                            }
+                            return
+                        }
+                        
+                        if let data = data,
+                           let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self?.profileScreen.imageViewProfile.image = image
+                            }
+                        }
+                    }.resume()
+                }
+            }
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
