@@ -10,6 +10,7 @@ import UIKit
 class ViewNoteScreenView: UIView {
 
     var contentWrapper: UIScrollView!
+    var contentView: UIView!
     var labelInstructions: UILabel!
     var labelDailyPrompt: UILabel!
     var labelPrompt: UILabel!
@@ -18,11 +19,12 @@ class ViewNoteScreenView: UIView {
     var labelPromptReply: UITextView!
     var labelLocation: UILabel!
     
-    override init(frame: CGRect){
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
         setupContentWrapper()
+        setupContentView()
         setupLabelInstructions()
         setupLabelDailyPrompt()
         setupLabelPrompt()
@@ -36,18 +38,13 @@ class ViewNoteScreenView: UIView {
     }
     
     func setupBackgroundImage() {
-        // Create an image view with the background image
         let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
             
-        // Add the background image view to the current view
         self.addSubview(backgroundImageView)
-            
-        // Send it to the back so it doesn't cover other elements
         self.sendSubviewToBack(backgroundImageView)
             
-        // Set up constraints for the background image
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -56,10 +53,16 @@ class ViewNoteScreenView: UIView {
         ])
     }
     
-    func setupContentWrapper(){
+    func setupContentWrapper() {
         contentWrapper = UIScrollView()
         contentWrapper.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(contentWrapper)
+    }
+    
+    func setupContentView() {
+        contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentWrapper.addSubview(contentView)
     }
     
     func setupLabelInstructions() {
@@ -68,7 +71,7 @@ class ViewNoteScreenView: UIView {
         labelInstructions.lineBreakMode = .byWordWrapping
         labelInstructions.numberOfLines = 0
         labelInstructions.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(labelInstructions)
+        contentView.addSubview(labelInstructions)
     }
     
     func setupLabelDailyPrompt() {
@@ -76,7 +79,7 @@ class ViewNoteScreenView: UIView {
         labelDailyPrompt.font = UIFont.italicSystemFont(ofSize: 12)
         labelDailyPrompt.text = "Daily Prompt:"
         labelDailyPrompt.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(labelDailyPrompt)
+        contentView.addSubview(labelDailyPrompt)
     }
     
     func setupLabelPrompt() {
@@ -86,7 +89,7 @@ class ViewNoteScreenView: UIView {
         labelPrompt.numberOfLines = 0
         labelPrompt.lineBreakMode = .byWordWrapping
         labelPrompt.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(labelPrompt)
+        contentView.addSubview(labelPrompt)
     }
     
     func setupLabelFreeWrite() {
@@ -95,7 +98,7 @@ class ViewNoteScreenView: UIView {
         labelFreeWrite.font = UIFont.systemFont(ofSize: 18)
         labelFreeWrite.textColor = .gray
         labelFreeWrite.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(labelFreeWrite)
+        contentView.addSubview(labelFreeWrite)
     }
     
     func setupSwitchFreeWrite() {
@@ -104,7 +107,7 @@ class ViewNoteScreenView: UIView {
         switchFreeWrite.setOn(false, animated: false)
         switchFreeWrite.isUserInteractionEnabled = false
         switchFreeWrite.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(switchFreeWrite)
+        contentView.addSubview(switchFreeWrite)
     }
     
     func setupTextFieldPrompt() {
@@ -116,8 +119,8 @@ class ViewNoteScreenView: UIView {
         labelPromptReply.translatesAutoresizingMaskIntoConstraints = false
         labelPromptReply.backgroundColor = .secondarySystemBackground
         labelPromptReply.isEditable = false
-        labelPromptReply.isScrollEnabled = false 
-        contentWrapper.addSubview(labelPromptReply)
+        labelPromptReply.isScrollEnabled = false // Allows the height to expand
+        contentView.addSubview(labelPromptReply)
     }
     
     func setupLabelLocation() {
@@ -126,44 +129,49 @@ class ViewNoteScreenView: UIView {
         labelLocation.font = UIFont.systemFont(ofSize: 14)
         labelLocation.textColor = .black
         labelLocation.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(labelLocation)
+        contentView.addSubview(labelLocation)
     }
     
     func initConstraints() {
         NSLayoutConstraint.activate([
             contentWrapper.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             contentWrapper.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            contentWrapper.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor),
-            contentWrapper.heightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.heightAnchor),
-            contentWrapper.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            contentWrapper.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            contentWrapper.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
             
-            labelInstructions.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
-            labelInstructions.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            labelInstructions.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
-            labelInstructions.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
+            contentView.topAnchor.constraint(equalTo: contentWrapper.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: contentWrapper.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: contentWrapper.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            labelInstructions.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            labelInstructions.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            labelInstructions.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             labelDailyPrompt.topAnchor.constraint(equalTo: labelInstructions.bottomAnchor, constant: 32),
-            labelDailyPrompt.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
+            labelDailyPrompt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             
             labelPrompt.topAnchor.constraint(equalTo: labelDailyPrompt.bottomAnchor, constant: 8),
-            labelPrompt.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
-            labelPrompt.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
-            labelPrompt.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
+            labelPrompt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            labelPrompt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             labelFreeWrite.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
-            labelFreeWrite.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
+            labelFreeWrite.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             
             switchFreeWrite.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             switchFreeWrite.leadingAnchor.constraint(equalTo: labelFreeWrite.trailingAnchor, constant: 16),
             
             labelLocation.topAnchor.constraint(equalTo: switchFreeWrite.bottomAnchor, constant: 16),
-            labelLocation.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
-            labelLocation.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
+            labelLocation.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            labelLocation.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            labelPromptReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 8),
-            labelPromptReply.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 16),
-            labelPromptReply.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -16),
-            labelPromptReply.heightAnchor.constraint(equalToConstant: 100)
+            labelPromptReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 16),
+            labelPromptReply.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            labelPromptReply.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            labelPromptReply.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     
@@ -172,11 +180,3 @@ class ViewNoteScreenView: UIView {
     }
 }
 
-extension ViewNoteScreenView: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let contentHeight = textView.contentSize.height
-        // Adjust the height based on the content size
-        labelPromptReply.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
-        layoutIfNeeded()
-    }
-}

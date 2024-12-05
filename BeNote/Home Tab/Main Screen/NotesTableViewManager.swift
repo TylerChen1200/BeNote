@@ -26,6 +26,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         let noteFullVC = NoteFullViewController()
         noteFullVC.note = self.notesList[indexPath.row]
         self.navigationController?.pushViewController(noteFullVC, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     // Observing refresh
