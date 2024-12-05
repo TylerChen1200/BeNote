@@ -14,7 +14,7 @@ extension RegisterViewController{
     func registerNewAccount(){
         //MARK: create a Firebase user with email and password...
         if let name = registerScreenView.textFieldName.text,
-           let email = registerScreenView.textFieldEmail.text,
+           let email = registerScreenView.textFieldEmail.text?.lowercased(),
            let password = registerScreenView.textFieldPassword.text,
            let passwordVal = registerScreenView.textFieldPasswordVal.text{
             //Validations....

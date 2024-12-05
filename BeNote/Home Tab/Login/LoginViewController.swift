@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func onLoginTapped() {
-        if let email = loginView.emailTextField.text,
+        if let email = loginView.emailTextField.text?.lowercased(),
            let password = loginView.passwordTextField.text{
             if (email.isEmpty || password.isEmpty) {
                 self.showErrorAlert("Cannot submit empty fields")
