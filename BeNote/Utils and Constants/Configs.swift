@@ -14,4 +14,8 @@ class Configs{
     static let tableViewProfileID = "tableViewProfileID"
     
     static let notificationRefresh = Notification.Name("refreshTab")
+    
+    static let defaultUID = "uid"
+    static let defaultEmail = "email"
+    static let defaultName = "name"
 }

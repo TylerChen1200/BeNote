@@ -14,8 +14,8 @@ extension AddNoteViewController {
     // save it both in the notes folder and the user folder to easily populate home and history screens
     func sendNoteToFirebase() {
         self.showActivityIndicator()
-         
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             // save note to notes collection
             db.collection(FirebaseConstants.Notes)
                 .document(FirebaseConstants.Notes)
@@ -23,7 +23,7 @@ extension AddNoteViewController {
                 .document(currentUserID)
                 .setData([
                     "prompt": freeWrite ? "Freewrite" : self.addNoteScreen.labelPrompt.text as Any,
-                    "creatorDisplayName": Auth.auth().currentUser?.displayName as Any,
+                    "creatorDisplayName": self.defaults.object(forKey: Configs.defaultName) as Any,
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
                     "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),
@@ -42,7 +42,7 @@ extension AddNoteViewController {
                 .document(self.today)
                 .setData([
                     "prompt": freeWrite ? "Freewrite" : self.addNoteScreen.labelPrompt.text as Any,
-                    "creatorDisplayName": Auth.auth().currentUser?.email as Any,
+                    "creatorDisplayName": self.defaults.object(forKey: Configs.defaultEmail) as Any,
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
                     "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),

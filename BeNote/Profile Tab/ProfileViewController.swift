@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import PhotosUI
 
 class ProfileViewController: UIViewController {
     
@@ -15,40 +16,70 @@ class ProfileViewController: UIViewController {
     let db = Firestore.firestore()
     var notesHistory = [Note]()
     let notificationCenter = NotificationCenter.default
+    let defaults = UserDefaults.standard
+    var handleAuth: AuthStateDidChangeListenerHandle?
+    
     
     override func loadView() {
         view = profileScreen
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //MARK: handling if the Authentication state is changed (sign in, sign out, register)...
+        handleAuth = Auth.auth().addStateDidChangeListener{ auth, user in
+            if user == nil{
+                //MARK: not signed in...
+                HomeViewController().disableTabs()
+            } else {
+                //MARK: the user is signed in...
+                self.setupRightBarButton(isLoggedin: true)
+                HomeViewController().enableTabs()
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Profile"
         
-        //MARK: Make the titles look large...
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Edit",
+            style: .plain,
+            target: self,
+            action: #selector(editProfileTapped)
+        )
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        //MARK: patching table view delegate and data source...
         profileScreen.tableViewNotesHistory.delegate = self
         profileScreen.tableViewNotesHistory.dataSource = self
+        
         self.fetchProfileData()
         self.fetchNotesData()
+        self.fetchProfilePicture()
         
-        // Setting observers
         observeRefresh()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(handleAuth!)
     }
     
     
     func fetchProfileData() {
-        if let currentUserEmail = Auth.auth().currentUser?.email,
-           let currentUserName = Auth.auth().currentUser?.displayName {
-            self.profileScreen.labelName.text = "\(currentUserName)"
+        if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String?,
+           let currentUserName = self.defaults.object(forKey: Configs.defaultName) as! String? {
+            self.profileScreen.labelName.text = "Name: \(currentUserName)"
             self.profileScreen.labelEmail.text = "Email: \(currentUserEmail)"
         }
         
     }
     
     func fetchNotesData() {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Notes)
@@ -82,7 +113,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    // Observing refresh
     func observeRefresh(){
         notificationCenter.addObserver(
             self,
@@ -91,10 +121,10 @@ class ProfileViewController: UIViewController {
         )
     }
     
-    // Refreshes the profile content of this screen
-    @objc func notificationReceived(notification: Notification){
+    @objc func notificationReceived(notification: Notification) {
         self.fetchProfileData()
         self.fetchNotesData()
+        self.fetchProfilePicture()  
     }
     
     func showErrorAlert(_ message: String) {
@@ -104,7 +134,94 @@ class ProfileViewController: UIViewController {
         errorAlert.addAction(UIAlertAction(title: "Okay", style: .cancel))
         self.present(errorAlert, animated: true)
     }
+    @objc func editProfileTapped() {
+        let editProfileVC = EditProfileViewController()
+        let navController = UINavigationController(rootViewController: editProfileVC)
+        present(navController, animated: true)
+    }
     
+    func setupRightBarButton(isLoggedin: Bool){
+        if isLoggedin{
+            //MARK: user is logged in...
+            let barIcon = UIBarButtonItem(
+                image: UIImage(systemName: "rectangle.portrait.and.arrow.forward"),
+                style: .plain,
+                target: self,
+                action: #selector(onLogOutBarButtonTapped)
+            )
+            let barText = UIBarButtonItem(
+                title: "Logout",
+                style: .plain,
+                target: self,
+                action: #selector(onLogOutBarButtonTapped)
+            )
+            
+            self.navigationItem.rightBarButtonItems = [barIcon, barText]
+        }
+    }
+    
+    @objc func onLogOutBarButtonTapped(){
+        let logoutAlert = UIAlertController(title: "Logging out!", message: "Are you sure want to log out?",
+            preferredStyle: .alert)
+        logoutAlert.addAction(UIAlertAction(title: "Yes, log out!", style: .default, handler: {(_) in
+                do{
+                    try Auth.auth().signOut()
+                    self.defaults.removeObject(forKey: Configs.defaultUID)
+                    self.defaults.removeObject(forKey: Configs.defaultEmail)
+                    self.defaults.removeObject(forKey: Configs.defaultName)
+                    // Switch to the home tab
+                    if let tabBarController = self.tabBarController {
+                        tabBarController.selectedIndex = 0
+                    }
+                }catch{
+                    print("Error occured!")
+                }
+            })
+        )
+        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(logoutAlert, animated: true)
+    }
+
+    func fetchProfilePicture() {
+        guard let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as? String else {
+            return
+        }
+        
+        // Set a default profile image or placeholder
+        self.profileScreen.imageViewProfile.image = UIImage(systemName: "person.circle.fill")
+        
+        db.collection(FirebaseConstants.Users)
+            .document(currentUserID)
+            .getDocument { [weak self] document, error in
+                if let error = error {
+                    self?.showErrorAlert("Error fetching profile picture: \(error.localizedDescription)")
+                    return
+                }
+                
+                // Check for the URL in Firestore
+                if let profilePictureURL = document?.data()?["profilePictureURL"] as? String,
+                   let url = URL(string: profilePictureURL) {
+                    
+                    // Create a URLSession task to download the image
+                    URLSession.shared.dataTask(with: url) { data, response, error in
+                        if let error = error {
+                            DispatchQueue.main.async {
+                                self?.showErrorAlert("Error downloading profile picture: \(error.localizedDescription)")
+                            }
+                            return
+                        }
+                        
+                        if let data = data,
+                           let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self?.profileScreen.imageViewProfile.image = image
+                            }
+                        }
+                    }.resume()
+                }
+            }
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {

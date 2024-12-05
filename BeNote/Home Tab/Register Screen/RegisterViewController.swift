@@ -12,6 +12,7 @@ class RegisterViewController: UIViewController {
     let registerScreenView = RegisterScreenView()
     let childProgressView = ProgressSpinnerViewController()
     let notificationCenter = NotificationCenter.default
+    let defaults = UserDefaults.standard
     
     override func loadView() {
         view = registerScreenView
