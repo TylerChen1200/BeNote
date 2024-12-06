@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class HomeViewController: UIViewController {
-
+    
     let mainScreen = MainScreenView()
     var notesList = [Note]()
     let db = Firestore.firestore()
@@ -51,15 +51,15 @@ class HomeViewController: UIViewController {
                 navigationController.modalPresentationStyle = .fullScreen
                 navigationController.isModalInPresentation = true
                 self.present(navigationController, animated: false)
-
+                
                 self.currentUser = nil
                 self.mainScreen.labelText.text = "Please sign in to send your note of the day!"
                 
                 self.disableTabs()
                 
                 //MARK: Reset tableView...
-               self.notesList.removeAll()
-               self.mainScreen.tableViewNotes.reloadData()
+                self.notesList.removeAll()
+                self.mainScreen.tableViewNotes.reloadData()
             } else {
                 //MARK: the user is signed in...
                 self.setupRightBarButton(isLoggedin: true)
@@ -87,7 +87,7 @@ class HomeViewController: UIViewController {
         // Settings observers
         observeRefresh()
         logo()
-
+        
         mainScreen.addNoteButton.addTarget(self, action: #selector(addNote), for: .touchUpInside)
     }
     
@@ -103,71 +103,141 @@ class HomeViewController: UIViewController {
     
     func getFriendsNotes() {
         if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
-            
-            var friendsArray = [String]()
-            
-            // get the users friends
-            db.collection(FirebaseConstants.Users)
+            // First, fetch the current user's note for today
+            self.db.collection(FirebaseConstants.Notes)
+                .document(FirebaseConstants.Notes)
+                .collection(self.today)
                 .document(currentUserID)
-                .collection(FirebaseConstants.Friends)
-                .getDocuments { (querySnapshot, error) in
+                .getDocument { [weak self] (document, error) in
                     if let error = error {
-                        self.showErrorAlert("Error fetching user data: \(error)")
+                        self?.showErrorAlert("Error fetching user note: \(error)")
                         return
                     }
                     
-                    // Filter out the current user and then map the documents to User objects
-                    friendsArray = querySnapshot?.documents
-                        .map { document in
-                            return document.documentID
-                        } ?? []
+                    // Initialize empty array for all notes
+                    self?.notesList = []
                     
-                    // save note to notes collection
-                    self.db.collection(FirebaseConstants.Notes)
-                        .document(FirebaseConstants.Notes)
-                        .collection(self.today)
-                        .getDocuments { (querySnapshot, error) in
-                            if let error = error {
-                                self.showErrorAlert("Error fetching user data: \(error)")
-                                return
-                            }
-                            
-                            // Filter out the current user and then map the documents to User objects
-                            self.notesList = querySnapshot?.documents
-                                .filter { document in
-                                    let title = document.documentID
-                                    return friendsArray.contains(title)
-                                }
-                                .map {document in
-                                    let data = document.data()
-                                    let timestamp = data["timestampCreated"] as? Timestamp
-                                    let uwDate = timestamp?.dateValue() ?? Date()
-                                    
-                                    return Note(prompt: data["prompt"] as? String ?? "No Prompt",
-                                                creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Display Name",
-                                                creatorReply: data["creatorReply"] as? String ?? "No Reply",
-                                                location: data["location"] as? String ?? "No Location",
-                                                timestampCreated: uwDate,
-                                                likes: data["likes"] as? [String] ?? [String](),
-                                                creatorID: document.documentID)
-                                }
-                            ?? [Note]()
-                            
-                            let dailyPrompt = self.notesList.first {
-                                $0.prompt != FirebaseConstants.Freewrite
-                            }
-                            
-                            if let uwDailyPrompt = dailyPrompt {
-                                self.mainScreen.labelPrompt.text = uwDailyPrompt.prompt
-                            } else {
-                                self.mainScreen.labelPrompt.text = FirebaseConstants.DefaultPrompt
-                            }
-                            
-                            print("All Notes: \(self.notesList)")
-                            
-                            self.mainScreen.tableViewNotes.reloadData()
-                        }
+                    if let document = document, document.exists,
+                       let data = document.data() {
+                        let timestamp = data["timestampCreated"] as? Timestamp
+                        let uwDate = timestamp?.dateValue() ?? Date()
+                        
+                        let userNote = Note(
+                            prompt: data["prompt"] as? String ?? "No Prompt",
+                            creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Display Name",
+                            creatorReply: data["creatorReply"] as? String ?? "No Reply",
+                            location: data["location"] as? String ?? "No Location",
+                            timestampCreated: uwDate,
+                            likes: data["likes"] as? [String] ?? [String](),
+                            creatorID: currentUserID
+                        )
+                        
+                        // Add user's note to the start of the array
+                        self?.notesList = [userNote]
+                    }
+                    
+                    // Continue with fetching friends' notes
+                    self?.fetchFriendsNotes(currentUserID: currentUserID)
                 }
         }
+    }
+    
+    private func fetchFriendsNotes(currentUserID: String) {
+        db.collection(FirebaseConstants.Users)
+            .document(currentUserID)
+            .collection(FirebaseConstants.Friends)
+            .getDocuments { [weak self] (querySnapshot, error) in
+                if let error = error {
+                    self?.showErrorAlert("Error fetching user data: \(error)")
+                    return
+                }
+                
+                let friendsArray = querySnapshot?.documents
+                    .map { document in
+                        return document.documentID
+                    } ?? []
+                
+                self?.db.collection(FirebaseConstants.Notes)
+                    .document(FirebaseConstants.Notes)
+                    .collection(self?.today ?? "")
+                    .getDocuments { [weak self] (querySnapshot, error) in
+                        if let error = error {
+                            self?.showErrorAlert("Error fetching user data: \(error)")
+                            return
+                        }
+                        
+                        // Explicitly type friendNotes as [Note]
+                        let friendNotes: [Note] = querySnapshot?.documents
+                            .filter { document in
+                                let title = document.documentID
+                                return friendsArray.contains(title)
+                            }
+                            .map { document in
+                                let data = document.data()
+                                let timestamp = data["timestampCreated"] as? Timestamp
+                                let uwDate = timestamp?.dateValue() ?? Date()
+                                
+                                return Note(
+                                    prompt: data["prompt"] as? String ?? "No Prompt",
+                                    creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Display Name",
+                                    creatorReply: data["creatorReply"] as? String ?? "No Reply",
+                                    location: data["location"] as? String ?? "No Location",
+                                    timestampCreated: uwDate,
+                                    likes: data["likes"] as? [String] ?? [String](),
+                                    creatorID: document.documentID
+                                )
+                            } ?? []
+                        
+                        // Update the array concatenation
+                        self?.notesList += friendNotes
+                        
+                        let dailyPrompt = self?.notesList.first {
+                            $0.prompt != FirebaseConstants.Freewrite
+                        }
+                        
+                        if let uwDailyPrompt = dailyPrompt {
+                            self?.mainScreen.labelPrompt.text = uwDailyPrompt.prompt
+                        } else {
+                            self?.mainScreen.labelPrompt.text = FirebaseConstants.DefaultPrompt
+                        }
+                        
+                        self?.mainScreen.tableViewNotes.reloadData()
+                    }
+            }
+    }
+}
+extension HomeViewController {
+    func fetchAndSetProfilePicture(for userID: String, imageView: UIImageView) {
+        db.collection(FirebaseConstants.Users)
+            .document(userID)
+            .getDocument { document, error in
+                if let error = error {
+                    print("Error fetching profile picture: \(error)")
+                    return
+                }
+                
+                // Check for the URL in Firestore
+                if let profilePictureURL = document?.data()?["profilePictureURL"] as? String,
+                   let url = URL(string: profilePictureURL) {
+                    
+                    // Create a URLSession task to download the image
+                    URLSession.shared.dataTask(with: url) { data, response, error in
+                        if let error = error {
+                            print("Error downloading profile picture: \(error)")
+                            return
+                        }
+                        
+                        if let data = data,
+                           let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                imageView.image = image
+                                // Make the image circular
+                                imageView.layer.cornerRadius = imageView.frame.size.width / 2
+                                imageView.clipsToBounds = true
+                            }
+                        }
+                    }.resume()
+                }
+            }
     }
 }
