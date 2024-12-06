@@ -48,9 +48,13 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
     
     // handles the UISwitch element being flipped
     @objc func onSwitchFlipped(_ sender: UISwitch) {
+        updateSwitchUI(sender.isOn)
+    }
+    
+    func updateSwitchUI(_ switchState: Bool) {
         // 1. bold the Freewrite label
         // 2. Change the controller variable to know what to send to firebase
-        if (sender.isOn) {
+        if (switchState) {
             // code for switch being on
             addNoteScreen.labelFreeWrite.font = UIFont.boldSystemFont(ofSize: 20)
             addNoteScreen.labelFreeWrite.textColor = .black

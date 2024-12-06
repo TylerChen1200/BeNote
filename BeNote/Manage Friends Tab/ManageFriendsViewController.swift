@@ -97,6 +97,8 @@ class ManageFriendsViewController: UIViewController {
                             print("Friend removed successfully.")
                             // Step 3: Refresh view
                             self.getAllFriends()
+                            // Post notification to refresh home page
+                            NotificationCenter.default.post(name: Configs.notificationRefresh, object: nil)
                         }
                     }
         }
@@ -123,16 +125,14 @@ class ManageFriendsViewController: UIViewController {
                     }
                     .first { $0.email == email }
                 
-                DispatchQueue.main.async {
-                    if let uwFriend = newFriend {
-                        print("successfully found friend data")
-                        
-                        // Step 2: Add friend info to the current users friends collection
-                        self.addFriendToCurrentUser(friend: uwFriend)
-                    } else {
-                        self.showErrorAlert("Cannot find friend with that email")
-                        return
-                    }
+                if let uwFriend = newFriend {
+                    print("successfully found friend data")
+                    
+                    // Step 2: Add friend info to the current users friends collection
+                    self.addFriendToCurrentUser(friend: uwFriend)
+                } else {
+                    self.showErrorAlert("Cannot find friend with that email")
+                    return
                 }
             }
         }
@@ -155,6 +155,9 @@ class ManageFriendsViewController: UIViewController {
                         // Step 3: Refresh view
                         self.getAllFriends()
                         self.clearAddViewFields()
+                        
+                        // Post notification to refresh home page
+                        NotificationCenter.default.post(name: Configs.notificationRefresh, object: nil)
                     }
                 }
         }

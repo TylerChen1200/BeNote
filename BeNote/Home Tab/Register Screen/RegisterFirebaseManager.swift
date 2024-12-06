@@ -102,6 +102,8 @@ extension RegisterViewController{
                     print("User data saved successfully.")
                 }
             }
+        } else {
+            print("User data not saved")
         }
     }
 }

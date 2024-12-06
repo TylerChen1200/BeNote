@@ -91,21 +91,19 @@ class ProfileTableViewCell: UITableViewCell {
             labelPrompt.heightAnchor.constraint(equalToConstant: 20),
             labelPrompt.widthAnchor.constraint(lessThanOrEqualTo: wrapperCellView.widthAnchor),
             
-            labelLocation.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 4),
-            labelLocation.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
+            labelLocation.topAnchor.constraint(equalTo: labelReply.bottomAnchor, constant: 2),
+            labelLocation.leadingAnchor.constraint(equalTo: labelTimestampCreated.trailingAnchor, constant: 8),
             labelLocation.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
-            labelLocation.heightAnchor.constraint(equalToConstant: 16),
             
-            labelReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 2), 
+            labelReply.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 2),
             labelReply.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
             labelReply.heightAnchor.constraint(equalToConstant: 16),
             labelReply.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
             labelTimestampCreated.topAnchor.constraint(equalTo: labelReply.bottomAnchor, constant: 2),
             labelTimestampCreated.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelTimestampCreated.widthAnchor.constraint(lessThanOrEqualTo: labelPrompt.widthAnchor),
             
-            wrapperCellView.heightAnchor.constraint(equalToConstant: 96)
+            wrapperCellView.heightAnchor.constraint(equalToConstant: 72)
         ])
     }
 
