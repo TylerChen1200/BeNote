@@ -80,7 +80,8 @@ class NotesTableViewCell: UITableViewCell {
         labelReply = UILabel()
         labelReply.font = UIFont.systemFont(ofSize: 16)
         labelReply.textColor = .darkGray
-        labelReply.numberOfLines = 0
+        labelReply.numberOfLines = 2  // Limit to two lines
+        labelReply.lineBreakMode = .byTruncatingTail  // Show ellipsis ("...") at the end if text is truncated
         labelReply.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelReply)
     }

@@ -10,7 +10,6 @@ import UIKit
 class MainScreenView: UIView {
     var profilePic: UIImageView!
     var labelText: UILabel!
-    var floatingButtonAddContact: UIButton!
     var tableViewNotes: UITableView!
     var modalOverlay: UIView!
     var modalView: UIView!
@@ -22,7 +21,6 @@ class MainScreenView: UIView {
         
         setupProfilePic()
         setupLabelText()
-        setupFloatingButtonAddContact()
         setupTableViewNotes()
         setupModal()
         setupBackgroundImage()
@@ -75,22 +73,6 @@ class MainScreenView: UIView {
         tableViewNotes.backgroundColor = UIColor.clear
         tableViewNotes.separatorStyle = .none
         self.addSubview(tableViewNotes)
-    }
-    
-    func setupFloatingButtonAddContact(){
-        floatingButtonAddContact = UIButton(type: .system)
-        floatingButtonAddContact.setTitle("", for: .normal)
-        floatingButtonAddContact.setImage(UIImage(systemName: "button.left.circle.fill.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        floatingButtonAddContact.contentHorizontalAlignment = .fill
-        floatingButtonAddContact.contentVerticalAlignment = .fill
-        floatingButtonAddContact.imageView?.contentMode = .scaleAspectFit
-        floatingButtonAddContact.layer.cornerRadius = 16
-        floatingButtonAddContact.imageView?.layer.shadowOffset = .zero
-        floatingButtonAddContact.imageView?.layer.shadowRadius = 0.8
-        floatingButtonAddContact.imageView?.layer.shadowOpacity = 0.7
-        floatingButtonAddContact.imageView?.clipsToBounds = true
-        floatingButtonAddContact.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(floatingButtonAddContact)
     }
     
     func setupModal() {
@@ -154,11 +136,6 @@ class MainScreenView: UIView {
             tableViewNotes.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             tableViewNotes.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewNotes.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
-            floatingButtonAddContact.widthAnchor.constraint(equalToConstant: 48),
-            floatingButtonAddContact.heightAnchor.constraint(equalToConstant: 48),
-            floatingButtonAddContact.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -12),
-            floatingButtonAddContact.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
             
             modalOverlay.topAnchor.constraint(equalTo: self.topAnchor),
             modalOverlay.bottomAnchor.constraint(equalTo: self.bottomAnchor),

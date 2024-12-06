@@ -242,6 +242,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let noteFullVC = NoteFullViewController()
         noteFullVC.note = self.notesHistory[indexPath.row]
         self.navigationController?.pushViewController(noteFullVC, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     func formatTimestamp(_ timestamp: Date) -> String {
