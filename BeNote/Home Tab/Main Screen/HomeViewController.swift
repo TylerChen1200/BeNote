@@ -22,6 +22,7 @@ class HomeViewController: UIViewController {
     let notificationCenter = NotificationCenter.default
     let today: String = todaysDate()
     let defaults = UserDefaults.standard
+    var prevColor: UIColor = UIColor()
     
     override func loadView() {
         view = mainScreen
@@ -149,6 +150,17 @@ class HomeViewController: UIViewController {
                                                 timestampCreated: uwDate)
                                 }
                             ?? [Note]()
+                            
+                            let dailyPrompt = self.notesList.first {
+                                $0.prompt != FirebaseConstants.Freewrite
+                            }
+                            
+                            if let uwDailyPrompt = dailyPrompt {
+                                self.mainScreen.labelPrompt.text = uwDailyPrompt.prompt
+                            } else {
+                                self.mainScreen.labelPrompt.text = FirebaseConstants.DefaultPrompt
+                            }
+                            
                             print("All Notes: \(self.notesList)")
                             
                             self.mainScreen.tableViewNotes.reloadData()
