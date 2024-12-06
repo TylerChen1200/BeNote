@@ -37,7 +37,8 @@ extension HomeViewController {
                                                        creatorDisplayName: data["creatorEmail"] as? String ?? "No Email",
                                                        creatorReply: data["creatorReply"] as? String ?? "",
                                                        location: data["location"] as? String ?? "",
-                                                       timestampCreated: uwDate
+                                                       timestampCreated: uwDate,
+                                                       likes: data["likes"] as? [String] ?? [String]()
                                 )
                             }
                         } else {

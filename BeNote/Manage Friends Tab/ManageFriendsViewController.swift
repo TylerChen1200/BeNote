@@ -115,13 +115,13 @@ class ManageFriendsViewController: UIViewController {
                 // find user with the given email
                 newFriend = querySnapshot?.documents
                     .filter { $0.documentID != currentUserID }
-                    .first { $0.data()["email"] as! String == email }
                     .map { document in
                         let data = document.data()
                         return User(name: data["name"] as? String ?? "No Name",
                                     email: data["email"] as? String ?? "No Email",
                                     _id: data["id"] as? String ?? "No ID")
-                    } ?? nil
+                    }
+                    .first { $0.email == email }
                 
                 DispatchQueue.main.async {
                     if let uwFriend = newFriend {

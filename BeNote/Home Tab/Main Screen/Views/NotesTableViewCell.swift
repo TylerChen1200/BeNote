@@ -10,11 +10,14 @@ import UIKit
 class NotesTableViewCell: UITableViewCell {
     
     var wrapperCellView: UIView!
-    var labelPrompt: UILabel!
     var labelReply: UILabel!
     var labelCreatorDisplayName: UILabel!
+    var labelFreewrite: UILabel!
     var labelTimestampCreated: UILabel!
     var labelLocation: UILabel!
+    var imageLikes: UIImageView!
+    var labelLikes: UILabel!
+    var profilePic: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,11 +25,14 @@ class NotesTableViewCell: UITableViewCell {
         self.backgroundColor = .clear
                 
         setupWrapperCellView()
-        setupLabelPrompt()
         setupLabelCreatorDisplayName()
+        setupLabelFreewrite()
         setupLabelLocation()
         setupLabelReply()
         setupLabelTimestampCreated()
+        setupProfilePic()
+        setupImageLikes()
+        setupLabelLikes()
         
         initConstraints()
     }
@@ -49,22 +55,22 @@ class NotesTableViewCell: UITableViewCell {
         self.contentView.addSubview(wrapperCellView)
     }
     
-    func setupLabelPrompt() {
-        labelPrompt = UILabel()
-        labelPrompt.font = UIFont.boldSystemFont(ofSize: 16) // Adjusted font size
-        labelPrompt.textColor = .black // Set to black
-        labelPrompt.numberOfLines = 1 // Restrict to a single line
-        labelPrompt.lineBreakMode = .byTruncatingTail // Add "..." for overflow
-        labelPrompt.translatesAutoresizingMaskIntoConstraints = false
-        wrapperCellView.addSubview(labelPrompt)
-    }
-    
     func setupLabelCreatorDisplayName() {
         labelCreatorDisplayName = UILabel()
         labelCreatorDisplayName.font = UIFont.systemFont(ofSize: 14)
         labelCreatorDisplayName.textColor = .tintColor
         labelCreatorDisplayName.translatesAutoresizingMaskIntoConstraints = false
         wrapperCellView.addSubview(labelCreatorDisplayName)
+    }
+    
+    func setupLabelFreewrite() {
+        labelFreewrite = UILabel()
+        labelFreewrite.font = UIFont.boldSystemFont(ofSize: 14)
+        labelFreewrite.text = "Freewrite"
+        labelFreewrite.textColor = .black
+        labelFreewrite.isHidden = true
+        labelFreewrite.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelFreewrite)
     }
     
     func setupLabelLocation() {
@@ -78,8 +84,8 @@ class NotesTableViewCell: UITableViewCell {
     
     func setupLabelReply() {
         labelReply = UILabel()
-        labelReply.font = UIFont.systemFont(ofSize: 16)
-        labelReply.textColor = .darkGray
+        labelReply.font = UIFont.systemFont(ofSize: 18)
+        labelReply.textColor = .black
         labelReply.numberOfLines = 2  // Limit to two lines
         labelReply.lineBreakMode = .byTruncatingTail  // Show ellipsis ("...") at the end if text is truncated
         labelReply.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +100,34 @@ class NotesTableViewCell: UITableViewCell {
         wrapperCellView.addSubview(labelTimestampCreated)
     }
     
+    func setupProfilePic() {
+        profilePic = UIImageView()
+        profilePic.image = UIImage(systemName: "person.circle")?.withRenderingMode(.alwaysOriginal)
+        profilePic.contentMode = .scaleToFill
+        profilePic.clipsToBounds = true
+        profilePic.layer.masksToBounds = true
+        profilePic.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(profilePic)
+    }
+    
+    func setupImageLikes() {
+        imageLikes = UIImageView()
+        imageLikes.image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal)
+        imageLikes.contentMode = .scaleToFill
+        imageLikes.clipsToBounds = true
+        imageLikes.layer.masksToBounds = true
+        imageLikes.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(imageLikes)
+    }
+    
+    func setupLabelLikes() {
+        labelLikes = UILabel()
+        labelLikes.font = UIFont.boldSystemFont(ofSize: 14)
+        labelLikes.textColor = .tintColor
+        labelLikes.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelLikes)
+    }
+    
     func initConstraints() {
         NSLayoutConstraint.activate([
             // Wrapper cell view
@@ -102,31 +136,43 @@ class NotesTableViewCell: UITableViewCell {
             wrapperCellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             wrapperCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
-            // Prompt label
-            labelPrompt.topAnchor.constraint(equalTo: wrapperCellView.topAnchor, constant: 12),
-            labelPrompt.leadingAnchor.constraint(equalTo: wrapperCellView.leadingAnchor, constant: 16),
-            labelPrompt.trailingAnchor.constraint(equalTo: wrapperCellView.trailingAnchor, constant: -16),
-            
             // Creator display name
-            labelCreatorDisplayName.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
-            labelCreatorDisplayName.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelCreatorDisplayName.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            profilePic.widthAnchor.constraint(equalToConstant: 32),
+            profilePic.heightAnchor.constraint(equalToConstant: 32),
+            profilePic.topAnchor.constraint(equalTo: wrapperCellView.topAnchor, constant: 8),
+            profilePic.leadingAnchor.constraint(equalTo: wrapperCellView.leadingAnchor, constant: 8),
             
-            // Location label
-            labelLocation.topAnchor.constraint(equalTo: labelCreatorDisplayName.bottomAnchor, constant: 8),
-            labelLocation.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelLocation.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            labelCreatorDisplayName.topAnchor.constraint(equalTo: profilePic.topAnchor),
+            labelCreatorDisplayName.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
+            labelCreatorDisplayName.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: 8),
+            
+            labelFreewrite.topAnchor.constraint(equalTo: profilePic.topAnchor),
+            labelFreewrite.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
+            labelFreewrite.trailingAnchor.constraint(equalTo: imageLikes.leadingAnchor, constant: -8),
+            
+            imageLikes.topAnchor.constraint(equalTo: profilePic.topAnchor),
+            imageLikes.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
+            imageLikes.widthAnchor.constraint(equalTo: imageLikes.heightAnchor),
+            imageLikes.trailingAnchor.constraint(equalTo: labelLikes.leadingAnchor, constant: -2),
+            
+            labelLikes.topAnchor.constraint(equalTo: profilePic.topAnchor),
+            labelLikes.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
+            labelLikes.trailingAnchor.constraint(equalTo: labelReply.trailingAnchor),
             
             // Reply label
-            labelReply.topAnchor.constraint(equalTo: labelLocation.bottomAnchor, constant: 8),
-            labelReply.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelReply.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            labelReply.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 8),
+            labelReply.leadingAnchor.constraint(equalTo: wrapperCellView.leadingAnchor, constant: 16),
+            labelReply.trailingAnchor.constraint(equalTo: wrapperCellView.trailingAnchor, constant: -16),
             
             // Timestamp label
             labelTimestampCreated.topAnchor.constraint(equalTo: labelReply.bottomAnchor, constant: 8),
-            labelTimestampCreated.leadingAnchor.constraint(equalTo: labelPrompt.leadingAnchor),
-            labelTimestampCreated.trailingAnchor.constraint(equalTo: labelPrompt.trailingAnchor),
+            labelTimestampCreated.leadingAnchor.constraint(equalTo: labelReply.leadingAnchor),
             labelTimestampCreated.bottomAnchor.constraint(lessThanOrEqualTo: wrapperCellView.bottomAnchor, constant: -12),
+            
+            // Location label
+            labelLocation.topAnchor.constraint(equalTo: labelReply.bottomAnchor, constant: 8),
+            labelLocation.trailingAnchor.constraint(equalTo: labelReply.trailingAnchor),
+            labelLocation.bottomAnchor.constraint(lessThanOrEqualTo: wrapperCellView.bottomAnchor, constant: -12),
         ])
     }
     

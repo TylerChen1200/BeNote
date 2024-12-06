@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -14,11 +15,32 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.notesViewContactsID, for: indexPath) as! NotesTableViewCell
-        cell.labelPrompt.text = notesList[indexPath.row].prompt
         cell.labelCreatorDisplayName.text = notesList[indexPath.row].creatorDisplayName
         cell.labelTimestampCreated.text = formatTimestamp(notesList[indexPath.row].timestampCreated)
         cell.labelReply.text = notesList[indexPath.row].creatorReply
         cell.labelLocation.text = notesList[indexPath.row].location
+        
+        // set the color of the border of the cell
+        let borderColor = randomColor(indexPath.row > 0 ? self.prevColor : nil)
+        self.prevColor = borderColor
+        cell.wrapperCellView.layer.borderColor = borderColor.cgColor
+        cell.labelCreatorDisplayName.textColor = borderColor
+        
+        // enable the freewrite label if needed
+        if (notesList[indexPath.row].prompt == FirebaseConstants.Freewrite) {
+            cell.labelFreewrite.isHidden = false
+        }
+        
+        // calculate the number of likes
+        cell.labelLikes.text = String(notesList[indexPath.row].likes.count)
+        print(String(notesList[indexPath.row].likes.count))
+        // change to filled heart if user is one of the likers
+        if (notesList[indexPath.row].likes.first{ $0 == currentUser?.email } != nil) {
+            cell.imageLikes.image = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal)
+        } else {
+            cell.imageLikes.image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal)
+        }
+    
         return cell
     }
     

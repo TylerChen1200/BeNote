@@ -101,8 +101,10 @@ class ProfileViewController: UIViewController {
                             
                             return Note(prompt: data["prompt"] as? String ?? "",
                                         creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Email",
-                                        creatorReply: data["creatorReply"] as? String ?? "", location: data["location"] as? String ?? "",
-                                        timestampCreated: uwDate)
+                                        creatorReply: data["creatorReply"] as? String ?? "",
+                                        location: data["location"] as? String ?? "",
+                                        timestampCreated: uwDate,
+                                        likes: data["likes"] as? [String] ?? [String]())
                         }
                         .reversed()
                     ?? [Note]()

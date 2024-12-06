@@ -30,11 +30,11 @@ extension RegisterViewController{
                 if error == nil{
                     //MARK: the user creation is successful...
                     self.setNameOfTheUserInFirebaseAuth(name: name)
-                    self.addToUserDB(name: name, email: email)
                     let currentUser = result?.user
                     self.defaults.set(currentUser?.uid, forKey: Configs.defaultUID)
                     self.defaults.set(currentUser?.email, forKey: Configs.defaultEmail)
                     self.defaults.set(currentUser?.displayName, forKey: Configs.defaultName)
+                    self.addToUserDB(name: name, email: email)
                     // Refresh the tab views
                     self.notificationCenter.post(
                         name: Configs.notificationRefresh,
