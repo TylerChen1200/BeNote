@@ -97,6 +97,8 @@ class ManageFriendsViewController: UIViewController {
                             print("Friend removed successfully.")
                             // Step 3: Refresh view
                             self.getAllFriends()
+                            // Post notification to refresh home page
+                            NotificationCenter.default.post(name: Configs.notificationRefresh, object: nil)
                         }
                     }
         }
@@ -115,24 +117,22 @@ class ManageFriendsViewController: UIViewController {
                 // find user with the given email
                 newFriend = querySnapshot?.documents
                     .filter { $0.documentID != currentUserID }
-                    .first { $0.data()["email"] as! String == email }
                     .map { document in
                         let data = document.data()
                         return User(name: data["name"] as? String ?? "No Name",
                                     email: data["email"] as? String ?? "No Email",
                                     _id: data["id"] as? String ?? "No ID")
-                    } ?? nil
-                
-                DispatchQueue.main.async {
-                    if let uwFriend = newFriend {
-                        print("successfully found friend data")
-                        
-                        // Step 2: Add friend info to the current users friends collection
-                        self.addFriendToCurrentUser(friend: uwFriend)
-                    } else {
-                        self.showErrorAlert("Cannot find friend with that email")
-                        return
                     }
+                    .first { $0.email == email }
+                
+                if let uwFriend = newFriend {
+                    print("successfully found friend data")
+                    
+                    // Step 2: Add friend info to the current users friends collection
+                    self.addFriendToCurrentUser(friend: uwFriend)
+                } else {
+                    self.showErrorAlert("Cannot find friend with that email")
+                    return
                 }
             }
         }
@@ -155,6 +155,9 @@ class ManageFriendsViewController: UIViewController {
                         // Step 3: Refresh view
                         self.getAllFriends()
                         self.clearAddViewFields()
+                        
+                        // Post notification to refresh home page
+                        NotificationCenter.default.post(name: Configs.notificationRefresh, object: nil)
                     }
                 }
         }

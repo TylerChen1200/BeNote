@@ -57,6 +57,7 @@ extension ViewNoteViewController {
                     } else {
                         // update the current views labels with the note info
                         self.updateLabelsWithNote()
+                        self.showEditButton()
                     }
                 }
         }
