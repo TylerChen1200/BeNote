@@ -16,6 +16,8 @@ class NoteFullView: UIView {
     var labelLocation: UILabel!
     var labelTimestampCreated: UILabel!
     var labelCreatorReply: UILabel!
+    var labelLikes: UILabel!
+    var buttonLikes: UIButton!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +26,7 @@ class NoteFullView: UIView {
         setupScrollView()
         setupContentView()
         setupLabels()
+        setupLikeButton()
         
         setupBackgroundImage()
         
@@ -85,12 +88,25 @@ class NoteFullView: UIView {
         labelTimestampCreated.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(labelTimestampCreated)
         
+        // Setup for the likes number
+        labelLikes = UILabel()
+        labelLikes.font = UIFont.systemFont(ofSize: 16)
+        labelLikes.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(labelLikes)
+        
         // Setup for the creator's reply label (regular font)
         labelCreatorReply = UILabel()
         labelCreatorReply.font = UIFont.systemFont(ofSize: 16)
         labelCreatorReply.numberOfLines = 0
         labelCreatorReply.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(labelCreatorReply)
+    }
+    
+    func setupLikeButton() {
+        buttonLikes = UIButton(type: .system)
+        buttonLikes.setImage(UIImage(systemName: "heart"), for: .normal)
+        buttonLikes.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(buttonLikes)
     }
 
     private func initConstraints() {
@@ -122,8 +138,18 @@ class NoteFullView: UIView {
             labelTimestampCreated.leadingAnchor.constraint(equalTo: labelLocation.leadingAnchor),
             labelTimestampCreated.trailingAnchor.constraint(equalTo: labelLocation.trailingAnchor),
             
+            // Likes label/buttonconstraints
+            buttonLikes.heightAnchor.constraint(equalToConstant: 32),
+            buttonLikes.widthAnchor.constraint(equalTo: buttonLikes.heightAnchor),
+            buttonLikes.topAnchor.constraint(equalTo: labelTimestampCreated.bottomAnchor, constant: 8),
+            buttonLikes.leadingAnchor.constraint(equalTo: labelLocation.leadingAnchor),
+            
+            labelLikes.topAnchor.constraint(equalTo: buttonLikes.topAnchor),
+            labelLikes.bottomAnchor.constraint(equalTo: buttonLikes.bottomAnchor),
+            labelLikes.leadingAnchor.constraint(equalTo: buttonLikes.trailingAnchor, constant: 4),
+            
             // Creator's reply label constraints
-            labelCreatorReply.topAnchor.constraint(equalTo: labelTimestampCreated.bottomAnchor, constant: 25),
+            labelCreatorReply.topAnchor.constraint(equalTo: labelLikes.bottomAnchor, constant: 25),
             labelCreatorReply.leadingAnchor.constraint(equalTo: labelTimestampCreated.leadingAnchor),
             labelCreatorReply.trailingAnchor.constraint(equalTo: labelTimestampCreated.trailingAnchor),
             labelCreatorReply.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),

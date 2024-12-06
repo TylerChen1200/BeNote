@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Note: Codable {
     var prompt: String
@@ -13,4 +14,6 @@ struct Note: Codable {
     var creatorReply: String
     var location: String
     var timestampCreated: Date
+    var likes: [String]
+    var creatorID: String?
 }

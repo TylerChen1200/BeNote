@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,6 +31,38 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             cell.labelFreewrite.isHidden = false
         }
         
+        // calculate the number of likes
+        cell.labelLikes.text = String(notesList[indexPath.row].likes.count)
+        
+        // change to filled heart if user is one of the likers
+        if (notesList[indexPath.row].likes.first{ $0 == currentUser?.email } != nil) {
+            cell.imageLikes.image = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal)
+        } else {
+            cell.imageLikes.image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal)
+        }
+        
+        // Fetch and set profile picture
+        if let creatorID = notesList[indexPath.row].creatorID {
+            db.collection(FirebaseConstants.Users)
+                .document(creatorID)
+                .getDocument { [weak self] document, error in
+                    if let profilePictureURL = document?.data()?["profilePictureURL"] as? String,
+                       let url = URL(string: profilePictureURL) {
+                        
+                        URLSession.shared.dataTask(with: url) { data, response, error in
+                            if let data = data,
+                               let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    cell.profilePic.image = image
+                                    cell.profilePic.layer.cornerRadius = cell.profilePic.frame.size.width / 2
+                                    cell.profilePic.clipsToBounds = true
+                                }
+                            }
+                        }.resume()
+                    }
+                }
+        }
+
         return cell
     }
     
