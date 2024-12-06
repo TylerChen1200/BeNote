@@ -10,9 +10,11 @@ import UIKit
 class MainScreenView: UIView {
     var profilePic: UIImageView!
     var labelText: UILabel!
+    var labelPrompt: UILabel!
     var tableViewNotes: UITableView!
     var modalOverlay: UIView!
     var modalView: UIView!
+    var modalLabel: UILabel!
     var addNoteButton: UIButton!
     
     override init(frame: CGRect) {
@@ -20,6 +22,7 @@ class MainScreenView: UIView {
         self.backgroundColor = .white
         
         setupProfilePic()
+        setupLabelPrompt()
         setupLabelText()
         setupTableViewNotes()
         setupModal()
@@ -59,6 +62,15 @@ class MainScreenView: UIView {
         self.addSubview(profilePic)
     }
     
+    func setupLabelPrompt() {
+        labelPrompt = UILabel()
+        labelPrompt.font = .boldSystemFont(ofSize: 18)
+        labelPrompt.numberOfLines = 0
+        labelPrompt.lineBreakMode = .byWordWrapping
+        labelPrompt.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(labelPrompt)
+    }
+    
     func setupLabelText(){
         labelText = UILabel()
         labelText.font = .boldSystemFont(ofSize: 14)
@@ -92,7 +104,7 @@ class MainScreenView: UIView {
         modalOverlay.addSubview(modalView)
         
         // Add a label to the modal
-        let modalLabel = UILabel()
+        modalLabel = UILabel()
         modalLabel.text = "Create your Note of the Day!"
         modalLabel.textAlignment = .center
         modalLabel.font = .boldSystemFont(ofSize: 16)
@@ -132,7 +144,11 @@ class MainScreenView: UIView {
             labelText.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
             labelText.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: 8),
             
-            tableViewNotes.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 8),
+            labelPrompt.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 16),
+            labelPrompt.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            labelPrompt.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            tableViewNotes.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             tableViewNotes.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             tableViewNotes.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewNotes.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
