@@ -104,23 +104,11 @@ class HomeViewController: UIViewController {
     
     func getFriendsNotes() {
         if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
-            // First, fetch the current user's note for today
-            self.db.collection(FirebaseConstants.Notes)
-                .document(FirebaseConstants.Notes)
-                .collection(self.today)
-                .document(currentUserID)
-                .getDocument { [weak self] (document, error) in
-                    if let error = error {
-                        self?.showErrorAlert("Error fetching user note: \(error)")
-                        return
-                    }
-                    
-                    // Initialize empty array for all notes
-                    self?.notesList = []
-                    
-                    // Continue with fetching friends' notes
-                    self?.fetchFriendsNotes(currentUserID: currentUserID)
-                }
+            // Initialize empty array for all notes
+            self.notesList = []
+            
+            // Continue with fetching friends' notes
+            self.fetchFriendsNotes(currentUserID: currentUserID)
         }
     }
     
