@@ -90,11 +90,22 @@ class HomeViewController: UIViewController {
         logo()
         
         mainScreen.addNoteButton.addTarget(self, action: #selector(addNote), for: .touchUpInside)
+        mainScreen.buttonRefresh.addTarget(self, action: #selector(refreshButton), for: .touchUpInside)
     }
     
     @objc func addNote() {
         // Navigate to the second tab
         tabBarController?.selectedIndex = 1
+    }
+    
+    @objc func refreshButton() {
+        // Refresh the tab views
+        self.notificationCenter.post(
+            name: Configs.notificationRefresh,
+            object: nil
+        )
+        
+        mainScreen.tableViewNotes.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,6 +124,7 @@ class HomeViewController: UIViewController {
     }
     
     private func fetchFriendsNotes(currentUserID: String) {
+        self.showActivityIndicator()
         db.collection(FirebaseConstants.Users)
             .document(currentUserID)
             .collection(FirebaseConstants.Friends)
@@ -174,10 +186,13 @@ class HomeViewController: UIViewController {
                         self?.mainScreen.tableViewNotes.reloadData()
                     }
             }
+        self.hideActivityIndicator()
     }
 }
+
 extension HomeViewController {
     func fetchAndSetProfilePicture(for userID: String, imageView: UIImageView) {
+        self.showActivityIndicator()
         db.collection(FirebaseConstants.Users)
             .document(userID)
             .getDocument { document, error in
@@ -209,5 +224,6 @@ extension HomeViewController {
                     }.resume()
                 }
             }
+        self.hideActivityIndicator()
     }
 }
