@@ -9,8 +9,7 @@
 import UIKit
 import FirebaseFirestore
 
-class NoteFullViewController: UIViewController {
-    
+class NoteFullViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let noteScreen = NoteFullView()
     var note: Note!
     let childProgressView = ProgressSpinnerViewController()
@@ -35,7 +34,12 @@ class NoteFullViewController: UIViewController {
         noteScreen.labelLocation.text = note.location
         noteScreen.labelCreatorReply.text = note.creatorReply
         
+        //MARK: patching table view delegate and data source...
+        noteScreen.tableViewLikes.delegate = self
+        noteScreen.tableViewLikes.dataSource = self
+        
         noteScreen.buttonLikes.addTarget(self, action: #selector(addLike), for: .touchUpInside)
+        noteScreen.buttonAdd.addTarget(self, action: #selector(hideBottomView), for: .touchUpInside)
     }
 
     func formatTimestamp(_ timestamp: Date) -> String {
@@ -116,8 +120,28 @@ class NoteFullViewController: UIViewController {
             
             setLikeButtonImage()
             setLikeCount()
-            
-            self.hideActivityIndicator()
         }
+        self.hideActivityIndicator()
+    }
+    
+    @objc func showListOfLikes() {
+        noteScreen.bottomAddView.isHidden = false
+    }
+    
+    @objc func hideBottomView() {
+        noteScreen.bottomAddView.isHidden = true
+    }
+}
+
+extension NoteFullViewController {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.note.likes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Configs.tableViewLikesID, for: indexPath) as! LikesTableViewCell
+        cell.labelEmail.text = self.note.likes[indexPath.row]
+        
+        return cell
     }
 }

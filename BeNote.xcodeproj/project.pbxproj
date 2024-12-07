@@ -33,6 +33,7 @@
 		004FE5442CF1371F006C0EC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5432CF1371F006C0EC8 /* Date.swift */; };
 		0084E2942D0232E500530612 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0084E2932D0232E500530612 /* GoogleService-Info.plist */; };
 		0084E2962D0248CA00530612 /* RandomColorsForNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0084E2952D0248CA00530612 /* RandomColorsForNotes.swift */; };
+		0084E2992D04C2C100530612 /* LikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0084E2982D04C2C100530612 /* LikesTableViewCell.swift */; };
 		00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */; };
 		1877ECDF2D0116C800447020 /* EditProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877ECDE2D0116C800447020 /* EditProfileScreenView.swift */; };
 		1877ECE12D0116DE00447020 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877ECE02D0116DE00447020 /* EditProfileViewController.swift */; };
@@ -109,6 +110,7 @@
 		004FE5432CF1371F006C0EC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0084E2932D0232E500530612 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0084E2952D0248CA00530612 /* RandomColorsForNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomColorsForNotes.swift; sourceTree = "<group>"; };
+		0084E2982D04C2C100530612 /* LikesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesTableViewCell.swift; sourceTree = "<group>"; };
 		00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		1877ECDE2D0116C800447020 /* EditProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileScreenView.swift; sourceTree = "<group>"; };
 		1877ECE02D0116DE00447020 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
@@ -187,8 +189,7 @@
 		002F99062CE4E1EA00602A86 /* BeNote */ = {
 			isa = PBXGroup;
 			children = (
-				FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */,
-				FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */,
+				0084E2972D04BC6900530612 /* Note Full */,
 				004FE5342CF0F998006C0EC8 /* Utils and Constants */,
 				002F99502CE4E4D300602A86 /* Data Models */,
 				002F99A42CE4FFFC00602A86 /* Profile Tab */,
@@ -286,6 +287,16 @@
 				004FE53F2CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift */,
 			);
 			path = "View Note";
+			sourceTree = "<group>";
+		};
+		0084E2972D04BC6900530612 /* Note Full */ = {
+			isa = PBXGroup;
+			children = (
+				FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */,
+				FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */,
+				0084E2982D04C2C100530612 /* LikesTableViewCell.swift */,
+			);
+			path = "Note Full";
 			sourceTree = "<group>";
 		};
 		1877ECDD2D01169F00447020 /* Edit Profile Tab */ = {
@@ -505,6 +516,7 @@
 				002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */,
 				002F990A2CE4E1EA00602A86 /* SceneDelegate.swift in Sources */,
 				002F99A12CE4F9EE00602A86 /* ManageFriendsViewController.swift in Sources */,
+				0084E2992D04C2C100530612 /* LikesTableViewCell.swift in Sources */,
 				004FE53A2CF1362A006C0EC8 /* AddNoteScreenView.swift in Sources */,
 				004FE5422CF136CF006C0EC8 /* Prompts.swift in Sources */,
 				002F994F2CE4E49500602A86 /* Configs.swift in Sources */,

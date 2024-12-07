@@ -243,6 +243,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let noteFullVC = NoteFullViewController()
         noteFullVC.note = self.notesHistory[indexPath.row]
+        
+        // change the button function to open up a new page with a list of who liked it
+        noteFullVC.noteScreen.buttonLikes.removeTarget(noteFullVC, action: #selector(noteFullVC.addLike), for: .touchUpInside)
+        noteFullVC.noteScreen.buttonLikes.addTarget(noteFullVC, action: #selector(noteFullVC.showListOfLikes), for: .touchUpInside)
+        
         self.navigationController?.pushViewController(noteFullVC, animated: true)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
