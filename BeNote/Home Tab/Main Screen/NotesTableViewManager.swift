@@ -96,6 +96,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     //MARK: handling notifications...
     @objc func notificationReceived(notification: Notification){
         self.getFriendsNotes()
+        self.mainScreen.tableViewNotes.reloadData()
     }
     
     func logo() {
