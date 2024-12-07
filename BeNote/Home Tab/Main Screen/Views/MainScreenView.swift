@@ -9,6 +9,7 @@ import UIKit
 
 class MainScreenView: UIView {
     var labelText: UILabel!
+    var labelPlaceholder: UILabel!
     var buttonRefresh: UIButton!
     var labelPrompt: UILabel!
     var tableViewNotes: UITableView!
@@ -21,6 +22,7 @@ class MainScreenView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .white
         
+        setupLabelPlaceholder()
         setupLabelPrompt()
         setupButtonRefresh()
         setupLabelText()
@@ -68,6 +70,17 @@ class MainScreenView: UIView {
         buttonRefresh.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
         buttonRefresh.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonRefresh)
+    }
+    
+    func setupLabelPlaceholder() {
+        labelPlaceholder = UILabel()
+        labelPlaceholder.font = .systemFont(ofSize: 14)
+        labelPlaceholder.numberOfLines = 0
+        labelPlaceholder.lineBreakMode = .byWordWrapping
+        labelPlaceholder.text = "Your friends haven't written any notes yet! Go bug them about it... or get more friends..."
+        labelPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+        labelPlaceholder.isHidden = true
+        self.addSubview(labelPlaceholder)
     }
     
     func setupLabelText(){
@@ -146,6 +159,10 @@ class MainScreenView: UIView {
             labelPrompt.topAnchor.constraint(equalTo: labelText.bottomAnchor, constant: 16),
             labelPrompt.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             labelPrompt.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            labelPlaceholder.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
+            labelPlaceholder.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            labelPlaceholder.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             tableViewNotes.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             tableViewNotes.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),

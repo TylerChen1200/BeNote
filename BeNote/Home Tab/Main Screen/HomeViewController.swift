@@ -173,17 +173,39 @@ class HomeViewController: UIViewController {
                         // Update the array concatenation
                         self?.notesList += friendNotes
                         
-                        let dailyPrompt = self?.notesList.first {
-                            $0.prompt != FirebaseConstants.Freewrite
+                        // attempt to sort the notes by latest timestamp
+                        let sortedNotes = self?.notesList.sorted{a, b in
+                            a.timestampCreated > b.timestampCreated
                         }
                         
-                        if let uwDailyPrompt = dailyPrompt {
-                            self?.mainScreen.labelPrompt.text = uwDailyPrompt.prompt
-                        } else {
-                            self?.mainScreen.labelPrompt.text = FirebaseConstants.DefaultPrompt
+                        if let uwSortedNotes = sortedNotes {
+                            self?.notesList = uwSortedNotes
+                            
+                            // hide/show the placeholder if needed
+                            if (uwSortedNotes.count == 0) {
+                                self?.mainScreen.labelPlaceholder.isHidden = false
+                            } else {
+                                self?.mainScreen.labelPlaceholder.isHidden = true
+                            }
                         }
                         
                         self?.mainScreen.tableViewNotes.reloadData()
+                        
+                        self?.db.collection(FirebaseConstants.Notes)
+                            .document(FirebaseConstants.Notes)
+                            .collection(self?.today ?? "")
+                            .getDocuments { [weak self] (querySnapshot, error) in
+                                
+                                let dailyPromptData = querySnapshot?.documents
+                                    .first{ $0.documentID == FirebaseConstants.DailyPrompt }
+                                    
+                                if let uwDailyPromptData = dailyPromptData {
+                                    let dailyPrompt = uwDailyPromptData.data()[FirebaseConstants.DailyPrompt] as? String ?? FirebaseConstants.DefaultPrompt
+                                    
+                                    self?.mainScreen.labelPrompt.text = dailyPrompt
+                                }
+                                
+                            }
                     }
             }
         self.hideActivityIndicator()
