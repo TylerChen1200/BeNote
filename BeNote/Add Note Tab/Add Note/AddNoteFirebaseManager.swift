@@ -27,6 +27,7 @@ extension AddNoteViewController {
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
                     "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),
+                    "likes": [String]()
                         ]) { error in
                             if let error = error {
                                 print("Error saving note data: \(error)")
@@ -46,6 +47,7 @@ extension AddNoteViewController {
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
                     "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),
+                    "likes": [String]()
                         ]) { error in
                             if let error = error {
                                 print("Error saving note data: \(error)")

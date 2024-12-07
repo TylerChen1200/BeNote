@@ -15,6 +15,8 @@ class NotesTableViewCell: UITableViewCell {
     var labelFreewrite: UILabel!
     var labelTimestampCreated: UILabel!
     var labelLocation: UILabel!
+    var imageLikes: UIImageView!
+    var labelLikes: UILabel!
     var profilePic: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -29,6 +31,8 @@ class NotesTableViewCell: UITableViewCell {
         setupLabelReply()
         setupLabelTimestampCreated()
         setupProfilePic()
+        setupImageLikes()
+        setupLabelLikes()
         
         initConstraints()
     }
@@ -106,6 +110,24 @@ class NotesTableViewCell: UITableViewCell {
         wrapperCellView.addSubview(profilePic)
     }
     
+    func setupImageLikes() {
+        imageLikes = UIImageView()
+        imageLikes.image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal)
+        imageLikes.contentMode = .scaleToFill
+        imageLikes.clipsToBounds = true
+        imageLikes.layer.masksToBounds = true
+        imageLikes.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(imageLikes)
+    }
+    
+    func setupLabelLikes() {
+        labelLikes = UILabel()
+        labelLikes.font = UIFont.boldSystemFont(ofSize: 14)
+        labelLikes.textColor = .tintColor
+        labelLikes.translatesAutoresizingMaskIntoConstraints = false
+        wrapperCellView.addSubview(labelLikes)
+    }
+    
     func initConstraints() {
         NSLayoutConstraint.activate([
             // Wrapper cell view
@@ -126,7 +148,16 @@ class NotesTableViewCell: UITableViewCell {
             
             labelFreewrite.topAnchor.constraint(equalTo: profilePic.topAnchor),
             labelFreewrite.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
-            labelFreewrite.trailingAnchor.constraint(equalTo: labelReply.trailingAnchor),
+            labelFreewrite.trailingAnchor.constraint(equalTo: imageLikes.leadingAnchor, constant: -8),
+            
+            imageLikes.topAnchor.constraint(equalTo: profilePic.topAnchor),
+            imageLikes.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
+            imageLikes.widthAnchor.constraint(equalTo: imageLikes.heightAnchor),
+            imageLikes.trailingAnchor.constraint(equalTo: labelLikes.leadingAnchor, constant: -2),
+            
+            labelLikes.topAnchor.constraint(equalTo: profilePic.topAnchor),
+            labelLikes.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
+            labelLikes.trailingAnchor.constraint(equalTo: labelReply.trailingAnchor),
             
             // Reply label
             labelReply.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 8),
