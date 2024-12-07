@@ -69,6 +69,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let noteFullVC = NoteFullViewController()
         noteFullVC.note = self.notesList[indexPath.row]
+        
+        if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String? {
+            noteFullVC.liked = self.notesList[indexPath.row].likes.first{$0 == currentUserEmail} != nil
+        }
+        
+        noteFullVC.dispatch = self
+        noteFullVC.index = indexPath.row
+        
         self.navigationController?.pushViewController(noteFullVC, animated: true)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

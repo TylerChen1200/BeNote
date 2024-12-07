@@ -70,6 +70,7 @@ class HomeViewController: UIViewController {
             }
         }
         hasNoteToday()
+        mainScreen.tableViewNotes.reloadData()
     }
     
     override func viewDidLoad() {
@@ -116,25 +117,6 @@ class HomeViewController: UIViewController {
                     
                     // Initialize empty array for all notes
                     self?.notesList = []
-                    
-                    if let document = document, document.exists,
-                       let data = document.data() {
-                        let timestamp = data["timestampCreated"] as? Timestamp
-                        let uwDate = timestamp?.dateValue() ?? Date()
-                        
-                        let userNote = Note(
-                            prompt: data["prompt"] as? String ?? "No Prompt",
-                            creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Display Name",
-                            creatorReply: data["creatorReply"] as? String ?? "No Reply",
-                            location: data["location"] as? String ?? "No Location",
-                            timestampCreated: uwDate,
-                            likes: data["likes"] as? [String] ?? [String](),
-                            creatorID: currentUserID
-                        )
-                        
-                        // Add user's note to the start of the array
-                        self?.notesList = [userNote]
-                    }
                     
                     // Continue with fetching friends' notes
                     self?.fetchFriendsNotes(currentUserID: currentUserID)
