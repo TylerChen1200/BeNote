@@ -70,47 +70,51 @@ class ProfileViewController: UIViewController {
     
     
     func fetchProfileData() {
-        if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String?,
-           let currentUserName = self.defaults.object(forKey: Configs.defaultName) as! String? {
-            self.profileScreen.labelName.text = "Name: \(currentUserName)"
-            self.profileScreen.labelEmail.text = "Email: \(currentUserEmail)"
+            if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String?,
+               let currentUserName = self.defaults.object(forKey: Configs.defaultName) as! String? {
+                self.profileScreen.labelName.text = currentUserName
+                self.profileScreen.labelEmail.text = "Email: \(currentUserEmail)"
+            }
         }
-        
-    }
     
     func fetchNotesData() {
         if let currentUserID = self.defaults.object(forKey: Configs.defaultUID) as! String? {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .collection(FirebaseConstants.Notes)
-                .getDocuments { (querySnapshot, error) in
+                .getDocuments { [weak self] (querySnapshot, error) in
                     if let error = error {
-                        self.showErrorAlert("Error fetching user data: \(error)")
+                        self?.showErrorAlert("Error fetching user data: \(error)")
                         return
                     }
+                    
+                    if let userName = self?.defaults.object(forKey: Configs.defaultName) as? String {
+                        self?.profileScreen.labelName.text = userName  // Update name display
+                    }
+                    
                     // get number of notes written
                     let numberOfNotes = querySnapshot?.documents.count ?? 0
-                    self.profileScreen.labelNotesWritten.text = "\(numberOfNotes) notes written"
+                    self?.profileScreen.labelNotesWritten.text = "\(numberOfNotes) notes written"
                     
                     // get the history of the notes
-                    self.notesHistory = querySnapshot?.documents
-                        .map {document in
+                    self?.notesHistory = querySnapshot?.documents
+                        .map { document in
                             let data = document.data()
                             let timestamp = data["timestampCreated"] as? Timestamp
                             let uwDate = timestamp?.dateValue() ?? Date()
                             
                             return Note(prompt: data["prompt"] as? String ?? "",
-                                        creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Email",
-                                        creatorReply: data["creatorReply"] as? String ?? "",
-                                        location: data["location"] as? String ?? "",
-                                        timestampCreated: uwDate,
-                                        likes: data["likes"] as? [String] ?? [String]())
+                                      creatorDisplayName: data["name"] as? String ?? "No Email",
+                                      creatorReply: data["creatorReply"] as? String ?? "",
+                                      location: data["location"] as? String ?? "",
+                                      timestampCreated: uwDate,
+                                      likes: data["likes"] as? [String] ?? [String]())
                         }
                         .reversed()
-                    ?? [Note]()
+                        ?? [Note]()
                     
-                    print(self.notesHistory)
-                    self.profileScreen.tableViewNotesHistory.reloadData()
+                    print(self?.notesHistory ?? [])
+                    self?.profileScreen.tableViewNotesHistory.reloadData()
                 }
         }
     }

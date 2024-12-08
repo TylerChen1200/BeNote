@@ -2,8 +2,6 @@
 //  EditProfileViewController.swift
 //  BeNote
 //
-//  Created by Ty C on 12/4/24.
-//
 
 import Foundation
 import UIKit
@@ -19,7 +17,6 @@ class EditProfileViewController: UIViewController {
     var pickedImage: UIImage?
     let storage = Storage.storage()
     var loadingAlert: UIAlertController?
-
     
     override func loadView() {
         view = editProfileScreen
@@ -44,58 +41,67 @@ class EditProfileViewController: UIViewController {
     }
     
     func loadCurrentUserData() {
-        if let currentUserName = defaults.string(forKey: Configs.defaultName) {
-            editProfileScreen.textFieldName.text = currentUserName
-        }
-        
         if let currentUserID = defaults.string(forKey: Configs.defaultUID) {
             db.collection(FirebaseConstants.Users)
                 .document(currentUserID)
                 .getDocument { [weak self] document, error in
-                    if let base64String = document?.data()?["profilePicture"] as? String,
-                       let imageData = Data(base64Encoded: base64String),
-                       let image = UIImage(data: imageData) {
-                        DispatchQueue.main.async {
-                            self?.editProfileScreen.imageViewProfile.image = image
+                    if let error = error {
+                        self?.showAlert(message: "Error loading user data: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    if let userData = document?.data() {
+                        // Get name from Firestore
+                        if let name = userData["name"] as? String {
+                            DispatchQueue.main.async {
+                                self?.editProfileScreen.textFieldName.text = name
+                                // Clear placeholder when there's text
+                                self?.editProfileScreen.textFieldName.placeholder = nil
+                            }
+                        } else {
+                            // Set placeholder if no name is set
+                            DispatchQueue.main.async {
+                                self?.editProfileScreen.textFieldName.placeholder = "Name"
+                            }
+                        }
+                        
+                        // Load profile picture if available
+                        if let base64String = userData["profilePicture"] as? String,
+                           let imageData = Data(base64Encoded: base64String),
+                           let image = UIImage(data: imageData) {
+                            DispatchQueue.main.async {
+                                self?.editProfileScreen.imageViewProfile.image = image
+                            }
                         }
                     }
                 }
         }
     }
     
-    @objc func changePhotoTapped() {
-        var config = PHPickerConfiguration(photoLibrary: .shared())
-        config.selectionLimit = 1
-        config.filter = PHPickerFilter.images
-        config.preferredAssetRepresentationMode = .current
-        
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
     @objc func saveTapped() {
         guard let currentUserID = defaults.string(forKey: Configs.defaultUID),
-              let currentUser = Auth.auth().currentUser,  // Add this check
+              let currentUser = Auth.auth().currentUser,
               let newName = editProfileScreen.textFieldName.text,
               !newName.isEmpty else {
             showAlert(message: "Please enter a valid name")
             return
         }
         
-        // Add a loading indicator directly to the view
+        // Add a loading indicator
         let loadingIndicator = UIActivityIndicatorView(style: .large)
         loadingIndicator.center = self.view.center
         loadingIndicator.startAnimating()
         self.view.addSubview(loadingIndicator)
         
         // Prepare update data
-        var updateData: [String: Any] = ["displayName": newName]
+        var updateData: [String: Any] = ["name": newName]
+        
+        // Store the new name in UserDefaults
+        defaults.set(newName, forKey: Configs.defaultName)
         
         if let image = pickedImage,
            let imageData = image.jpegData(compressionQuality: 0.5) {
             
-            // Get a fresh ID token
             currentUser.getIDToken { idToken, error in
                 if let error = error {
                     DispatchQueue.main.async {
@@ -105,16 +111,13 @@ class EditProfileViewController: UIViewController {
                     return
                 }
                 
-                // Create storage reference
                 let storageRef = Storage.storage().reference()
                 let profilePicsRef = storageRef.child("profile_pictures")
                 let imageRef = profilePicsRef.child("\(currentUserID).jpg")
                 
-                // Set metadata
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
                 
-                // Upload the image data
                 imageRef.putData(imageData, metadata: metadata) { [weak self] metadata, error in
                     if let error = error {
                         DispatchQueue.main.async {
@@ -124,7 +127,6 @@ class EditProfileViewController: UIViewController {
                         return
                     }
                     
-                    // Get the download URL
                     imageRef.downloadURL { [weak self] url, error in
                         if let error = error {
                             DispatchQueue.main.async {
@@ -136,23 +138,17 @@ class EditProfileViewController: UIViewController {
                         
                         guard let downloadURL = url else { return }
                         
-                        // Add the download URL to the update data
                         updateData["profilePictureURL"] = downloadURL.absoluteString
                         
-                        // Update Firestore with both name and profile picture URL
                         self?.updateFirestore(currentUserID: currentUserID, data: updateData, loadingIndicator: loadingIndicator)
                     }
                 }
             }
         } else {
-            // If no new image, just update the name
             updateFirestore(currentUserID: currentUserID, data: updateData, loadingIndicator: loadingIndicator)
         }
     }
     
-    @objc func cancelTapped() {
-        dismiss(animated: true)
-    }
     private func updateFirestore(currentUserID: String, data: [String: Any], loadingIndicator: UIActivityIndicatorView) {
         db.collection(FirebaseConstants.Users)
             .document(currentUserID)
@@ -165,13 +161,26 @@ class EditProfileViewController: UIViewController {
                         return
                     }
                     
-                    // Post notification to refresh profile
                     NotificationCenter.default.post(name: Configs.notificationRefresh, object: nil)
-                    
-                    // Dismiss the edit screen
                     self?.dismiss(animated: true)
                 }
             }
+    }
+    
+    // Existing methods remain unchanged
+    @objc func changePhotoTapped() {
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        config.selectionLimit = 1
+        config.filter = PHPickerFilter.images
+        config.preferredAssetRepresentationMode = .current
+        
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    @objc func cancelTapped() {
+        dismiss(animated: true)
     }
     
     func showAlert(message: String) {

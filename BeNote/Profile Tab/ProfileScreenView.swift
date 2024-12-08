@@ -31,6 +31,13 @@ class ProfileScreenView: UIView {
         
         initConstraints()
     }
+    func setupLabelName() {
+          labelName = UILabel()
+          labelName.font = .systemFont(ofSize: 20, weight: .medium)  
+          labelName.textAlignment = .center
+          labelName.translatesAutoresizingMaskIntoConstraints = false
+          self.addSubview(labelName)
+      }
     
     func setupBackgroundImage() {
         let backgroundImageView = UIImageView(image: UIImage(named: "paper"))

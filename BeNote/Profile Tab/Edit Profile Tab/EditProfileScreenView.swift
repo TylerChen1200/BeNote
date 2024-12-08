@@ -67,9 +67,11 @@ class EditProfileScreenView: UIView {
     
     func setupTextFieldName() {
         textFieldName = UITextField()
-        textFieldName.placeholder = "Enter your name"
+        textFieldName.placeholder = "Enter Name"
         textFieldName.borderStyle = .roundedRect
         textFieldName.translatesAutoresizingMaskIntoConstraints = false
+        textFieldName.font = .systemFont(ofSize: 16)
+        textFieldName.textAlignment = .center
         self.addSubview(textFieldName)
     }
     

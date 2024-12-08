@@ -16,3 +16,13 @@ class FirebaseConstants {
     static let DefaultPrompt = "How was your day?"
     static let DailyPrompt = "dailyPrompt"
 }
+extension FirebaseConstants {
+    static let FriendRequests = "friendRequests"
+    static let RequestStatus = "status"
+    static let RequestSender = "sender"
+    static let RequestReceiver = "receiver"
+    static let RequestTimestamp = "timestamp"
+    static let StatusPending = "pending"
+    static let StatusAccepted = "accepted"
+    static let StatusDenied = "denied"
+}
