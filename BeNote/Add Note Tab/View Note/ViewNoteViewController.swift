@@ -68,6 +68,36 @@ class ViewNoteViewController: UIViewController {
         }
     }
     
+    func showEditButton() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Edit",
+            style: .plain,
+            target: self,
+            action: #selector(onEditButtonTapped)
+        )
+    }
+    
+    @objc func onEditButtonTapped() {
+        if let note = self.latestNote {
+            let addNoteViewController = AddNoteViewController()
+            
+            // set the other aspects of the note in the screen
+            addNoteViewController.addNoteScreen.labelPrompt.text = self.prompt
+            if (note.prompt == FirebaseConstants.Freewrite) {
+                addNoteViewController.addNoteScreen.switchFreeWrite.setOn(true, animated: true)
+                addNoteViewController.updateSwitchUI(true)
+            } else {
+                addNoteViewController.addNoteScreen.switchFreeWrite.setOn(false, animated: true)
+                addNoteViewController.updateSwitchUI(false)
+            }
+            
+            addNoteViewController.addNoteScreen.textFieldPrompt.text = note.creatorReply
+            self.navigationController?.pushViewController(addNoteViewController, animated: false)
+        } else {
+            self.showErrorAlert("Unable to load note. Please try again later.")
+        }
+    }
+    
     // Observing refresh
     func observeRefresh(){
         notificationCenter.addObserver(

@@ -76,7 +76,7 @@ class EditProfileScreenView: UIView {
     func setupButtonSave() {
         buttonSave = UIButton(type: .system)
         buttonSave.setTitle("Save Changes", for: .normal)
-        buttonSave.backgroundColor = .systemBlue
+        buttonSave.backgroundColor = .tintColor
         buttonSave.setTitleColor(.white, for: .normal)
         buttonSave.layer.cornerRadius = 5
         buttonSave.translatesAutoresizingMaskIntoConstraints = false

@@ -31,8 +31,10 @@
 		004FE5402CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE53F2CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift */; };
 		004FE5422CF136CF006C0EC8 /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5412CF136CF006C0EC8 /* Prompts.swift */; };
 		004FE5442CF1371F006C0EC8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FE5432CF1371F006C0EC8 /* Date.swift */; };
+		0084E2942D0232E500530612 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0084E2932D0232E500530612 /* GoogleService-Info.plist */; };
+		0084E2962D0248CA00530612 /* RandomColorsForNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0084E2952D0248CA00530612 /* RandomColorsForNotes.swift */; };
+		0084E2992D04C2C100530612 /* LikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0084E2982D04C2C100530612 /* LikesTableViewCell.swift */; };
 		00FE9BF52CF55257002CA292 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */; };
-		1877ECDC2D0115A800447020 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1877ECDB2D0115A700447020 /* GoogleService-Info.plist */; };
 		1877ECDF2D0116C800447020 /* EditProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877ECDE2D0116C800447020 /* EditProfileScreenView.swift */; };
 		1877ECE12D0116DE00447020 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877ECE02D0116DE00447020 /* EditProfileViewController.swift */; };
 		95DC4A532CFEBE4B00FF5885 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 95DC4A522CFEBE4B00FF5885 /* FirebaseAnalytics */; };
@@ -106,8 +108,10 @@
 		004FE53F2CF1364F006C0EC8 /* ViewNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteFirebaseManager.swift; sourceTree = "<group>"; };
 		004FE5412CF136CF006C0EC8 /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
 		004FE5432CF1371F006C0EC8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		0084E2932D0232E500530612 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0084E2952D0248CA00530612 /* RandomColorsForNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomColorsForNotes.swift; sourceTree = "<group>"; };
+		0084E2982D04C2C100530612 /* LikesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesTableViewCell.swift; sourceTree = "<group>"; };
 		00FE9BF42CF55257002CA292 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
-		1877ECDB2D0115A700447020 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1877ECDE2D0116C800447020 /* EditProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileScreenView.swift; sourceTree = "<group>"; };
 		1877ECE02D0116DE00447020 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		FDBDBBF72CF6A23C00CC64FD /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -125,7 +129,6 @@
 		FDBDBC112CF6A28D00CC64FD /* ProgressSpinnerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSpinnerDelegate.swift; sourceTree = "<group>"; };
 		FDBDBC122CF6A28D00CC64FD /* ProgressSpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSpinnerViewController.swift; sourceTree = "<group>"; };
 		FDBDBC272CF6E51A00CC64FD /* NoNoteFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNoteFirebaseManager.swift; sourceTree = "<group>"; };
-		FDBDBC312CFD5E4600CC64FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FDBDBC332CFD5FBA00CC64FD /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFullView.swift; sourceTree = "<group>"; };
 		FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFullViewController.swift; sourceTree = "<group>"; };
@@ -186,8 +189,7 @@
 		002F99062CE4E1EA00602A86 /* BeNote */ = {
 			isa = PBXGroup;
 			children = (
-				FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */,
-				FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */,
+				0084E2972D04BC6900530612 /* Note Full */,
 				004FE5342CF0F998006C0EC8 /* Utils and Constants */,
 				002F99502CE4E4D300602A86 /* Data Models */,
 				002F99A42CE4FFFC00602A86 /* Profile Tab */,
@@ -200,8 +202,8 @@
 				002F99102CE4E1EC00602A86 /* Assets.xcassets */,
 				002F99122CE4E1EC00602A86 /* LaunchScreen.storyboard */,
 				002F99152CE4E1EC00602A86 /* Info.plist */,
-				1877ECDB2D0115A700447020 /* GoogleService-Info.plist */,
 				002F99B42CE53DFC00602A86 /* ViewController.swift */,
+				0084E2932D0232E500530612 /* GoogleService-Info.plist */,
 			);
 			path = BeNote;
 			sourceTree = "<group>";
@@ -287,6 +289,16 @@
 			path = "View Note";
 			sourceTree = "<group>";
 		};
+		0084E2972D04BC6900530612 /* Note Full */ = {
+			isa = PBXGroup;
+			children = (
+				FDBDBC6E2CFD707A00CC64FD /* NoteFullViewController.swift */,
+				FDBDBC6C2CFD703700CC64FD /* NoteFullView.swift */,
+				0084E2982D04C2C100530612 /* LikesTableViewCell.swift */,
+			);
+			path = "Note Full";
+			sourceTree = "<group>";
+		};
 		1877ECDD2D01169F00447020 /* Edit Profile Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +313,7 @@
 			children = (
 				FDBDBBF72CF6A23C00CC64FD /* MainScreenView.swift */,
 				FDBDBBF82CF6A23C00CC64FD /* NotesTableViewCell.swift */,
+				0084E2952D0248CA00530612 /* RandomColorsForNotes.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -360,7 +373,6 @@
 		FDBDBC702CFD769C00CC64FD /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				FDBDBC312CFD5E4600CC64FD /* GoogleService-Info.plist */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -453,8 +465,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				002F99142CE4E1EC00602A86 /* LaunchScreen.storyboard in Resources */,
+				0084E2942D0232E500530612 /* GoogleService-Info.plist in Resources */,
 				002F99112CE4E1EC00602A86 /* Assets.xcassets in Resources */,
-				1877ECDC2D0115A800447020 /* GoogleService-Info.plist in Resources */,
 				002F990F2CE4E1EA00602A86 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +494,7 @@
 				FDBDBC042CF6A23C00CC64FD /* MainScreenView.swift in Sources */,
 				FDBDBC052CF6A23C00CC64FD /* RegisterViewController.swift in Sources */,
 				FDBDBC062CF6A23C00CC64FD /* TabBarManager.swift in Sources */,
+				0084E2962D0248CA00530612 /* RandomColorsForNotes.swift in Sources */,
 				FDBDBC072CF6A23C00CC64FD /* NotesTableViewManager.swift in Sources */,
 				FDBDBC082CF6A23C00CC64FD /* NotesTableViewCell.swift in Sources */,
 				FDBDBC092CF6A23C00CC64FD /* HomeViewController.swift in Sources */,
@@ -503,6 +516,7 @@
 				002F99B12CE51B2300602A86 /* FriendTableViewCell.swift in Sources */,
 				002F990A2CE4E1EA00602A86 /* SceneDelegate.swift in Sources */,
 				002F99A12CE4F9EE00602A86 /* ManageFriendsViewController.swift in Sources */,
+				0084E2992D04C2C100530612 /* LikesTableViewCell.swift in Sources */,
 				004FE53A2CF1362A006C0EC8 /* AddNoteScreenView.swift in Sources */,
 				004FE5422CF136CF006C0EC8 /* Prompts.swift in Sources */,
 				002F994F2CE4E49500602A86 /* Configs.swift in Sources */,

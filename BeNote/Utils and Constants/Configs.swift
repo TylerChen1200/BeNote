@@ -12,6 +12,7 @@ class Configs{
     static let notesViewContactsID = "notesViewContactsID"
     static let tableViewFriendsID = "friendsViewContactsID"
     static let tableViewProfileID = "tableViewProfileID"
+    static let tableViewLikesID = "tableViewLikesID"
     
     static let notificationRefresh = Notification.Name("refreshTab")
     

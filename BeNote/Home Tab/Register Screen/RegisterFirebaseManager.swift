@@ -14,7 +14,7 @@ extension RegisterViewController{
     func registerNewAccount(){
         //MARK: create a Firebase user with email and password...
         if let name = registerScreenView.textFieldName.text,
-           let email = registerScreenView.textFieldEmail.text,
+           let email = registerScreenView.textFieldEmail.text?.lowercased(),
            let password = registerScreenView.textFieldPassword.text,
            let passwordVal = registerScreenView.textFieldPasswordVal.text{
             //Validations....
@@ -30,11 +30,11 @@ extension RegisterViewController{
                 if error == nil{
                     //MARK: the user creation is successful...
                     self.setNameOfTheUserInFirebaseAuth(name: name)
-                    self.addToUserDB(name: name, email: email)
                     let currentUser = result?.user
                     self.defaults.set(currentUser?.uid, forKey: Configs.defaultUID)
                     self.defaults.set(currentUser?.email, forKey: Configs.defaultEmail)
                     self.defaults.set(currentUser?.displayName, forKey: Configs.defaultName)
+                    self.addToUserDB(name: name, email: email)
                     // Refresh the tab views
                     self.notificationCenter.post(
                         name: Configs.notificationRefresh,
@@ -102,6 +102,8 @@ extension RegisterViewController{
                     print("User data saved successfully.")
                 }
             }
+        } else {
+            print("User data not saved")
         }
     }
 }

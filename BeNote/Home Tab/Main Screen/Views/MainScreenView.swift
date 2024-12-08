@@ -8,21 +8,24 @@
 import UIKit
 
 class MainScreenView: UIView {
-    var profilePic: UIImageView!
     var labelText: UILabel!
-    var floatingButtonAddContact: UIButton!
+    var labelPlaceholder: UILabel!
+    var buttonRefresh: UIButton!
+    var labelPrompt: UILabel!
     var tableViewNotes: UITableView!
     var modalOverlay: UIView!
     var modalView: UIView!
+    var modalLabel: UILabel!
     var addNoteButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
-        setupProfilePic()
+        setupLabelPlaceholder()
+        setupLabelPrompt()
+        setupButtonRefresh()
         setupLabelText()
-        setupFloatingButtonAddContact()
         setupTableViewNotes()
         setupModal()
         setupBackgroundImage()
@@ -51,14 +54,33 @@ class MainScreenView: UIView {
     }
     
     //MARK: initializing the UI elements...
-    func setupProfilePic(){
-        profilePic = UIImageView()
-        profilePic.image = UIImage(systemName: "person.circle")?.withRenderingMode(.alwaysOriginal)
-        profilePic.contentMode = .scaleToFill
-        profilePic.clipsToBounds = true
-        profilePic.layer.masksToBounds = true
-        profilePic.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(profilePic)
+    
+    func setupLabelPrompt() {
+        labelPrompt = UILabel()
+        labelPrompt.font = .boldSystemFont(ofSize: 18)
+        labelPrompt.numberOfLines = 0
+        labelPrompt.lineBreakMode = .byWordWrapping
+        labelPrompt.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(labelPrompt)
+    }
+    
+    func setupButtonRefresh() {
+        buttonRefresh = UIButton(type: .system)
+        buttonRefresh.setTitle("Refresh", for: .normal)
+        buttonRefresh.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+        buttonRefresh.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(buttonRefresh)
+    }
+    
+    func setupLabelPlaceholder() {
+        labelPlaceholder = UILabel()
+        labelPlaceholder.font = .systemFont(ofSize: 14)
+        labelPlaceholder.numberOfLines = 0
+        labelPlaceholder.lineBreakMode = .byWordWrapping
+        labelPlaceholder.text = "Your friends haven't written any notes yet! Go bug them about it... or get more friends..."
+        labelPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+        labelPlaceholder.isHidden = true
+        self.addSubview(labelPlaceholder)
     }
     
     func setupLabelText(){
@@ -75,22 +97,6 @@ class MainScreenView: UIView {
         tableViewNotes.backgroundColor = UIColor.clear
         tableViewNotes.separatorStyle = .none
         self.addSubview(tableViewNotes)
-    }
-    
-    func setupFloatingButtonAddContact(){
-        floatingButtonAddContact = UIButton(type: .system)
-        floatingButtonAddContact.setTitle("", for: .normal)
-        floatingButtonAddContact.setImage(UIImage(systemName: "button.left.circle.fill.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        floatingButtonAddContact.contentHorizontalAlignment = .fill
-        floatingButtonAddContact.contentVerticalAlignment = .fill
-        floatingButtonAddContact.imageView?.contentMode = .scaleAspectFit
-        floatingButtonAddContact.layer.cornerRadius = 16
-        floatingButtonAddContact.imageView?.layer.shadowOffset = .zero
-        floatingButtonAddContact.imageView?.layer.shadowRadius = 0.8
-        floatingButtonAddContact.imageView?.layer.shadowOpacity = 0.7
-        floatingButtonAddContact.imageView?.clipsToBounds = true
-        floatingButtonAddContact.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(floatingButtonAddContact)
     }
     
     func setupModal() {
@@ -110,7 +116,7 @@ class MainScreenView: UIView {
         modalOverlay.addSubview(modalView)
         
         // Add a label to the modal
-        let modalLabel = UILabel()
+        modalLabel = UILabel()
         modalLabel.text = "Create your Note of the Day!"
         modalLabel.textAlignment = .center
         modalLabel.font = .boldSystemFont(ofSize: 16)
@@ -141,24 +147,27 @@ class MainScreenView: UIView {
     //MARK: setting up constraints...
     func initConstraints(){
         NSLayoutConstraint.activate([
-            profilePic.widthAnchor.constraint(equalToConstant: 32),
-            profilePic.heightAnchor.constraint(equalToConstant: 32),
-            profilePic.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 8),
-            profilePic.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            labelText.topAnchor.constraint(equalTo: buttonRefresh.topAnchor),
+            labelText.bottomAnchor.constraint(equalTo: buttonRefresh.bottomAnchor),
+            labelText.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            labelText.trailingAnchor.constraint(equalTo: buttonRefresh.leadingAnchor, constant: -8),
             
-            labelText.topAnchor.constraint(equalTo: profilePic.topAnchor),
-            labelText.bottomAnchor.constraint(equalTo: profilePic.bottomAnchor),
-            labelText.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: 8),
+            buttonRefresh.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 8),
+            buttonRefresh.heightAnchor.constraint(equalToConstant: 32),
+            buttonRefresh.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            tableViewNotes.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 8),
+            labelPrompt.topAnchor.constraint(equalTo: labelText.bottomAnchor, constant: 16),
+            labelPrompt.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            labelPrompt.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            labelPlaceholder.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
+            labelPlaceholder.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            labelPlaceholder.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            tableViewNotes.topAnchor.constraint(equalTo: labelPrompt.bottomAnchor, constant: 8),
             tableViewNotes.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             tableViewNotes.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableViewNotes.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
-            floatingButtonAddContact.widthAnchor.constraint(equalToConstant: 48),
-            floatingButtonAddContact.heightAnchor.constraint(equalToConstant: 48),
-            floatingButtonAddContact.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -12),
-            floatingButtonAddContact.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
             
             modalOverlay.topAnchor.constraint(equalTo: self.topAnchor),
             modalOverlay.bottomAnchor.constraint(equalTo: self.bottomAnchor),

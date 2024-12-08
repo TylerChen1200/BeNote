@@ -41,7 +41,8 @@ extension ViewNoteViewController {
                                                        creatorDisplayName: data["creatorEmail"] as? String ?? "No Email",
                                                        creatorReply: data["creatorReply"] as? String ?? "",
                                                        location: data["location"] as? String ?? "",
-                                                       timestampCreated: uwDate
+                                                       timestampCreated: uwDate,
+                                                       likes: data["likes"] as? [String] ?? [String]()
                                 )
                             }
                         } else {
@@ -57,6 +58,7 @@ extension ViewNoteViewController {
                     } else {
                         // update the current views labels with the note info
                         self.updateLabelsWithNote()
+                        self.showEditButton()
                     }
                 }
         }

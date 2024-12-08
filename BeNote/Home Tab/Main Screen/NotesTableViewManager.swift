@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -14,18 +15,73 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Configs.notesViewContactsID, for: indexPath) as! NotesTableViewCell
-        cell.labelPrompt.text = notesList[indexPath.row].prompt
         cell.labelCreatorDisplayName.text = notesList[indexPath.row].creatorDisplayName
         cell.labelTimestampCreated.text = formatTimestamp(notesList[indexPath.row].timestampCreated)
         cell.labelReply.text = notesList[indexPath.row].creatorReply
         cell.labelLocation.text = notesList[indexPath.row].location
+        
+        // set the color of the border of the cell
+        let borderColor = randomColor(indexPath.row > 0 ? self.prevColor : nil)
+        self.prevColor = borderColor
+        cell.wrapperCellView.layer.borderColor = borderColor.cgColor
+        cell.labelCreatorDisplayName.textColor = borderColor
+        
+        // enable the freewrite label if needed
+        if (notesList[indexPath.row].prompt == FirebaseConstants.Freewrite) {
+            cell.labelFreewrite.isHidden = false
+        }
+        
+        // calculate the number of likes
+        cell.labelLikes.text = String(notesList[indexPath.row].likes.count)
+        
+        // change to filled heart if user is one of the likers
+        if (notesList[indexPath.row].likes.first{ $0 == currentUser?.email } != nil) {
+            cell.imageLikes.image = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal)
+        } else {
+            cell.imageLikes.image = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal)
+        }
+        
+        // Fetch and set profile picture
+        if let creatorID = notesList[indexPath.row].creatorID {
+            db.collection(FirebaseConstants.Users)
+                .document(creatorID)
+                .getDocument { [weak self] document, error in
+                    if let profilePictureURL = document?.data()?["profilePictureURL"] as? String,
+                       let url = URL(string: profilePictureURL) {
+                        
+                        URLSession.shared.dataTask(with: url) { data, response, error in
+                            if let data = data,
+                               let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    cell.profilePic.image = image
+                                    cell.profilePic.layer.cornerRadius = cell.profilePic.frame.size.width / 2
+                                    cell.profilePic.clipsToBounds = true
+                                }
+                            }
+                        }.resume()
+                    }
+                }
+        }
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let noteFullVC = NoteFullViewController()
         noteFullVC.note = self.notesList[indexPath.row]
+        
+        if let currentUserEmail = self.defaults.object(forKey: Configs.defaultEmail) as! String? {
+            noteFullVC.liked = self.notesList[indexPath.row].likes.first{$0 == currentUserEmail} != nil
+        }
+        
+        noteFullVC.dispatch = self
+        noteFullVC.index = indexPath.row
+        
         self.navigationController?.pushViewController(noteFullVC, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     // Observing refresh
@@ -40,6 +96,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     //MARK: handling notifications...
     @objc func notificationReceived(notification: Notification){
         self.getFriendsNotes()
+        self.mainScreen.tableViewNotes.reloadData()
     }
     
     func logo() {
