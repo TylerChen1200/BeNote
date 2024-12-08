@@ -26,6 +26,8 @@ class FriendRequestCell: UITableViewCell {
         nameLabel = UILabel()
         nameLabel.font = .boldSystemFont(ofSize: 16)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
         
         emailLabel = UILabel()
         emailLabel.font = .systemFont(ofSize: 14)
