@@ -15,23 +15,40 @@ class FriendScreenView: UIView {
     var bottomAddView:UIView!
     var textFieldAddFriend:UITextField!
     var buttonAdd:UIButton!
+    var requestsTableView: UITableView!
+     var requestsLabel: UILabel!
 
     override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .white
-        
-        setupTableViewFriends()
-        
-        setupBottomAddView()
-        setupTextFieldAddFriend()
-        setupButtonAdd()
-        setupBackgroundImage()
-        
-        initConstraints()
+          super.init(frame: frame)
+          self.backgroundColor = .white
+          
+          setupTableViewFriends()
+          setupBottomAddView()
+          setupTextFieldAddFriend()
+          setupButtonAdd()
+          setupBackgroundImage()
+          setupRequestsLabel()
+          setupRequestsTableView()
+          
+          initConstraints()
+      }
+    func setupRequestsLabel() {
+           requestsLabel = UILabel()
+           requestsLabel.text = "Friend Requests"
+           requestsLabel.font = .boldSystemFont(ofSize: 18)
+           requestsLabel.translatesAutoresizingMaskIntoConstraints = false
+           self.addSubview(requestsLabel)
+       }
+    func setupRequestsTableView() {
+        requestsTableView = UITableView()
+        requestsTableView.register(FriendRequestCell.self, forCellReuseIdentifier: "RequestCell")
+        requestsTableView.backgroundColor = .clear
+        requestsTableView.separatorStyle = .none
+        requestsTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(requestsTableView)
     }
     
     func setupBackgroundImage() {
-        // Create an image view with the background image
         let backgroundImageView = UIImageView(image: UIImage(named: "paper"))
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -41,8 +58,7 @@ class FriendScreenView: UIView {
             
         // Send it to the back so it doesn't cover other elements
         self.sendSubviewToBack(backgroundImageView)
-            
-        // Set up constraints for the background image
+   
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -89,34 +105,41 @@ class FriendScreenView: UIView {
         buttonAdd.translatesAutoresizingMaskIntoConstraints = false
         bottomAddView.addSubview(buttonAdd)
     }
-    
-    func initConstraints(){
-        NSLayoutConstraint.activate([
-            //bottom add view...
-            bottomAddView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,constant: -8),
-            bottomAddView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            bottomAddView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            
-            buttonAdd.bottomAnchor.constraint(equalTo: bottomAddView.bottomAnchor, constant: -8),
-            buttonAdd.leadingAnchor.constraint(equalTo: bottomAddView.leadingAnchor, constant: 4),
-            buttonAdd.trailingAnchor.constraint(equalTo: bottomAddView.trailingAnchor, constant: -4),
-            
-            textFieldAddFriend.bottomAnchor.constraint(equalTo: buttonAdd.topAnchor, constant: -8),
-            textFieldAddFriend.leadingAnchor.constraint(equalTo: buttonAdd.leadingAnchor, constant: 4),
-            textFieldAddFriend.trailingAnchor.constraint(equalTo: buttonAdd.trailingAnchor, constant: -4),
-            
-            bottomAddView.topAnchor.constraint(equalTo: textFieldAddFriend.topAnchor, constant: -8),
-            
-            tableViewFriends.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
-            tableViewFriends.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            tableViewFriends.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            tableViewFriends.bottomAnchor.constraint(equalTo: bottomAddView.topAnchor, constant: -8),
-            
-            
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
+    func initConstraints() {
+           NSLayoutConstraint.activate([
+               // Request section constraints
+               requestsLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+               requestsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+               
+               requestsTableView.topAnchor.constraint(equalTo: requestsLabel.bottomAnchor, constant: 8),
+               requestsTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+               requestsTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+               requestsTableView.heightAnchor.constraint(equalToConstant: 150),
+               
+               // Friends table constraints
+               tableViewFriends.topAnchor.constraint(equalTo: requestsTableView.bottomAnchor, constant: 16),
+               tableViewFriends.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+               tableViewFriends.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+               tableViewFriends.bottomAnchor.constraint(equalTo: bottomAddView.topAnchor, constant: -8),
+               
+               // Bottom add view constraints
+               bottomAddView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+               bottomAddView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+               bottomAddView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+               
+               buttonAdd.bottomAnchor.constraint(equalTo: bottomAddView.bottomAnchor, constant: -8),
+               buttonAdd.leadingAnchor.constraint(equalTo: bottomAddView.leadingAnchor, constant: 4),
+               buttonAdd.trailingAnchor.constraint(equalTo: bottomAddView.trailingAnchor, constant: -4),
+               
+               textFieldAddFriend.bottomAnchor.constraint(equalTo: buttonAdd.topAnchor, constant: -8),
+               textFieldAddFriend.leadingAnchor.constraint(equalTo: buttonAdd.leadingAnchor, constant: 4),
+               textFieldAddFriend.trailingAnchor.constraint(equalTo: buttonAdd.trailingAnchor, constant: -4),
+               
+               bottomAddView.topAnchor.constraint(equalTo: textFieldAddFriend.topAnchor, constant: -8)
+           ])
+       }
+       
+       required init?(coder: NSCoder) {
+           fatalError("init(coder:) has not been implemented")
+       }
+   }
