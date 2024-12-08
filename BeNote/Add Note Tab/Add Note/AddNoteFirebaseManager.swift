@@ -43,7 +43,7 @@ extension AddNoteViewController {
                 .document(self.today)
                 .setData([
                     "prompt": freeWrite ? "Freewrite" : self.addNoteScreen.labelPrompt.text as Any,
-                    "creatorDisplayName": self.defaults.object(forKey: Configs.defaultEmail) as Any,
+                    "creatorDisplayName": self.defaults.object(forKey: Configs.defaultName) as Any,
                     "creatorReply": addNoteScreen.textFieldPrompt.text as Any,
                     "location" : self.location as Any,
                     "timestampCreated": Timestamp(date: Date()),

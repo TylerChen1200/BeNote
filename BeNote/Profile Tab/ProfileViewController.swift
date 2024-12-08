@@ -104,7 +104,7 @@ class ProfileViewController: UIViewController {
                             let uwDate = timestamp?.dateValue() ?? Date()
                             
                             return Note(prompt: data["prompt"] as? String ?? "",
-                                      creatorDisplayName: data["name"] as? String ?? "No Email",
+                                      creatorDisplayName: data["creatorDisplayName"] as? String ?? "No Email",
                                       creatorReply: data["creatorReply"] as? String ?? "",
                                       location: data["location"] as? String ?? "",
                                       timestampCreated: uwDate,

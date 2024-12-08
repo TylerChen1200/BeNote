@@ -26,20 +26,23 @@ extension RegisterViewController{
                 return
             }
             self.showActivityIndicator()
-            Auth.auth().createUser(withEmail: email, password: password, completion: {result, error in
+            Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self] result, error in
+                guard let self = self else { return }
+                
                 if error == nil{
                     //MARK: the user creation is successful...
-                    self.setNameOfTheUserInFirebaseAuth(name: name)
-                    let currentUser = result?.user
-                    self.defaults.set(currentUser?.uid, forKey: Configs.defaultUID)
-                    self.defaults.set(currentUser?.email, forKey: Configs.defaultEmail)
-                    self.defaults.set(currentUser?.displayName, forKey: Configs.defaultName)
-                    self.addToUserDB(name: name, email: email)
-                    // Refresh the tab views
-                    self.notificationCenter.post(
-                        name: Configs.notificationRefresh,
-                        object: nil
-                    )
+                    if let currentUser = result?.user {
+                        self.defaults.set(currentUser.uid, forKey: Configs.defaultUID)
+                        self.defaults.set(currentUser.email, forKey: Configs.defaultEmail)
+                        self.setNameOfTheUserInFirebaseAuth(name: name)
+                        self.addToUserDB(name: name, email: email)
+                        
+                        // Refresh the tab views
+                        self.notificationCenter.post(
+                            name: Configs.notificationRefresh,
+                            object: nil
+                        )
+                    }
                 }else{
                     //MARK: there is a error creating the user...
                     var message: String = "Error occurred while signing in. Please try again."
@@ -68,12 +71,18 @@ extension RegisterViewController{
     
     //MARK: We set the name of the user after we create the account...
     func setNameOfTheUserInFirebaseAuth(name: String){
+        self.showActivityIndicator()
         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = name
-        changeRequest?.commitChanges(completion: {(error) in
+        changeRequest?.commitChanges(completion: {[weak self] (error) in
+            guard let self = self else { return }
+            
             if error == nil{
                 //MARK: the profile update is successful...
                 self.hideActivityIndicator()
+                
+                // Update UserDefaults with the new display name
+                self.defaults.set(name, forKey: Configs.defaultName)
                 
                 // Pop the current view controller
                 self.navigationController?.popViewController(animated: true)
@@ -83,7 +92,9 @@ extension RegisterViewController{
                 
             } else {
                 //MARK: there was an error updating the profile...
-                print("Error occured: \(String(describing: error))")
+                print("Error occurred: \(String(describing: error))")
+                self.hideActivityIndicator()
+                self.showErrorAlert("Failed to update display name")
             }
         })
     }
